@@ -31,3 +31,151 @@
 body {
   background-color: #1C1C1C;
 }
+
+.cinephoria-background {
+  background-color: #1C1C1C;
+}
+
+.cinephoria-main-title {
+  color: #FFFFFF;
+  font-family: Great Vibes, sans-serif;
+  font-size: 64px;
+}
+
+.cinephoria-booking {
+  background-color: rgba(0, 0, 0, 0.8);
+  background-blend-mode: darken;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-width: 2px 0 2px 0;
+  border-style: solid;
+  border-color: #F1C40F;
+  height: 30dvh;
+}
+
+.cinephoria-hall-number {
+  color: #F1C40F;
+  font-family: Oswald, sans-serif;
+  font-size: 40px;
+}
+
+.cinephoria-informations {
+  display: flex;
+  align-items: center;
+  width: 40dvw;
+}
+
+.cinephoria-incident-header {
+  color: #F1C40F;
+  font-family: Merriweather, sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.cinephoria-incident {
+  border-top: 2px solid #F1C40F;
+  border-bottom: 2px solid #F1C40F;
+}
+
+.cinephoria-main-text {
+  color: #FFFFFF;
+  font-family: Raleway, sans-serif;
+  font-size: 16px;
+}
+
+.cinephoria-big-text {
+  color: #FFFFFF;
+  font-family: Raleway, sans-serif;
+  font-size: 5dvw;
+}
+
+.cinephoria-movie-title {
+  color: #F1C40F;
+  font-family: Oswald, sans-serif;
+  font-size: 7dvw;
+}
+
+.cinephoria-showtime {
+  color: #FFFFFF;
+  font-family: Raleway, sans-serif;
+  font-size: 24px;
+}
+
+.cinephoria-alert {
+  color: #FFFFFF;
+  font-family: Raleway, sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.cinephoria-header {
+  color: #FFFFFF;
+  font-family: Merriweather, sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.cinephoria-button {
+  position: relative;
+  background-color: #E63946;
+  color: #FFFFFF;
+  border-radius: 2px;
+  font-family: Raleway, sans-serif;
+  font-weight: bold;
+}
+
+.cinephoria-button img {
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 25px;
+  height: 25px;
+}
+
+.cinephoria-button:hover {
+  background-color: #e62232;
+}
+
+.cinephoria-button:active {
+  background-color: #C41826;
+}
+
+.cinephoria-button:disabled {
+  background-color: lightgrey;
+  color: #1C1C1C;
+}
+
+.cinephoria-input {
+  background-color: #FFFFFF;
+  color: #1C1C1C;
+}
+
+.cinephoria-input::placeholder {
+  color: #1C1C1C;
+}
+
+.cinephoria-input-container {
+  position: relative;
+  width: 250px;
+}
+.cinephoria-input-container img {
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 25px;
+  height: 25px;
+}
+.cinephoria-input-container input {
+  width: 100%;
+  padding: 10px 10px 10px 40px;  /* Add padding to make space for the image */
+  border-radius: 2px;
+  font-size: 16px;
+  font-family: Raleway, sans-serif;
+}
+.cinephoria-input-container input:focus {
+  border-color: unset;
+  outline: none;
+}
