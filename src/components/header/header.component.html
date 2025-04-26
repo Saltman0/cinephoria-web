@@ -1,6 +1,30 @@
-<header class="flex justify-between items-center h-20 p-5">
-    <span class="cinephoria-header flex items-center">Bienvenue {{ firstName }} {{ lastName }}</span>
-  <!--<button type="button" (click)="disconnect()">
-    <img ngSrc="../../assets/images/Power.png" alt="Se déconnecter" class="icon" width="30" height="30" />
-  </button>-->
+<header class="flex justify-between items-center p-5">
+
+  <div class="flex items-center">
+    <img ngSrc="../../assets/images/Popcorn.png" width="100" height="100" />
+    <span class="cinephoria-main-title">Cinéphoria</span>
+  </div>
+
+  <nav>
+    <ul class="flex">
+      <li>
+        <a class="cinephoria-input" routerLink="/home" routerLinkActive="active" ariaCurrentWhenActive="page">Accueil</a>
+      </li>
+      <li>
+        <a class="cinephoria-input" routerLink="/booking" routerLinkActive="active" ariaCurrentWhenActive="page">Réservation</a>
+      </li>
+      <li>
+        <a class="cinephoria-input" routerLink="/movie" routerLinkActive="active" ariaCurrentWhenActive="page">Films</a>
+      </li>
+      <li>
+        <a class="cinephoria-input" routerLink="/contact" routerLinkActive="active" ariaCurrentWhenActive="page">Contact</a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="flex items-center">
+    <span class="cinephoria-header">Mon espace</span>
+    <img ngSrc="../../assets/images/Popcorn.png" width="50" height="50" />
+  </div>
+
 </header>
