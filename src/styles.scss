@@ -3,29 +3,21 @@
 @font-face {
   font-family: "Great Vibes";
   src: url("assets/fonts/GreatVibes.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
 }
 
 @font-face {
   font-family: "Merriweather";
   src: url("assets/fonts/Merriweather.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
 }
 
 @font-face {
   font-family: "Oswald";
   src: url("assets/fonts/Oswald.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
 }
 
 @font-face {
   font-family: "Raleway";
   src: url("./assets/fonts/Raleway.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
 }
 
 body {
@@ -40,6 +32,18 @@ body {
   color: #FFFFFF;
   font-family: Great Vibes, sans-serif;
   font-size: 64px;
+}
+
+.cinephoria-subtitle {
+  color: #FFFFFF;
+  font-family: Merriweather, sans-serif;
+  font-size: 24px;
+}
+
+.cinephoria-footer {
+  color: #FFFFFF;
+  font-family: Merriweather, sans-serif;
+  font-size: 16px;
 }
 
 .cinephoria-booking {
