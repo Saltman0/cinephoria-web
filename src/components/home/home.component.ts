@@ -3,11 +3,15 @@ import {HeaderComponent} from '../header/header.component';
 import {Router} from '@angular/router';
 import {MovieModel} from '../../models/movie.model';
 import {ApiService} from '../../services/api/api.service';
+import {FooterComponent} from '../footer/footer.component';
+import {NgOptimizedImage} from '@angular/common';
 
 @Component({
   selector: 'app-home',
   imports: [
-    HeaderComponent
+    HeaderComponent,
+    FooterComponent,
+    NgOptimizedImage
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
