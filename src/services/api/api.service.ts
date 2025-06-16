@@ -72,10 +72,42 @@ export class ApiService {
     ).result();
 
     result.data.movies.forEach((movie: MovieModel) => {
-      movies.push(this.movieFactory.create(movie.id, movie.title, movie.imageUrl, movie.showtime));
+      movies.push(this.movieFactory.create(movie.id, movie.title, movie.imageURL, movie.showtime));
     });
 
     return movies;
+  }
+
+  public async getLastMovies(token: string, limit: number): Promise<MovieModel[]> {
+    const response: Response = await fetch(this.apiUrl + `movie/last-movies?limit=${limit}`, {
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json"
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(response.status.toString());
+    }
+
+    return response.json();
+  }
+
+  public async getFavoriteMovies(token: string, limit: number): Promise<MovieModel[]> {
+    const response: Response = await fetch(this.apiUrl + `movie/favorite-movies?limit=${limit}`, {
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json"
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(response.status.toString());
+    }
+
+    return response.json();
   }
 
   public async getBookings(userId: number) {
