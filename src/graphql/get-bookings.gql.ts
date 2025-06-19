@@ -14,7 +14,6 @@ export class GetBookingsGql extends Query<Response> {
       query GetBookings($userId: Int!) {
         bookings(userId: $userId) {
           id
-          qrCode
           showtime {
             id
             startTime

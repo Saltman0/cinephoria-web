@@ -8,8 +8,8 @@ import { BookingSeatModel } from "../models/bookingSeat.model";
 })
 export class BookingFactory {
 
-    public create(id: number, qrCode: string, showtime: ShowtimeModel, bookingSeats: BookingSeatModel[]): BookingModel {
-        return new BookingModel(id, qrCode, showtime, bookingSeats);
+    public create(id: number, showtime: ShowtimeModel, bookingSeats: BookingSeatModel[]): BookingModel {
+        return new BookingModel(id, showtime, bookingSeats);
     }
 
 }
