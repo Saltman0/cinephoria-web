@@ -1,0 +1,56 @@
+<app-header></app-header>
+
+<main class="flex justify-center items-center">
+
+  <section class="w-90/100">
+
+    <!-- Header -->
+    <div class="order-header flex justify-between">
+
+      <!-- Titre -->
+      <span class="cinephoria-subtitle">Commandes</span>
+
+      <!-- Liste de tous les cinémas -->
+      <div class="cinephoria-input-container flex justify-end items-center">
+        <img ngSrc="../../assets/images/Placeholder.png" width="25" height="25" alt="Mot de passe" />
+        <select class="bg-amber-50">
+          <option>Odysseum</option>
+        </select>
+      </div>
+
+    </div>
+
+    <!-- Foreach de chaque réservation -->
+
+    @for (booking of bookingList; track booking.id) {
+      <div class="cinephoria-booking flex" style="background-image: url('assets/images/movies/{{ booking.movieImage }}')">
+        <span>{{ booking.movieTitle }}</span>
+
+        <div class="flex justify-center items-center">
+          <img ngSrc="../../assets/images/Calendar.png" width="25" height="25" alt="Date de réservation">
+          <span>{{ booking.showtimeDate }}</span>
+        </div>
+
+        <div class="flex justify-center items-center">
+          <img ngSrc="../../assets/images/Clock.png" width="25" height="25" alt="Date de réservation">
+          <span>{{ booking.hours }}</span>
+        </div>
+
+        <div class="flex justify-center items-center">
+          <img ngSrc="../../assets/images/Chair.png" width="25" height="25" alt="Date de réservation">
+          <span>{{ booking.numberOfSeats }}</span>
+        </div>
+      </div>
+    }
+
+    <div>
+
+      <!-- Réservation -->
+
+    </div>
+
+  </section>
+
+</main>
+
+<app-footer></app-footer>
