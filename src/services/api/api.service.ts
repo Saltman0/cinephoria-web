@@ -35,17 +35,6 @@ export class ApiService {
     return response.json();
   }
 
-  public login2(email: string, password: string) {
-    const url = this.apiUrl + 'login';
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const body = { email:email, password:password };
-
-    return this.httpClient.post(url, body, { headers }).subscribe(
-      res => {
-        console.log(res);
-      });
-  }
-
   public async getUser(token: string) {
     const userId: number = jwtDecode<{id: number}>(token).id;
     const response: Response = await fetch(this.apiUrl + `user/${userId}`, {
@@ -110,8 +99,7 @@ export class ApiService {
     return response.json();
   }
 
-  public async getBookings(userId: number) {
-
+  public async getBookings(userId: number): Promise<BookingModel[]> {
     let bookings: BookingModel[] = [];
 
     let result = await this.getBookingsGQL.watch(
@@ -119,7 +107,7 @@ export class ApiService {
     ).result();
 
     result.data.bookings.forEach((booking: BookingModel) => {
-      bookings.push(this.bookingFactory.create(booking.id, booking.qrCode, booking.showtime, booking.bookingSeats));
+      bookings.push(this.bookingFactory.create(booking.id, booking.showtime, booking.bookingSeats));
     });
 
     return bookings;
