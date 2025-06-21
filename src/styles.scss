@@ -59,6 +59,14 @@ body {
   height: 10rem;
 }
 
+.cinephoria-employee {
+  background-color: #2f2f2f;
+  border-width: 2px 0 2px 0;
+  border-style: solid;
+  border-color: #F1C40F;
+  height: 10rem;
+}
+
 .cinephoria-hall-number {
   color: #F1C40F;
   font-family: Oswald, sans-serif;
@@ -114,6 +122,10 @@ body {
   font-weight: bold;
 }
 
+.cinephoria-table-header {
+  background-color: #E63946;
+}
+
 .cinephoria-header {
   color: #FFFFFF;
   font-family: Merriweather, sans-serif;
@@ -165,6 +177,7 @@ body {
   position: relative;
   width: 250px;
 }
+
 .cinephoria-input-container img {
   position: absolute;
   left: 8px;
@@ -173,6 +186,7 @@ body {
   width: 25px;
   height: 25px;
 }
+
 .cinephoria-input-container input {
   width: 100%;
   padding: 10px 10px 10px 40px;  /* Add padding to make space for the image */
@@ -180,6 +194,7 @@ body {
   font-size: 16px;
   font-family: Raleway, sans-serif;
 }
+
 .cinephoria-input-container input:focus {
   border-color: unset;
   outline: none;
