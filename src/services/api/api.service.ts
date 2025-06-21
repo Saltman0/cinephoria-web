@@ -7,6 +7,7 @@ import {MovieModel} from '../../models/movie.model';
 import {MovieFactory} from '../../factories/movie.factory';
 import {GetMoviesGql} from '../../graphql/get-movies.gql';
 import {BookingFactory} from '../../factories/booking.factory';
+import {UserModel} from '../../models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +39,31 @@ export class ApiService {
   public async getUser(token: string) {
     const userId: number = jwtDecode<{id: number}>(token).id;
     const response: Response = await fetch(this.apiUrl + `user/${userId}`, {
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json"
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(response.status.toString());
+    }
+
+    return response.json();
+  }
+
+  /**
+   * Retourne les utilisateurs
+   * @param token
+   * @param role
+   */
+  public async getUsers(token: string, role: string|null): Promise<UserModel[]> {
+    let roleQueryParam: string|null = null;
+    if (role !== null) {
+      roleQueryParam = "?role=" + role;
+    }
+    const response: Response = await fetch(this.apiUrl + `user` + roleQueryParam, {
       method: "GET",
       headers: {
         "Authorization": `Bearer ${token}`,
