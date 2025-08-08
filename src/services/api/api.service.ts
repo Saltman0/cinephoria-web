@@ -2,12 +2,13 @@ import {Injectable} from '@angular/core';
 import {jwtDecode} from "jwt-decode";
 import {GetBookingsGql} from "../../graphql/get-bookings.gql";
 import {BookingModel} from "../../models/booking.model";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {MovieModel} from '../../models/movie.model';
 import {MovieFactory} from '../../factories/movie.factory';
-import {GetMoviesGql} from '../../graphql/get-movies.gql';
 import {BookingFactory} from '../../factories/booking.factory';
 import {UserModel} from '../../models/user.model';
+import {GetMoviesWithShowtimesGql} from '../../graphql/get-movies-with-showtimes-gql';
+import {ShowtimeModel} from '../../models/showtime.model';
+import {ShowtimeFactory} from '../../factories/showtime.factory';
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +17,11 @@ export class ApiService {
 
   private apiUrl = 'http://172.18.0.6/';
 
-  constructor(private readonly getMoviesGQL: GetMoviesGql, private readonly getBookingsGQL: GetBookingsGql,
-              private readonly bookingFactory: BookingFactory, private readonly movieFactory: MovieFactory,
-              private readonly httpClient: HttpClient) {}
+  constructor(private readonly getMoviesWithShowtimesGQL: GetMoviesWithShowtimesGql,
+              private readonly getBookingsGQL: GetBookingsGql,
+              private readonly bookingFactory: BookingFactory,
+              private readonly movieFactory: MovieFactory,
+              private showtimeFactory: ShowtimeFactory) {}
 
   public async login(email: string, password: string): Promise<any> {
     const response = await fetch(this.apiUrl + "login", {
@@ -78,19 +81,31 @@ export class ApiService {
     return response.json();
   }
 
-  public async getMovies(userId: number) {
+  public async getMoviesWithShowtimes(): Promise<MovieModel[]> {
+    let moviesWithShowtimes: MovieModel[] = [];
 
-    let movies: MovieModel[] = [];
-
-    let result = await this.getMoviesGQL.watch(
-      { userId: userId }
-    ).result();
+    let result = await this.getMoviesWithShowtimesGQL.watch().result();
 
     result.data.movies.forEach((movie: MovieModel) => {
-      movies.push(this.movieFactory.create(movie.id, movie.title, movie.imageURL, movie.showtime));
+
+      let showtimes: ShowtimeModel[] = [];
+      movie.showtimes.forEach((showtime: ShowtimeModel) => {
+        showtimes.push(
+          this.showtimeFactory.create(
+            showtime.id, movie, showtime.startTime, showtime.endTime, showtime.hall, []
+          )
+        );
+      });
+
+      moviesWithShowtimes.push(
+        this.movieFactory.create(
+          movie.id, movie.favorite, movie.title, movie.imageURL, movie.minimumAge, showtimes
+        )
+      );
+
     });
 
-    return movies;
+    return moviesWithShowtimes;
   }
 
   public async getLastMovies(token: string, limit: number): Promise<MovieModel[]> {
