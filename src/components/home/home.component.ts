@@ -32,6 +32,5 @@ export class HomeComponent {
   async ngOnInit(): Promise<void> {
     this.lastMovies = await this.apiService.getLastMovies(this.localStorageService.getJwtToken(), 7);
     this.favoriteMovies = await this.apiService.getFavoriteMovies(this.localStorageService.getJwtToken(), 7);
-    console.log(this.favoriteMovies);
   }
 }
