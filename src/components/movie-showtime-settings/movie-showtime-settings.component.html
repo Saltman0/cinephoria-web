@@ -1,0 +1,102 @@
+<app-header></app-header>
+
+<main class="flex justify-center items-center">
+
+  <section class="w-90/100">
+
+    <!-- Header -->
+    <div class="order-header flex justify-between">
+
+      <!-- Titre à gauche -->
+      <span class="cinephoria-subtitle">Films</span>
+
+      <!-- Icône + à mettre -->
+
+      <!-- Titre à droite -->
+      <span class="cinephoria-subtitle">Séances</span>
+
+      <!-- Icône + à mettre -->
+
+    </div>
+
+    <div class="flex bg-amber-200">
+
+      <!-- Liste des films -->
+      <div class="flex flex-col bg-amber-950">
+
+        @for (movie of movieList; track movie.id) {
+          <div class="flex">
+
+            <!-- Icône de coeur -->
+            <span><img ngSrc="../../assets/images/Star.png" width="25" height="25" alt="Note du film"></span>
+
+            <span>{{ movie.title }}</span>
+
+            <span>x séances</span>
+
+            <div class="flex flex-col">
+              {{ movie.minimumAge }}
+              x / 5 <img ngSrc="../../assets/images/Star.png" width="25" height="25" alt="Note du film">
+            </div>
+
+            <div class="flex justify-center items-center">
+              <img ngSrc="../../assets/images/Pencil.png" width="25" height="25" alt="Modifier le film">
+              <img ngSrc="../../assets/images/Trash.png" width="25" height="25" alt="Supprimer le film">
+            </div>
+
+          </div>
+        }
+
+      </div>
+
+      <!-- Liste des séances -->
+      <div class="flex flex-col bg-blue-500">
+
+        @for (showtime of showtimeList; track showtime.id) {
+          <div class="flex">
+
+            <div class="flex flex-col">
+
+              <div class="flex">
+                <img ngSrc="../../assets/images/Calendar.png" width="25" height="25" alt="Date de la séance">
+                <span>{{ showtime.date }}</span>
+              </div>
+
+              <div class="flex">
+                <img ngSrc="../../assets/images/Clock.png" width="25" height="25" alt="Horaires de la séance">
+                <span>{{ showtime.hours }}</span>
+              </div>
+
+              <div class="flex">
+                <img ngSrc="../../assets/images/Hall.png" width="25" height="25" alt="Numéro de la salle">
+                <span>Salle {{ showtime.hallNumber }}</span>
+              </div>
+
+            </div>
+
+            <div class="flex flex-col">
+
+              <button type="button" class="cinephoria-button h-10 w-55" (click)="editShowtime(showtime.id)">
+                <img ngSrc="../../assets/images/Pencil.png" alt="Modifier la séance" width="20" height="20" />
+                <span class="ml-7">Modifier</span>
+              </button>
+
+              <button type="button" class="cinephoria-button h-10 w-55" (click)="deleteShowtime(showtime.id)">
+                <img ngSrc="../../assets/images/Trash.png" alt="Supprimer la séance" width="20" height="20" />
+                <span class="ml-7">Supprimer</span>
+              </button>
+
+            </div>
+
+          </div>
+        }
+
+      </div>
+
+    </div>
+
+  </section>
+
+</main>
+
+<app-footer></app-footer>
