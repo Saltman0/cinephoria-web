@@ -9,6 +9,9 @@ import {UserModel} from '../../models/user.model';
 import {GetMoviesWithShowtimesGql} from '../../graphql/get-movies-with-showtimes-gql';
 import {ShowtimeModel} from '../../models/showtime.model';
 import {ShowtimeFactory} from '../../factories/showtime.factory';
+import {HallModel} from '../../models/hall.model';
+import {GetHallSettingsGql} from '../../graphql/get-hall-settings.gql';
+import {HallFactory} from '../../factories/hall.factory';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +22,10 @@ export class ApiService {
 
   constructor(private readonly getMoviesWithShowtimesGQL: GetMoviesWithShowtimesGql,
               private readonly getBookingsGQL: GetBookingsGql,
+              private readonly getHallSettingsGql: GetHallSettingsGql,
               private readonly bookingFactory: BookingFactory,
               private readonly movieFactory: MovieFactory,
+              private readonly hallFactory: HallFactory,
               private showtimeFactory: ShowtimeFactory) {}
 
   public async login(email: string, password: string): Promise<any> {
@@ -152,5 +157,19 @@ export class ApiService {
     });
 
     return bookings;
+  }
+
+  public async getHalls(cinemaId: number): Promise<HallModel[]> {
+    let halls: HallModel[] = [];
+
+    let result = await this.getHallSettingsGql.watch(
+      { cinemaId: cinemaId }
+    ).result();
+
+    result.data.halls.forEach((hall: HallModel) => {
+      halls.push(this.hallFactory.create(hall.id, hall.number, hall.currentShowtime));
+    });
+
+    return halls;
   }
 }
