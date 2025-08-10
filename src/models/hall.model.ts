@@ -1,13 +1,13 @@
-import { ShowtimeModel } from "./showtime.model";
+import {ShowtimeModel} from "./showtime.model";
 
 export class HallModel {
     id: number;
     number: number;
-    showtime: ShowtimeModel;
+    currentShowtime: ShowtimeModel|null;
 
-    constructor(id: number, number: number, showtime: ShowtimeModel) {
+    constructor(id: number, number: number, currentShowtime: ShowtimeModel|null) {
         this.id = id;
         this.number = number;
-        this.showtime = showtime;
+        this.currentShowtime = currentShowtime;
     }
 }
