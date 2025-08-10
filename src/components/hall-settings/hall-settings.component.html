@@ -1,0 +1,62 @@
+<app-header></app-header>
+
+<main class="flex justify-center items-center">
+
+  <section class="w-90/100">
+
+    <!-- Header -->
+    <div class="order-header flex justify-between">
+
+      <!-- Titre -->
+      <span class="cinephoria-subtitle">Salles</span>
+
+      <!-- Bouton + -->
+
+    </div>
+
+    <div>
+
+      @for (hall of hallList; track hall.id) {
+        <div class="cinephoria-hall flex flex-col" style="background-image: url('assets/images/movies/{{ hall.movieImage }}')">
+
+          <div class="flex justify-center items-center">
+            <img ngSrc="../../assets/images/Hall.png" width="25" height="25" alt="Numéro de salle">
+            <span>Salle {{ hall.number }}</span>
+          </div>
+
+          @if (hall.movieTitle !== null) {
+            <div class="flex justify-center items-center">
+              <img ngSrc="../../assets/images/Hall.png" width="25" height="25" alt="Nom du film">
+              <span>{{ hall.movieTitle }}</span>
+            </div>
+          }
+
+          @if (hall.hours !== null) {
+            <div class="flex justify-center items-center">
+              <img ngSrc="../../assets/images/Clock.png" width="25" height="25" alt="Horaires du film">
+              <span>{{ hall.hours }}</span>
+            </div>
+          }
+
+          <div class="flex justify-center items-center">
+            <button type="button" class="cinephoria-button h-10 w-55" (click)="editHall(hall.id)">
+              <img ngSrc="../../assets/images/Pencil.png" alt="Modifier la salle" width="20" height="20" />
+              <span class="ml-7">Modifier</span>
+            </button>
+
+            <button type="button" class="cinephoria-button h-10 w-55" (click)="deleteHall(hall.id)">
+              <img ngSrc="../../assets/images/Pencil.png" alt="Supprimer la salle" width="20" height="20" />
+              <span class="ml-7">Supprimer</span>
+            </button>
+          </div>
+
+        </div>
+      }
+
+    </div>
+
+  </section>
+
+</main>
+
+<app-footer></app-footer>
