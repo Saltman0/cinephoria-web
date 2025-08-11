@@ -172,4 +172,20 @@ export class ApiService {
 
     return halls;
   }
+
+  public async sendMail(email: string, title: string, description: string): Promise<any> {
+    const response: Response = await fetch("https://formspree.io/f/xjkojppa", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({email: email, title: title, description: description})
+    });
+
+    if (!response.ok) {
+      throw new Error(response.status.toString());
+    }
+
+    return response.json();
+  }
 }
