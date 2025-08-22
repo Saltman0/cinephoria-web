@@ -188,4 +188,33 @@ export class ApiService {
 
     return response.json();
   }
+
+  public async createUser(
+    email: string,
+    password: string,
+    firstName: string,
+    lastName: string,
+    phoneNumber: string
+  ): Promise<any> {
+    const response: Response = await fetch(this.apiUrl + "user", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "email": email,
+        "password": password,
+        "firstName": firstName,
+        "lastName": lastName,
+        "phoneNumber": phoneNumber,
+        "role": "user"
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(response.status.toString());
+    }
+
+    return response.json();
+  }
 }
