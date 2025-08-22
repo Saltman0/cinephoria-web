@@ -6,6 +6,7 @@ import {MovieShowtimeSettingsComponent} from '../movie-showtime-settings/movie-s
 import {HallSettingsComponent} from '../hall-settings/hall-settings.component';
 import {ContactComponent} from '../contact/contact.component';
 import {AccountCreationComponent} from '../account-creation/account-creation.component';
+import {AdministratorComponent} from '../administrator/administrator.component';
 
 export const root: string = "http://localhost:4200/";
 
@@ -17,5 +18,6 @@ export const routes: Routes = [
   { path: 'movie-showtime-settings', title: "Movie Showtime settings page", component: MovieShowtimeSettingsComponent },
   { path: 'hall-settings', title: "Hall settings page", component: HallSettingsComponent },
   { path: 'contact', title: "Contact page", component: ContactComponent },
-  { path: 'account-creation', title: "Account creation page", component: AccountCreationComponent }
+  { path: 'account-creation', title: "Account creation page", component: AccountCreationComponent },
+  { path: 'administrator', title: "Administrator page", component: AdministratorComponent }
 ];
