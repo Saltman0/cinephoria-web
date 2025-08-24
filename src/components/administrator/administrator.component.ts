@@ -26,7 +26,7 @@ export class AdministratorComponent {
   }
 
   redirectToEmployeeListPage() {
-    this.router.navigate(['employee-list']);
+    this.router.navigate(['employee']);
   }
 
   redirectToDashboardPage() {

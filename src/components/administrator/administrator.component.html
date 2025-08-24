@@ -1,30 +1,30 @@
 <app-header></app-header>
 
-<main class="flex justify-center items-center h-[80dvh]" style="background-color: #C3002F;">
+<main class="flex justify-center items-center h-[80dvh]">
 
-  <section class="flex flex-col justify-center w-50/100 h-1/1" style="background-color: #F1C40F;">
+  <section class="flex flex-col justify-center w-full h-full">
 
-    <div class="flex" style="background-color: #396cd8;">
-      <button (click)="redirectToMovieShowtimeSettingsPage()" type="button" class="flex flex-col justify-center items-center w-100/100" style="background-color: green;">
-        <span>Gestion des films et des séances</span>
-        <img ngSrc="assets/images/Movie.png" width="100" height="100" alt="Gestion des films et des séances" />
+    <div class="flex justify-center items-end h-1/2 w-full">
+      <button (click)="redirectToMovieShowtimeSettingsPage()" type="button" class="administrator-button flex flex-col justify-center items-center w-[350px] h-[200px] m-3">
+        <span class="mt-12">Gestion des films et des séances</span>
+        <img ngSrc="assets/images/Movie.png" width="50" height="50" alt="Gestion des films et des séances" class="mt-2" />
       </button>
 
-      <button (click)="redirectToHallSettingsPage()" type="button" class="flex flex-col justify-center items-center w-100/100" style="background-color: cadetblue;">
-        <span>Gestion des salles</span>
-        <img ngSrc="assets/images/Hall.png" width="100" height="100" alt="Gestion des salles" />
+      <button (click)="redirectToHallSettingsPage()" type="button" class="administrator-button flex flex-col justify-center items-center w-[350px] h-[200px] m-3">
+        <span class="mt-12">Gestion des salles</span>
+        <img ngSrc="assets/images/Hall.png" width="50" height="50" alt="Gestion des salles" class="mt-2" />
       </button>
     </div>
 
-    <div (click)="redirectToEmployeeListPage()" class="flex" style="background-color: #396cd8;">
-      <button type="button" class="flex flex-col justify-center items-center w-100/100" style="background-color: lightgoldenrodyellow;">
-        <span>Gestion des comptes Employé</span>
-        <img ngSrc="assets/images/Group.png" width="100" height="100" alt="Gestion des comptes Employé" />
+    <div class="flex justify-center h-1/2 w-full">
+      <button (click)="redirectToEmployeeListPage()" type="button" class="administrator-button flex flex-col justify-center items-center w-[350px] h-[200px] m-3">
+        <span class="mt-12">Gestion des comptes Employé</span>
+        <img ngSrc="assets/images/Group.png" width="50" height="50" alt="Gestion des comptes Employé" class="mt-2" />
       </button>
 
-      <button (click)="redirectToDashboardPage()" type="button" class="flex flex-col justify-center items-center w-100/100" style="background-color: burlywood;">
-        <span>Dashboard</span>
-        <img ngSrc="assets/images/Dashboard.png" width="100" height="100" alt="Dashboard" />
+      <button (click)="redirectToDashboardPage()" type="button" class="administrator-button flex flex-col justify-center items-center w-[350px] h-[200px] m-3">
+        <span class="mt-12">Dashboard</span>
+        <img ngSrc="assets/images/Dashboard.png" width="50" height="50" alt="Dashboard" class="mt-2" />
       </button>
     </div>
 
