@@ -15,7 +15,7 @@ import {ApiService} from '../../services/api/api.service';
   styleUrl: './forgotten-password.component.scss'
 })
 export class ForgottenPasswordComponent {
-  contactForm = new FormGroup({
+  forgottenPasswordForm = new FormGroup({
     email: new FormControl("", [Validators.required, Validators.email])
   });
 
@@ -23,9 +23,9 @@ export class ForgottenPasswordComponent {
 
   async submit() {
     await this.apiService.sendMail(
-      <string> this.contactForm.value.email,
+      <string> this.forgottenPasswordForm.value.email,
       "Cinéphoria - Réinitialisation de mot de passe",
-      "Votre mot de passe a été réinitialisé ! Veuillez modifier votre mot de passe vers le lien suivante : ajoutez le lien"
+      "Votre mot de passe a été réinitialisé ! Veuillez modifier votre mot de passe vers le lien suivante : lien"
     );
   }
 }
