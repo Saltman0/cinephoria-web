@@ -113,6 +113,22 @@ export class ApiService {
     return moviesWithShowtimes;
   }
 
+  public async getMovies(token: string): Promise<MovieModel[]> {
+    const response: Response = await fetch(this.apiUrl + `movie`, {
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json"
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(response.status.toString());
+    }
+
+    return response.json();
+  }
+
   public async getLastMovies(token: string, limit: number): Promise<MovieModel[]> {
     const response: Response = await fetch(this.apiUrl + `movie/last-movies?limit=${limit}`, {
       method: "GET",
