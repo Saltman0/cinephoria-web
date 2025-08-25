@@ -1,0 +1,32 @@
+<app-header></app-header>
+
+<main class="flex justify-center items-center">
+
+  <section class="w-90/100" style="background-color: #E63946;">
+
+    <div class="flex flex-col items-center" style="background-color: #F1C40F;">
+      <label class="cinephoria-big-text">Sélectionnez votre cinéma :</label>
+      <select (select)="loadMovies()">
+        @for (cinema of cinemaList; track cinema.id) {
+          <option [value]="cinema.id">{{ cinema.name }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="h-9/10 flex justify-around" style="background-color: #396cd8;">
+      @for (movie of movieList; track movie.id) {
+        <img ngSrc="../../assets/images/movies/{{ movie.imageURL }}" width="200" height="100" alt="{{ movie.name }}"/>
+      } @empty {
+        <li>Aucun film.</li>
+      }
+    </div>
+
+    <div style="background-color: #24c8db;">
+
+    </div>
+
+  </section>
+
+</main>
+
+<app-footer></app-footer>
