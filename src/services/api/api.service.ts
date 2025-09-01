@@ -18,7 +18,7 @@ import {HallFactory} from '../../factories/hall.factory';
 })
 export class ApiService {
 
-  private apiUrl = 'http://172.18.0.6/';
+  private apiUrl = 'http://172.18.0.5/';
 
   constructor(private readonly getMoviesWithShowtimesGQL: GetMoviesWithShowtimesGql,
               private readonly getBookingsGQL: GetBookingsGql,
