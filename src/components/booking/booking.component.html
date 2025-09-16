@@ -6,22 +6,92 @@
 
     <div class="flex flex-col items-center" style="background-color: #F1C40F;">
       <label class="cinephoria-big-text">Sélectionnez votre cinéma :</label>
-      <select (select)="loadMovies()">
+      <select (change)="loadMovies()">
+        <option selected disabled>Choisissez un cinéma</option>
         @for (cinema of cinemaList; track cinema.id) {
           <option [value]="cinema.id">{{ cinema.name }}</option>
         }
       </select>
     </div>
 
-    <div class="h-9/10 flex justify-around" style="background-color: #396cd8;">
+    <div class="flex justify-around" style="background-color: #396cd8;">
+
       @for (movie of movieList; track movie.id) {
-        <img ngSrc="../../assets/images/movies/{{ movie.imageURL }}" width="200" height="100" alt="{{ movie.name }}"/>
+        <img (click)="loadShowtimes(movie.id)" ngSrc="../../assets/images/movies/{{ movie.imageURL }}" width="200" height="100" alt="{{ movie.title }}"/>
       } @empty {
         <li>Aucun film.</li>
       }
+
     </div>
 
-    <div style="background-color: #24c8db;">
+    <div class="flex justify-around" style="background-color: #396cd8;">
+
+      @for (showtime of showtimeList; track showtime.id) {
+        <div class="flex flex-col justify-center items-center">
+
+          <div class="flex justify-center items-center">
+            <img ngSrc="../../assets/images/Clock.png" width="100" height="50" alt="Horaires de la séance"/>
+            <span>{{ showtime.hours }}</span>
+          </div>
+
+          <div class="flex justify-center items-center">
+            <img ngSrc="../../assets/images/Hall.png" width="100" height="50" alt="Numéro de la salle"/>
+            <span>Salle {{ showtime.hallNumber }}</span>
+          </div>
+
+          @if (showtime.projectionQuality !== null) {
+            <div class="flex justify-center items-center">
+              <img ngSrc="../../assets/images/Camera.png" width="100" height="50"
+                   alt="Qualité de projection de la salle"/>
+              <span>{{ showtime.projectionQuality }}</span>
+            </div>
+          }
+
+          <button (click)="loadSeats(showtime.hallId, showtime.price, showtime.id)" type="button" class="cinephoria-button h-10 w-55">
+            <img ngSrc="../../assets/images/Ticket.png" alt="Réserver" width="20" height="20" />
+            <span class="ml-7">Réserver</span>
+          </button>
+
+        </div>
+      } @empty {
+        <li>Aucun showtime.</li>
+      }
+
+    </div>
+
+    <div class="flex justify-center items-center" style="background-color: #24c8db;">
+
+      <span>Choisissez vos places</span>
+      <div class="flex flex-col justify-center items-center" style="background-color: grey;">
+        @for (row of seatList; track row.row) {
+          <div class="flex justify-center items-center" style="background-color: brown;">
+            @for (seat of row.seats; track seat.id) {
+              <img [class.selected-seat]="isSelected(seat.id)" [class.locked-seat]="isAlreadyBooked(seat.id)"
+                   (click)="isAlreadyBooked(seat.id)
+                   ? $event.stopPropagation()
+                   : selectSeat(seat.id, seat.row, seat.number)"
+                   ngSrc="../../assets/images/Chair_top_view.png" width="50" height="50"
+                   alt="{{ seat.row }}{{ seat.number }}"/>
+            }
+          </div>
+        }
+      </div>
+
+    </div>
+
+    <div class="flex flex-col justify-center items-center">
+
+      <span>Prix : {{ totalPrice }} €</span>
+      <span>
+        Siège(s)
+        @for (selectedSeat of selectedSeatList; track selectedSeat.id) {
+          {{ selectedSeat.row + selectedSeat.number }}@if (!$last) {,}
+        }
+      </span>
+      <button (click)="book()" type="button" class="cinephoria-button h-10 w-55">
+        <img ngSrc="../../assets/images/Ticket.png" alt="Réserver" width="20" height="20" />
+        <span class="ml-7">Réserver</span>
+      </button>
 
     </div>
 
