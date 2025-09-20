@@ -27,7 +27,9 @@ import {BookingSeatModel} from '../../models/bookingSeat.model';
 })
 export class ApiService {
 
-  private apiUrl = 'http://172.18.0.5/';
+  private bookingApiUrl = process.env["BOOKING_API_URL"];
+  private movieApiUrl = process.env["MOVIE_API_URL"];
+  private userApiUrl = process.env["USER_API_URL"];
 
   constructor(private readonly getMoviesWithShowtimesGQL: GetMoviesWithShowtimesGql,
               private readonly getBookingsGQL: GetBookingsGql,
@@ -44,7 +46,7 @@ export class ApiService {
               private showtimeFactory: ShowtimeFactory) {}
 
   public async login(email: string, password: string): Promise<any> {
-    const response = await fetch(this.apiUrl + "login", {
+    const response = await fetch(this.userApiUrl + "login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -61,7 +63,7 @@ export class ApiService {
 
   public async getUser(token: string) {
     const userId: number = jwtDecode<{id: number}>(token).id;
-    const response: Response = await fetch(this.apiUrl + `user/${userId}`, {
+    const response: Response = await fetch(this.userApiUrl + `user/${userId}`, {
       method: "GET",
       headers: {
         "Authorization": `Bearer ${token}`,
@@ -86,7 +88,7 @@ export class ApiService {
     if (role !== null) {
       roleQueryParam = "?role=" + role;
     }
-    const response: Response = await fetch(this.apiUrl + `user` + roleQueryParam, {
+    const response: Response = await fetch(this.userApiUrl + `user` + roleQueryParam, {
       method: "GET",
       headers: {
         "Authorization": `Bearer ${token}`,
@@ -129,7 +131,7 @@ export class ApiService {
   }
 
   public async getMovies(): Promise<MovieModel[]> {
-    const response: Response = await fetch(this.apiUrl + `movie`, {
+    const response: Response = await fetch(this.movieApiUrl + `movie`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
@@ -144,7 +146,7 @@ export class ApiService {
   }
 
   public async getLastMovies(token: string, limit: number): Promise<MovieModel[]> {
-    const response: Response = await fetch(this.apiUrl + `movie/last-movies?limit=${encodeURIComponent(limit)}`, {
+    const response: Response = await fetch(this.movieApiUrl + `movie/last-movies?limit=${encodeURIComponent(limit)}`, {
       method: "GET",
       headers: {
         "Authorization": `Bearer ${token}`,
@@ -160,7 +162,7 @@ export class ApiService {
   }
 
   public async getFavoriteMovies(token: string, limit: number): Promise<MovieModel[]> {
-    const response: Response = await fetch(this.apiUrl + `movie/favorite-movies?limit=${encodeURIComponent(limit)}`, {
+    const response: Response = await fetch(this.movieApiUrl + `movie/favorite-movies?limit=${encodeURIComponent(limit)}`, {
       method: "GET",
       headers: {
         "Authorization": `Bearer ${token}`,
@@ -303,7 +305,7 @@ export class ApiService {
     lastName: string,
     phoneNumber: string
   ): Promise<any> {
-    const response: Response = await fetch(this.apiUrl + "user", {
+    const response: Response = await fetch(this.userApiUrl + "user", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -326,7 +328,7 @@ export class ApiService {
   }
 
   public async createBooking(token: string, userId: number, showtimeId: number, seatIds: number[]): Promise<any> {
-    const response: Response = await fetch(this.apiUrl + "booking", {
+    const response: Response = await fetch(this.bookingApiUrl + "booking", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${token}`,
