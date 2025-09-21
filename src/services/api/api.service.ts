@@ -21,15 +21,16 @@ import {GetSeatsGql} from '../../graphql/get-seats.gql';
 import {SeatFactory} from '../../factories/seat.factory';
 import {GetBookedSeatsGql} from '../../graphql/get-booked-seats.gql';
 import {BookingSeatModel} from '../../models/bookingSeat.model';
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  private bookingApiUrl = process.env["BOOKING_API_URL"];
-  private movieApiUrl = process.env["MOVIE_API_URL"];
-  private userApiUrl = process.env["USER_API_URL"];
+  private bookingApiUrl = environment.BOOKING_API_URL;
+  private movieApiUrl = environment.MOVIE_API_URL;
+  private userApiUrl = environment.USER_API_URL;
 
   constructor(private readonly getMoviesWithShowtimesGQL: GetMoviesWithShowtimesGql,
               private readonly getBookingsGQL: GetBookingsGql,
