@@ -1,12 +1,12 @@
 <app-header></app-header>
 
-<section class="p-5 h-[40dvh] border-b-2 border-amber-300">
+<section class="p-5 border-b-2 border-amber-300">
 
   <div class="h-1/10">
     <span class="cinephoria-subtitle">Dernières affiches</span>
   </div>
 
-  <div class="h-9/10 flex justify-around">
+  <div class="h-9/10 flex flex-wrap justify-around">
   @for (lastMovie of lastMovies; track lastMovie.id) {
     <img ngSrc="../../assets/images/movies/{{ lastMovie.imageURL }}" width="200" height="100" />
   } @empty {
@@ -15,7 +15,7 @@
   </div>
 
 </section>
-<section class="p-5 h-[40dvh] border-t-2 border-amber-300">
+<section class="p-5 border-t-2 border-amber-300">
   <div class="h-1/10">
     <span class="cinephoria-subtitle">Coups de coeur</span>
   </div>
