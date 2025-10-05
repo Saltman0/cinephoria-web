@@ -20,8 +20,31 @@
   src: url("./assets/fonts/Raleway.ttf") format("truetype");
 }
 
+html {
+  font-size: 16px;
+}
+
 body {
   background-color: #1C1C1C;
+}
+
+.cinephoria-hamburger {
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .cinephoria-account {
+    display: none;
+  }
+  .cinephoria-nav {
+    display: none;
+  }
+}
+
+.responsive-logo {
+  width: 80px;
+  height: 80px;
 }
 
 .cinephoria-background {
@@ -31,7 +54,7 @@ body {
 .cinephoria-main-title {
   color: #FFFFFF;
   font-family: Great Vibes, sans-serif;
-  font-size: 64px;
+  font-size: clamp(2rem, 15dvw, 4rem);
 }
 
 .cinephoria-subtitle {
@@ -130,7 +153,6 @@ body {
   color: #FFFFFF;
   font-family: Merriweather, sans-serif;
   font-size: 24px;
-  font-weight: bold;
 }
 
 .cinephoria-button {
