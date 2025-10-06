@@ -1,33 +1,39 @@
 <app-header></app-header>
 
-<section class="p-5 border-b-2 border-amber-300">
+<main class="px-12 py-10">
 
-  <div class="h-1/10">
-    <span class="cinephoria-subtitle">Dernières affiches</span>
-  </div>
+  <section class="pb-6 border-b-2 border-amber-300">
 
-  <div class="h-9/10 flex flex-wrap justify-around">
-  @for (lastMovie of lastMovies; track lastMovie.id) {
-    <img ngSrc="../../assets/images/movies/{{ lastMovie.imageURL }}" width="200" height="100" />
-  } @empty {
-    <li>Aucun film.</li>
-  }
-  </div>
+    <div class="h-1/10 mb-3">
+      <span class="cinephoria-subtitle-2">Dernières affiches</span>
+    </div>
 
-</section>
-<section class="p-5 border-t-2 border-amber-300">
-  <div class="h-1/10">
-    <span class="cinephoria-subtitle">Coups de coeur</span>
-  </div>
+    <div class="h-9/10 flex flex-wrap justify-center gap-3">
+      @for (lastMovie of lastMovies; track lastMovie.id) {
+        <img ngSrc="../../assets/images/movies/{{ lastMovie.imageURL }}" alt="{{ lastMovie.title }}"
+             width="150" height="230" class="cinephoria-movie-image" />
+      } @empty {
+        <li>Aucun film.</li>
+      }
+    </div>
 
-  <div class="h-9/10 flex justify-around">
-    @for (favoriteMovie of favoriteMovies; track favoriteMovie.id) {
-      <img ngSrc="../../assets/images/movies/{{ favoriteMovie.imageURL }}" width="200" height="100" />
-    } @empty {
-      <li>Aucun film.</li>
-    }
-  </div>
+  </section>
+  <section class="pt-6 border-t-2 border-amber-300">
+    <div class="h-1/10 mb-3">
+      <span class="cinephoria-subtitle-2">Coups de coeur</span>
+    </div>
 
-</section>
+    <div class="h-9/10 flex justify-around">
+      @for (favoriteMovie of favoriteMovies; track favoriteMovie.id) {
+        <img ngSrc="../../assets/images/movies/{{ favoriteMovie.imageURL }}" alt="{{ favoriteMovie.title }}"
+             width="150" height="230" class="cinephoria-movie-image" />
+      } @empty {
+        <li>Aucun film.</li>
+      }
+    </div>
+
+  </section>
+
+</main>
 
 <app-footer></app-footer>
