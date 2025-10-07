@@ -146,11 +146,14 @@ export class ApiService {
     return response.json();
   }
 
-  public async getLastMovies(token: string, limit: number): Promise<MovieModel[]> {
+  /**
+   * Return the last movies from the cinema
+   * @param limit
+   */
+  public async getLastMovies(limit: number): Promise<MovieModel[]> {
     const response: Response = await fetch(this.movieApiUrl + `movie/last-movies?limit=${encodeURIComponent(limit)}`, {
       method: "GET",
       headers: {
-        "Authorization": `Bearer ${token}`,
         "Content-Type": "application/json"
       }
     });
@@ -162,11 +165,14 @@ export class ApiService {
     return response.json();
   }
 
-  public async getFavoriteMovies(token: string, limit: number): Promise<MovieModel[]> {
+  /**
+   * Return the favorite movies from the cinema
+   * @param limit
+   */
+  public async getFavoriteMovies(limit: number): Promise<MovieModel[]> {
     const response: Response = await fetch(this.movieApiUrl + `movie/favorite-movies?limit=${encodeURIComponent(limit)}`, {
       method: "GET",
       headers: {
-        "Authorization": `Bearer ${token}`,
         "Content-Type": "application/json"
       }
     });
