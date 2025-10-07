@@ -9,12 +9,18 @@
     </div>
 
     <div class="h-9/10 flex flex-wrap justify-around px-5">
-      @for (lastMovie of lastMovies; track lastMovie.id) {
-        <img ngSrc="../../assets/images/movies/{{ lastMovie.imageURL }}" alt="{{ lastMovie.title }}"
-             width="150" height="230" class="cinephoria-movie-image w-30 lg:w-37.5 mx-1 my-1" />
-      } @empty {
-        <li>Aucun film.</li>
+
+      @if (lastMovies.length === 0) {
+        <span class="loading loading-spinner loading-xl text-warning"></span>
+      } @else {
+        @for (lastMovie of lastMovies; track lastMovie.id) {
+          <img ngSrc="../../assets/images/movies/{{ lastMovie.imageURL }}" alt="{{ lastMovie.title }}"
+               width="150" height="230" class="cinephoria-movie-image w-30 lg:w-37.5 mx-1 my-1" />
+        } @empty {
+          <li>Aucun film.</li>
+        }
       }
+
     </div>
 
   </section>
@@ -24,12 +30,18 @@
     </div>
 
     <div class="h-9/10 flex flex-wrap justify-around px-5">
-      @for (favoriteMovie of favoriteMovies; track favoriteMovie.id) {
-        <img ngSrc="../../assets/images/movies/{{ favoriteMovie.imageURL }}" alt="{{ favoriteMovie.title }}"
-             width="150" height="230" class="cinephoria-movie-image w-30 lg:w-37.5 mx-1 my-1" />
-      } @empty {
-        <li>Aucun film.</li>
+
+      @if (lastMovies.length === 0) {
+        <span class="loading loading-spinner loading-xl text-warning"></span>
+      } @else {
+        @for (favoriteMovie of favoriteMovies; track favoriteMovie.id) {
+          <img ngSrc="../../assets/images/movies/{{ favoriteMovie.imageURL }}" alt="{{ favoriteMovie.title }}"
+               width="150" height="230" class="cinephoria-movie-image w-30 lg:w-37.5 mx-1 my-1" />
+        } @empty {
+          <li>Aucun film.</li>
+        }
       }
+
     </div>
 
   </section>
