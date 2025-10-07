@@ -49,7 +49,7 @@ body {
 .cinephoria-main-title {
   color: #FFFFFF;
   font-family: Great Vibes, sans-serif;
-  font-size: clamp(2rem, 15dvw, 4rem);
+  font-size: 4rem;
 }
 
 .cinephoria-subtitle {
@@ -68,6 +68,11 @@ body {
 
 .cinephoria-movie-image {
   border-radius: 2px;
+}
+
+.cinephoria-nav-icon {
+  box-shadow: 0 0 0 4px green;
+  border-radius: 8px;
 }
 
 .cinephoria-footer {
