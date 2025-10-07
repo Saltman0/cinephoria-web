@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "daisyui";
 
 @font-face {
   font-family: "Great Vibes";
@@ -31,15 +32,6 @@ body {
 .cinephoria-hamburger {
   font-size: 2rem;
   cursor: pointer;
-}
-
-@media (max-width: 768px) {
-  .cinephoria-account {
-    display: none;
-  }
-  .cinephoria-nav {
-    display: none;
-  }
 }
 
 .cinephoria-background {
