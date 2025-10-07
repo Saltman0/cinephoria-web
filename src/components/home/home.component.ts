@@ -4,7 +4,6 @@ import {MovieModel} from '../../models/movie.model';
 import {ApiService} from '../../services/api/api.service';
 import {FooterComponent} from '../footer/footer.component';
 import {NgOptimizedImage} from '@angular/common';
-import {LocalStorageService} from '../../services/local-storage/local-storage.service';
 import {NavMobileComponent} from '../nav-mobile/nav-mobile.component';
 
 @Component({
@@ -25,12 +24,10 @@ export class HomeComponent {
   lastMovies: MovieModel[] = [];
   favoriteMovies: MovieModel[] = [];
 
-  constructor(
-    private readonly apiService: ApiService,
-    private readonly localStorageService: LocalStorageService) {}
+  constructor(private readonly apiService: ApiService) {}
 
   async ngOnInit(): Promise<void> {
-    this.lastMovies = await this.apiService.getLastMovies(this.localStorageService.getJwtToken(), 7);
-    this.favoriteMovies = await this.apiService.getFavoriteMovies(this.localStorageService.getJwtToken(), 7);
+    this.lastMovies = await this.apiService.getLastMovies(7);
+    this.favoriteMovies = await this.apiService.getFavoriteMovies(7);
   }
 }
