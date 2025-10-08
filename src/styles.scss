@@ -75,6 +75,10 @@ html {
   border-radius: 2px;
 }
 
+.cinephoria-movie-image:focus {
+  outline: 2px solid #F1C40F;
+}
+
 .cinephoria-nav-icon {
   box-shadow: 0 0 0 4px green;
   border-radius: 8px;

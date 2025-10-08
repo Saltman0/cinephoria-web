@@ -26,7 +26,8 @@
         </span>
       } @else {
         @for (movie of movieList; track movie.id) {
-          <img (click)="loadShowtimes(movie.id)" ngSrc="../../assets/images/movies/{{ movie.imageURL }}" width="150" height="230" alt="{{ movie.title }}"
+          <img (click)="loadShowtimes(movie.id)" ngSrc="../../assets/images/movies/{{ movie.imageURL }}"
+               alt="{{ movie.title }}" width="150" height="230" tabindex="0"
                class="cinephoria-movie-image w-30 lg:w-37.5 mx-1 my-1" />
         }
       }
