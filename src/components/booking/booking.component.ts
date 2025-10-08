@@ -9,20 +9,24 @@ import {BookingRenderer} from '../../renderers/booking.renderer';
 import {MovieModel} from '../../models/movie.model';
 import {SeatModel} from '../../models/seat.model';
 import {SeatService} from '../../services/seat/seat.service';
+import {NavMobileComponent} from '../nav-mobile/nav-mobile.component';
 
 @Component({
   selector: 'app-booking',
   imports: [
     HeaderComponent,
     FooterComponent,
-    NgOptimizedImage
+    NgOptimizedImage,
+    NavMobileComponent
   ],
   templateUrl: './booking.component.html',
   styleUrl: './booking.component.scss'
 })
 export class BookingComponent {
   cinemaList: { id: number; name: string; }[] = [];
+
   movieList: { id: number; title: string; imageURL: string; }[] = [];
+
   showtimeList: {
     id: number;
     showtimeDate: string;
@@ -32,11 +36,16 @@ export class BookingComponent {
     hallNumber: number;
     projectionQuality: string|null;
   }[] = [];
+
   selectedShowtime: { id: number; price: number; } = {id: 0, price: 0};
+
   seatList: { row: string; seats: { id: number; row: string; number: number; }[] }[] = [];
   alreadyBookedSeatList: { id: number; row: string; number: number; }[] = [];
   selectedSeatList: { id: number; row: string; number: number; }[] = [];
+
   totalPrice: number = 0;
+
+  isMovieListLoading: boolean = false;
 
   constructor(private readonly apiService: ApiService,
               private readonly seatService: SeatService,
@@ -56,6 +65,7 @@ export class BookingComponent {
   }
 
   public async loadMovies(): Promise<void> {
+    this.isMovieListLoading = true;
     const movies: MovieModel[] = await this.apiService.getMovies();
 
     this.movieList = [];

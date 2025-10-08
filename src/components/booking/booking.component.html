@@ -1,28 +1,37 @@
 <app-header></app-header>
 
-<main class="flex justify-center items-center">
+<main class="px-4 lg:py-8">
 
-  <section class="w-90/100" style="background-color: #E63946;">
+  <section class="flex flex-col items-center px-5 pb-6">
+    <label for="cinema" class="cinephoria-header">Sélectionnez votre cinéma :</label>
+    <div class="cinephoria-select-cinema flex justify-between items-center px-2">
+      <img ngSrc="../../assets/images/Placeholder.png" width="25" height="25" alt="Cinéma à choisir" />
 
-    <div class="flex flex-col items-center" style="background-color: #F1C40F;">
-      <label class="cinephoria-big-text">Sélectionnez votre cinéma :</label>
-      <select (change)="loadMovies()">
+      <select (change)="loadMovies()" class="mx-1" name="cinema">
         <option selected disabled>Choisissez un cinéma</option>
         @for (cinema of cinemaList; track cinema.id) {
           <option [value]="cinema.id">{{ cinema.name }}</option>
         }
       </select>
+
+      <img ngSrc="../../assets/images/Down_arrow.png" width="25" height="25" alt="Flèche du sélection de cinéma" />
     </div>
+  </section>
 
-    <div class="flex justify-around" style="background-color: #396cd8;">
+    <section class="max-h-137.5 overflow-y-auto flex flex-wrap justify-center px-5 py-6">
 
-      @for (movie of movieList; track movie.id) {
-        <img (click)="loadShowtimes(movie.id)" ngSrc="../../assets/images/movies/{{ movie.imageURL }}" width="200" height="100" alt="{{ movie.title }}"/>
-      } @empty {
-        <li>Aucun film.</li>
+      @if (movieList.length === 0) {
+        <span class="hidden loading loading-spinner loading-xl text-warning"
+              [class.hidden]="!isMovieListLoading">
+        </span>
+      } @else {
+        @for (movie of movieList; track movie.id) {
+          <img (click)="loadShowtimes(movie.id)" ngSrc="../../assets/images/movies/{{ movie.imageURL }}" width="150" height="230" alt="{{ movie.title }}"
+               class="cinephoria-movie-image w-30 lg:w-37.5 mx-1 my-1" />
+        }
       }
 
-    </div>
+    </section>
 
     <div class="flex justify-around" style="background-color: #396cd8;">
 
@@ -95,8 +104,8 @@
 
     </div>
 
-  </section>
-
 </main>
 
 <app-footer></app-footer>
+
+<app-nav-mobile></app-nav-mobile>
