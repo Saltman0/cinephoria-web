@@ -73,6 +73,7 @@ html {
 
 .cinephoria-movie-image {
   border-radius: 2px;
+  cursor: pointer;
 }
 
 .cinephoria-movie-image:focus {
@@ -143,7 +144,8 @@ html {
 .cinephoria-big-text {
   color: #FFFFFF;
   font-family: Raleway, sans-serif;
-  font-size: 5dvw;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 .cinephoria-movie-title {
@@ -153,9 +155,16 @@ html {
 }
 
 .cinephoria-showtime {
-  color: #FFFFFF;
-  font-family: Raleway, sans-serif;
-  font-size: 24px;
+  background-color: #1C1C1C;
+  border: 2px solid #FFFFFF;
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 150px;
+  height: 140px;
+  padding: 8px;
 }
 
 .cinephoria-alert {
@@ -181,21 +190,18 @@ html {
 }
 
 .cinephoria-button {
-  position: relative;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: #E63946;
   color: #FFFFFF;
   border-radius: 2px;
   font-family: Raleway, sans-serif;
+  font-size: 20px;
   font-weight: bold;
-}
-
-.cinephoria-button img {
-  position: absolute;
-  left: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 25px;
-  height: 25px;
+  width: 200px;
+  height: 50px;
 }
 
 .cinephoria-button:hover {
@@ -207,6 +213,34 @@ html {
 }
 
 .cinephoria-button:disabled {
+  background-color: lightgrey;
+  color: #1C1C1C;
+}
+
+.cinephoria-little-button {
+  cursor: pointer;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: #E63946;
+  color: #FFFFFF;
+  border-radius: 2px;
+  font-family: Raleway, sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  width: 85px;
+  height: 25px;
+}
+
+.cinephoria-little-button:hover {
+  background-color: #e62232;
+}
+
+.cinephoria-little-button:active {
+  background-color: #C41826;
+}
+
+.cinephoria-little-button:disabled {
   background-color: lightgrey;
   color: #1C1C1C;
 }
