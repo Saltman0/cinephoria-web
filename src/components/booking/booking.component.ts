@@ -37,15 +37,17 @@ export class BookingComponent {
     projectionQuality: string|null;
   }[] = [];
 
-  selectedShowtime: { id: number; price: number; } = {id: 0, price: 0};
-
   seatList: { row: string; seats: { id: number; row: string; number: number; }[] }[] = [];
   alreadyBookedSeatList: { id: number; row: string; number: number; }[] = [];
   selectedSeatList: { id: number; row: string; number: number; }[] = [];
 
+  selectedShowtime: { id: number; price: number; } = {id: 0, price: 0};
+
   totalPrice: number = 0;
 
   isMovieListLoading: boolean = false;
+  isShowtimeListLoading: boolean = false;
+  isSeatListLoading: boolean = false;
 
   constructor(private readonly apiService: ApiService,
               private readonly seatService: SeatService,
@@ -65,19 +67,28 @@ export class BookingComponent {
   }
 
   public async loadMovies(): Promise<void> {
+    this.resetMovies();
+    this.resetShowtimes();
+    this.resetSeats();
+
     this.isMovieListLoading = true;
+    this.isShowtimeListLoading = false;
+    this.isSeatListLoading = false;
     const movies: MovieModel[] = await this.apiService.getMovies();
 
-    this.movieList = [];
     for (const movie of movies) {
       this.movieList.push(this.bookingRenderer.renderMovie(movie));
     }
   }
 
   public async loadShowtimes(movieId: number): Promise<void> {
+    this.resetSeats();
+    this.resetShowtimes();
+
+    this.isShowtimeListLoading = true;
+    this.isSeatListLoading = false;
     const showtimes: ShowtimeModel[] = await this.apiService.getShowtimes(movieId);
 
-    this.showtimeList = [];
     for (const showtime of showtimes) {
       this.showtimeList.push(this.bookingRenderer.renderShowtime(showtime));
     }
@@ -85,6 +96,9 @@ export class BookingComponent {
 
   public async loadSeats(hallId: number, price: number, showtimeId: number): Promise<void> {
     this.resetSeats();
+    this.resetTotalPrice();
+
+    this.isSeatListLoading = true;
 
     this.selectedShowtime.id = showtimeId;
     this.selectedShowtime.price = price;
@@ -96,7 +110,6 @@ export class BookingComponent {
 
     this.seatList = this.seatService.groupSeatsByRow(seats);
 
-    this.alreadyBookedSeatList = [];
     for (const alreadyBookedSeat of alreadyBookedSeatList) {
       this.alreadyBookedSeatList.push(this.bookingRenderer.renderSeat(alreadyBookedSeat));
     }
@@ -132,11 +145,25 @@ export class BookingComponent {
 
     // TODO Modifier le user ID par celui de l'utilisateur connecté
     await this.apiService.createBooking('tokenAInserer', 1, this.selectedShowtime.id, seatIds);
+
+    // TODO Lorsque c'est fini, afficher un message pour dire que c'est ok et recharger la page
+  }
+
+  private resetMovies(): void {
+    this.movieList = [];
+  }
+
+  private resetShowtimes(): void {
+    this.showtimeList = [];
   }
 
   private resetSeats(): void {
     this.seatList = [];
     this.alreadyBookedSeatList = [];
     this.selectedSeatList = [];
+  }
+
+  private resetTotalPrice(): void {
+    this.totalPrice = 0;
   }
 }
