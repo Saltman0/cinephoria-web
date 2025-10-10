@@ -1,49 +1,46 @@
 <app-header></app-header>
 
-<main class="flex justify-center items-center">
+<main class="flex flex-col items-center px-4 lg:py-8">
 
-  <section class="w-90/100">
+  <section class="flex flex-col items-center p-5 lg:w-105 w-90 h-140" style="background-color: #272727;">
 
-    <!-- Header -->
-    <div class="bg-gray-700">
+    <span class="cinephoria-dialog-title">Votre demande</span>
 
-      <span class="cinephoria-subtitle">Votre demande</span>
+    <form [formGroup]="contactForm" (ngSubmit)="submit()"
+          action="https://formspree.io/f/xjkojppa"
+          method="POST"
+          class="flex flex-col justify-around items-center h-140">
 
-      <form [formGroup]="contactForm" (ngSubmit)="submit()"
-            action="https://formspree.io/f/xjkojppa"
-            method="POST"
-            class="flex flex-col justify-evenly items-center h-[100dvh]">
+      <div class="flex flex-col items-start">
+        <label for="contactEmail" class="cinephoria-main-text mb-1">Email</label>
+        <input type="email" formControlName="contactEmail" name="contactEmail" id="contactEmail"
+               class="cinephoria-input h-6.25 w-50" required minlength="4" maxlength="20"/>
+      </div>
 
-        <div class="flex flex-col items-start">
-          <label class="cinephoria-big-text">Email</label>
-          <input type="text" formControlName="contactEmail" name="contactEmail" id="contactEmail"
-                 class="cinephoria-input h-10 w-100" required minlength="4" maxlength="20"/>
-        </div>
+      <div class="flex flex-col items-start">
+        <label for="contactTitle" class="cinephoria-main-text mb-1">Titre</label>
+        <input type="text" formControlName="contactTitle" name="contactTitle" id="contactTitle"
+               class="cinephoria-input h-6.25 w-50" required minlength="4" maxlength="20"/>
+      </div>
 
-        <div class="flex flex-col items-start">
-          <label class="cinephoria-big-text">Titre</label>
-          <input type="text" formControlName="contactTitle" name="contactTitle" id="contactTitle"
-                 class="cinephoria-input h-10 w-100" required minlength="4" maxlength="20"/>
-        </div>
+      <div class="flex flex-col items-start">
+        <label for="contactDescription" class="cinephoria-main-text mb-1">Description</label>
+        <textarea formControlName="contactDescription" name="contactDescription" id="contactDescription"
+                  class="cinephoria-input w-75 h-35" required minlength="4" maxlength="200"></textarea>
+      </div>
 
-        <div class="flex flex-col items-start">
-          <label class="cinephoria-big-text">Description</label>
-          <textarea formControlName="contactDescription" name="contactDescription" id="contactDescription"
-                    class="cinephoria-input h-60 w-150" required minlength="4" maxlength="200"></textarea>
-        </div>
+      <div class="flex justify-center w-full">
+        <button type="submit" class="cinephoria-button h-10 w-40">
+          <span>Soumettre</span>
+        </button>
+      </div>
 
-        <div class="flex justify-evenly w-150">
-          <button type="submit" class="cinephoria-button h-10 w-40">
-            <span class="ml-3">Soumettre</span>
-          </button>
-        </div>
-
-      </form>
-
-    </div>
+    </form>
 
   </section>
 
 </main>
 
 <app-footer></app-footer>
+
+<app-nav-mobile></app-nav-mobile>
