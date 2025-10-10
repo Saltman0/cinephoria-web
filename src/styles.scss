@@ -85,10 +85,18 @@ html {
   border-radius: 8px;
 }
 
+.cinephoria-header {
+  color: #FFFFFF;
+  font-family: Merriweather, sans-serif;
+  font-size: 24px;
+}
+
 .cinephoria-footer {
   color: #FFFFFF;
   font-family: Merriweather, sans-serif;
   font-size: 16px;
+  height: 50px;
+  width: 100%;
 }
 
 .cinephoria-booking {
@@ -175,12 +183,6 @@ html {
 
 .cinephoria-table-header {
   background-color: #E63946;
-}
-
-.cinephoria-header {
-  color: #FFFFFF;
-  font-family: Merriweather, sans-serif;
-  font-size: 24px;
 }
 
 .cinephoria-active-link {
