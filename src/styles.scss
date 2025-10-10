@@ -145,7 +145,6 @@ html {
   color: #FFFFFF;
   font-family: Raleway, sans-serif;
   font-size: 24px;
-  font-weight: bold;
 }
 
 .cinephoria-movie-title {
@@ -247,7 +246,9 @@ html {
 
 .cinephoria-input {
   background-color: #FFFFFF;
+  border-radius: 2px;
   color: #1C1C1C;
+  padding: 5px;
 }
 
 .cinephoria-input::placeholder {
@@ -279,4 +280,14 @@ html {
 .cinephoria-input-container input:focus {
   border-color: unset;
   outline: none;
+}
+
+.cinephoria-dialog-title {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.cinephoria-dialog-title {
+  font-size: 32px;
+  font-weight: bold;
 }
