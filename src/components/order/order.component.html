@@ -1,21 +1,27 @@
 <app-header></app-header>
 
-<main class="flex justify-center items-center">
+<main class="flex flex-col items-center px-4 lg:py-8">
 
-  <section class="w-90/100">
+  <section class="flex flex-col items-center px-5 pb-6">
 
     <!-- Header -->
-    <div class="order-header flex justify-between">
+    <div class="flex justify-between items-center w-295 h-22.5 p-5" style="background-color: #E63946;">
 
       <!-- Titre -->
-      <span class="cinephoria-subtitle">Commandes</span>
+      <span class="cinephoria-subtitle-2">Commandes</span>
 
       <!-- Liste de tous les cinémas -->
-      <div class="cinephoria-input-container flex justify-end items-center">
-        <img ngSrc="../../assets/images/Placeholder.png" width="25" height="25" alt="Mot de passe" />
-        <select class="bg-amber-50">
-          <option>Odysseum</option>
+      <div class="cinephoria-select-cinema flex justify-between items-center px-2">
+        <img ngSrc="../../assets/images/Placeholder.png" width="25" height="25" alt="Cinéma à choisir" />
+
+        <select (change)="loadBookings()" class="mx-1" name="cinema">
+          <option selected disabled>Choisissez un cinéma</option>
+          @for (cinema of cinemaList; track cinema.id) {
+            <option [value]="cinema.id">{{ cinema.name }}</option>
+          }
         </select>
+
+        <img ngSrc="../../assets/images/Down_arrow.png" width="25" height="25" alt="Flèche du sélection de cinéma" />
       </div>
 
     </div>
@@ -54,3 +60,5 @@
 </main>
 
 <app-footer></app-footer>
+
+<app-nav-mobile></app-nav-mobile>
