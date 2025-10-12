@@ -1,14 +1,14 @@
 <app-header></app-header>
 
-<main class="px-4 lg:py-8">
+<main class="px-5 my-4">
 
-  <section class="px-5 pb-6 border-b-2 border-amber-300">
+  <section class="p-5 border-b-2 border-amber-300">
 
-    <div class="h-1/10 mb-3">
+    <div class="h-1/10 p-2">
       <span class="cinephoria-subtitle-2">Dernières affiches</span>
     </div>
 
-    <div class="h-9/10 flex flex-wrap justify-around px-5">
+    <div class="h-9/10 flex flex-wrap justify-around p-2">
 
       @if (lastMovies.length === 0) {
         <span class="loading loading-spinner loading-xl text-warning"></span>
@@ -24,12 +24,14 @@
     </div>
 
   </section>
-  <section class="px-5 pt-6 border-t-2 border-amber-300">
-    <div class="h-1/10 mb-3">
+
+  <section class="p-5 border-t-2 border-amber-300">
+
+    <div class="h-1/10 p-2">
       <span class="cinephoria-subtitle-2">Coups de coeur</span>
     </div>
 
-    <div class="h-9/10 flex flex-wrap justify-around px-5">
+    <div class="h-9/10 flex flex-wrap justify-around p-2">
 
       @if (lastMovies.length === 0) {
         <span class="loading loading-spinner loading-xl text-warning"></span>
