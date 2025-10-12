@@ -1,0 +1,22 @@
+<dialog #deleteEmployeeDialog class="modal">
+
+  <div class="modal-box flex flex-col justify-center">
+    <span class="text-lg font-bold mb-2">Suppression d'un employé</span>
+    <div class="my-2">
+      <span>Voulez-vous vraiment supprimer cet employé ?</span>
+      <br>
+      <span>Cette action sera irréversible.</span>
+    </div>
+    <div class="flex justify-end items-center gap-2 mt-2">
+      <button type="button" class="cinephoria-little-button" (click)="deleteEmployee(employeeId)">
+        <span [class.hidden]="isDeletingEmployee">Oui</span>
+        <span [class.hidden]="!isDeletingEmployee" class="loading loading-spinner loading-xs"></span>
+      </button>
+      <button type="button" class="cinephoria-little-button" (click)="closeDeleteEmployeeDialog()">
+        <span [class.hidden]="isDeletingEmployee">Non</span>
+        <span [class.hidden]="!isDeletingEmployee" class="loading loading-spinner loading-xs"></span>
+      </button>
+    </div>
+  </div>
+
+</dialog>

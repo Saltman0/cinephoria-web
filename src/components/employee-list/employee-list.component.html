@@ -1,0 +1,115 @@
+<app-header></app-header>
+
+<main class="flex justify-center items-center px-4 lg:my-8">
+
+  <section>
+
+    <div class="cinephoria-table-header">
+      <span class="cinephoria-subtitle-2">Employés</span>
+    </div>
+
+    <div class="cinephoria-employee-list">
+
+      @if (employeeList.length === 0) {
+        <span class="loading loading-spinner loading-xl text-warning"></span>
+      } @else {
+        <form [formGroup]="employeeForm" (ngSubmit)="createEmployee()" method="POST"
+              class="cinephoria-employee w-full h-20 flex lg:flex-row flex-col justify-between items-center p-2.5 my-1">
+          <div class="flex justify-start items-center gap-2 w-25/100">
+            <img ngSrc="../../assets/images/user.svg" width="25" height="25" alt="Prénom et nom">
+            <input type="text" formControlName="firstName" placeholder="Prénom" required minlength="4" maxlength="20"
+                   class="cinephoria-small-input font-bold w-25 h-[25px]" />
+            <input type="text" formControlName="lastName" placeholder="Nom" required minlength="4" maxlength="20"
+                   class="cinephoria-small-input font-bold w-25 h-[25px]" />
+          </div>
+
+          <div class="flex justify-start items-center gap-2 w-30/100">
+            <img ngSrc="../../assets/images/Email.png" width="25" height="25" alt="Email">
+            <input type="email" formControlName="email" placeholder="Email" required minlength="5" maxlength="50"
+                   class="cinephoria-small-input w-65 h-[25px]" />
+          </div>
+
+          <div class="flex justify-start items-center gap-2 w-15/100">
+            <img ngSrc="../../assets/images/Lock.png" width="25" height="25" alt="Mot de passe">
+            <input type="password" formControlName="password" placeholder="Mot de passe" required minlength="12"
+                   maxlength="64" class="cinephoria-small-input w-28 h-[25px]" />
+          </div>
+
+          <div class="flex justify-start items-center gap-2 w-15/100">
+            <img ngSrc="../../assets/images/Old_phone.png" width="25" height="25" alt="Numéro de téléphone">
+            <input type="tel" formControlName="phoneNumber" placeholder="Numéro" required
+                   pattern="[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}"
+                   class="cinephoria-small-input w-30 h-[25px]" />
+          </div>
+
+          <div class="flex justify-end items-center gap-2 w-15/100">
+            <button type="submit" class="cinephoria-little-button">
+              <span [class.hidden]="isCreatingEmployee">Enregistrer</span>
+              <span [class.hidden]="!isCreatingEmployee" class="loading loading-spinner loading-xs"></span>
+            </button>
+          </div>
+        </form>
+
+        @for (employee of employeeList; track employee.id) {
+
+          <div
+            class="cinephoria-employee w-full h-20 flex lg:flex-row flex-col justify-between items-center p-2.5 my-1">
+
+            <div class="flex justify-start items-center gap-2 w-25/100">
+              <img ngSrc="../../assets/images/user.svg" width="25" height="25" alt="Prénom et nom">
+              <span class="cinephoria-main-text font-bold">
+              {{ employee.firstName }}&nbsp;{{ employee.lastName|titlecase }}
+            </span>
+            </div>
+
+            <div class="flex justify-start items-center gap-2 w-30/100">
+              <img ngSrc="../../assets/images/Email.png" width="25" height="25" alt="Email">
+              <span class="cinephoria-main-text">{{ employee.email }}</span>
+            </div>
+
+            <div class="flex justify-start items-center gap-2 w-15/100">
+              <img ngSrc="../../assets/images/Lock.png" width="25" height="25" alt="Mot de passe">
+              <span class="cinephoria-main-text">-------------</span>
+            </div>
+
+            <div class="flex justify-start items-center gap-2 w-15/100">
+              <img ngSrc="../../assets/images/Old_phone.png" width="25" height="25" alt="Numéro de téléphone">
+              <span class="cinephoria-main-text">{{ employee.phoneNumber }}</span>
+            </div>
+
+            <div class="flex justify-end items-center gap-2 w-15/100">
+              <!--<img ngSrc="../../assets/images/Forbidden.png" width="25" height="25" alt="Bloquer l'employé" />-->
+              <img ngSrc="../../assets/images/Pencil.png" width="25" height="25" alt="Modifier l'employé"
+                   class="cursor-pointer"
+                   (click)="openUpdateEmployeeDialog(employee.id, employee.email, employee.firstName, employee.lastName, employee.phoneNumber)" />
+              <img ngSrc="../../assets/images/Trash.png" width="25" height="25" alt="Supprimer l'employé"
+                   class="cursor-pointer" (click)="openDeleteEmployeeDialog(employee.id)" />
+            </div>
+
+          </div>
+
+        }
+
+      }
+
+    </div>
+
+  </section>
+
+</main>
+
+<app-footer></app-footer>
+
+<app-update-employee-dialog
+  [employeeId]="employeeIdToUpdate"
+  [email]="employeeEmailToUpdate"
+  [firstName]="employeeFirstNameToUpdate"
+  [lastName]="employeeLastNameToUpdate"
+  [phoneNumber]="employeePhoneNumberToUpdate"
+  (employeeUpdatedEvent)="loadEmployeeList()">
+</app-update-employee-dialog>
+
+<app-delete-employee-dialog
+  [employeeId]="employeeIdToDelete"
+  (employeeDeletedEvent)="loadEmployeeList()">
+</app-delete-employee-dialog>
