@@ -104,6 +104,22 @@ export class ApiService {
     return response.json();
   }
 
+  public async deleteUser(token: string, userId: number) {
+    const response: Response = await fetch(this.userApiUrl + `user/${encodeURIComponent(userId)}`, {
+      method: "DELETE",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json"
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(response.status.toString());
+    }
+
+    return response.json();
+  }
+
   public async getMoviesWithShowtimes(): Promise<MovieModel[]> {
     let moviesWithShowtimes: MovieModel[] = [];
 
@@ -306,16 +322,19 @@ export class ApiService {
   }
 
   public async createUser(
+    token: string,
     email: string,
     password: string,
     firstName: string,
     lastName: string,
-    phoneNumber: string
+    phoneNumber: string,
+    role: string
   ): Promise<any> {
     const response: Response = await fetch(this.userApiUrl + "user", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
       },
       body: JSON.stringify({
         "email": email,
@@ -323,7 +342,7 @@ export class ApiService {
         "firstName": firstName,
         "lastName": lastName,
         "phoneNumber": phoneNumber,
-        "role": "user"
+        "role": role
       })
     });
 
