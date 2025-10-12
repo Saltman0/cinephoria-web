@@ -353,6 +353,39 @@ export class ApiService {
     return response.json();
   }
 
+  public async updateUser(
+    employeeId: number,
+    token: string,
+    email: string,
+    password: string,
+    firstName: string,
+    lastName: string,
+    phoneNumber: string,
+    role: string
+  ): Promise<any> {
+    const response: Response = await fetch(this.userApiUrl + `user/${encodeURIComponent(employeeId)}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        "email": email,
+        "password": password,
+        "firstName": firstName,
+        "lastName": lastName,
+        "phoneNumber": phoneNumber,
+        "role": role
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(response.status.toString());
+    }
+
+    return response.json();
+  }
+
   public async createBooking(token: string, userId: number, showtimeId: number, seatIds: number[]): Promise<any> {
     const response: Response = await fetch(this.bookingApiUrl + "booking", {
       method: "POST",
