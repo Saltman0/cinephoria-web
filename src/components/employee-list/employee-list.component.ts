@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {HeaderComponent} from '../header/header.component';
 import {ApiService} from '../../services/api/api.service';
 import {FooterComponent} from '../footer/footer.component';
@@ -8,12 +8,14 @@ import {EmployeeRenderer} from '../../renderers/employee.renderer';
 import {UserModel} from '../../models/user.model';
 import {LocalStorageService} from '../../services/local-storage/local-storage.service';
 import {DeleteEmployeeDialogComponent} from '../delete-employee-dialog/delete-employee-dialog.component';
+import {UpdateEmployeeDialogComponent} from '../update-employee-dialog/update-employee-dialog.component';
 
 @Component({
   selector: 'app-employee-list',
   imports: [
     HeaderComponent,
     FooterComponent,
+    UpdateEmployeeDialogComponent,
     DeleteEmployeeDialogComponent,
     NgOptimizedImage,
     NgOptimizedImage,
@@ -46,10 +48,17 @@ export class EmployeeListComponent {
     )
   });
 
+  employeeIdToUpdate: number = 0;
+  employeeEmailToUpdate: string = "";
+  employeeFirstNameToUpdate: string = "";
+  employeeLastNameToUpdate: string = "";
+  employeePhoneNumberToUpdate: string = "";
+
   employeeIdToDelete: number = 0;
 
   isCreatingEmployee: boolean = false;
 
+  @ViewChild(UpdateEmployeeDialogComponent) updateEmployeeDialogComponent!: UpdateEmployeeDialogComponent;
   @ViewChild(DeleteEmployeeDialogComponent) deleteEmployeeDialogComponent!: DeleteEmployeeDialogComponent;
 
   constructor(
@@ -62,7 +71,7 @@ export class EmployeeListComponent {
     await this.loadEmployeeList();
   }
 
-  public async submit() {
+  public async createEmployee() {
     this.isCreatingEmployee = true;
 
     await this.apiService.createUser(
@@ -75,9 +84,26 @@ export class EmployeeListComponent {
       "employee"
     );
 
+    this.employeeForm.reset();
+
     this.isCreatingEmployee = false;
 
     await this.loadEmployeeList();
+  }
+
+  public openUpdateEmployeeDialog(
+    id: number,
+    email: string,
+    firstName: string,
+    lastName: string,
+    phoneNumber: string
+  ): void {
+    this.employeeIdToUpdate = id;
+    this.employeeEmailToUpdate = email;
+    this.employeeFirstNameToUpdate = firstName;
+    this.employeeLastNameToUpdate = lastName;
+    this.employeePhoneNumberToUpdate = phoneNumber;
+    this.updateEmployeeDialogComponent.showUpdateEmployeeDialog();
   }
 
   public openDeleteEmployeeDialog(id: number) {

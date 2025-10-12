@@ -13,7 +13,7 @@
       @if (employeeList.length === 0) {
         <span class="loading loading-spinner loading-xl text-warning"></span>
       } @else {
-        <form [formGroup]="employeeForm" (ngSubmit)="submit()" method="POST"
+        <form [formGroup]="employeeForm" (ngSubmit)="createEmployee()" method="POST"
               class="cinephoria-employee w-full h-20 flex lg:flex-row flex-col justify-between items-center p-2.5 my-1">
           <div class="flex justify-start items-center gap-2 w-25/100">
             <img ngSrc="../../assets/images/user.svg" width="25" height="25" alt="Prénom et nom">
@@ -54,6 +54,7 @@
 
           <div
             class="cinephoria-employee w-full h-20 flex lg:flex-row flex-col justify-between items-center p-2.5 my-1">
+
             <div class="flex justify-start items-center gap-2 w-25/100">
               <img ngSrc="../../assets/images/user.svg" width="25" height="25" alt="Prénom et nom">
               <span class="cinephoria-main-text font-bold">
@@ -79,11 +80,12 @@
             <div class="flex justify-end items-center gap-2 w-15/100">
               <!--<img ngSrc="../../assets/images/Forbidden.png" width="25" height="25" alt="Bloquer l'employé" />-->
               <img ngSrc="../../assets/images/Pencil.png" width="25" height="25" alt="Modifier l'employé"
-                   class="cursor-pointer" />
-              <img ngSrc="../../assets/images/Trash.png" width="25" height="25" alt="Supprimer l'employé"
                    class="cursor-pointer"
-                   (click)="openDeleteEmployeeDialog(employee.id)" />
+                   (click)="openUpdateEmployeeDialog(employee.id, employee.email, employee.firstName, employee.lastName, employee.phoneNumber)" />
+              <img ngSrc="../../assets/images/Trash.png" width="25" height="25" alt="Supprimer l'employé"
+                   class="cursor-pointer" (click)="openDeleteEmployeeDialog(employee.id)" />
             </div>
+
           </div>
 
         }
@@ -98,5 +100,16 @@
 
 <app-footer></app-footer>
 
-<app-delete-employee-dialog [employeeId]="employeeIdToDelete" (employeeDeletedEvent)="loadEmployeeList()">
+<app-update-employee-dialog
+  [employeeId]="employeeIdToUpdate"
+  [email]="employeeEmailToUpdate"
+  [firstName]="employeeFirstNameToUpdate"
+  [lastName]="employeeLastNameToUpdate"
+  [phoneNumber]="employeePhoneNumberToUpdate"
+  (employeeUpdatedEvent)="loadEmployeeList()">
+</app-update-employee-dialog>
+
+<app-delete-employee-dialog
+  [employeeId]="employeeIdToDelete"
+  (employeeDeletedEvent)="loadEmployeeList()">
 </app-delete-employee-dialog>
