@@ -34,6 +34,8 @@ export class OrderComponent {
     numberOfSeats: string
   }[] = [];
 
+  isBookingListLoading: boolean = false;
+
   constructor(
     private readonly bookingRenderer: BookingRenderer,
     private readonly apiService: ApiService) {}
@@ -52,13 +54,17 @@ export class OrderComponent {
   }
 
   public async loadBookings(): Promise<void> {
+    this.isBookingListLoading = true;
+
     this.resetBookings();
 
-    const bookings: BookingModel[] = await this.apiService.getBookings(1);
+    const bookings: BookingModel[] = await this.apiService.getBookings(1, null);
 
     for (const booking of bookings) {
       this.bookingList.push(await this.bookingRenderer.render(booking));
     }
+
+    this.isBookingListLoading = false;
   }
 
   private resetBookings(): void {

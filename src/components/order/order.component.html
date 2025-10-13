@@ -4,13 +4,8 @@
 
   <section class="flex flex-col items-center px-5 pb-6">
 
-    <!-- Header -->
-    <div class="flex justify-between items-center w-295 h-22.5 p-5" style="background-color: #E63946;">
-
-      <!-- Titre -->
+    <div class="cinephoria-table-header">
       <span class="cinephoria-subtitle-2">Commandes</span>
-
-      <!-- Liste de tous les cinémas -->
       <div class="cinephoria-select-cinema flex justify-between items-center px-2">
         <img ngSrc="../../assets/images/Placeholder.png" width="25" height="25" alt="Cinéma à choisir" />
 
@@ -23,35 +18,39 @@
 
         <img ngSrc="../../assets/images/Down_arrow.png" width="25" height="25" alt="Flèche du sélection de cinéma" />
       </div>
-
     </div>
 
-    <!-- Foreach de chaque réservation -->
+    <div class="cinephoria-list">
 
-    @for (booking of bookingList; track booking.id) {
-      <div class="cinephoria-booking flex" style="background-image: url('assets/images/movies/{{ booking.movieImage }}')">
-        <span>{{ booking.movieTitle }}</span>
+      @if (isBookingListLoading) {
+        <span class="loading loading-spinner loading-xl text-warning"></span>
+      } @else {
+        @for (booking of bookingList; track booking.id) {
 
-        <div class="flex justify-center items-center">
-          <img ngSrc="../../assets/images/Calendar.png" width="25" height="25" alt="Date de réservation">
-          <span>{{ booking.showtimeDate }}</span>
-        </div>
+          <div class="cinephoria-booking lg:flex-row flex-col justify-between items-center p-2.5 my-1"
+               style="background-image: url('assets/images/movies/{{ booking.movieImage }}')">
 
-        <div class="flex justify-center items-center">
-          <img ngSrc="../../assets/images/Clock.png" width="25" height="25" alt="Date de réservation">
-          <span>{{ booking.hours }}</span>
-        </div>
+            <div class="flex justify-start items-center w-28/100">
+              <span class="cinephoria-main-title">{{ booking.movieTitle }}</span>
+            </div>
 
-        <div class="flex justify-center items-center">
-          <img ngSrc="../../assets/images/Chair.png" width="25" height="25" alt="Date de réservation">
-          <span>{{ booking.numberOfSeats }}</span>
-        </div>
-      </div>
-    }
+            <div class="flex justify-center items-center gap-2 w-20/100">
+              <img ngSrc="../../assets/images/Calendar.png" width="50" height="50" alt="Date de réservation">
+              <span class="cinephoria-big-text">{{ booking.showtimeDate }}</span>
+            </div>
 
-    <div>
+            <div class="flex justify-center items-center gap-2 w-22/100">
+              <img ngSrc="../../assets/images/Clock.png" width="50" height="50" alt="Date de réservation">
+              <span class="cinephoria-big-text">{{ booking.hours }}</span>
+            </div>
 
-      <!-- Réservation -->
+            <div class="flex justify-center items-center gap-2 w-15/100">
+              <img ngSrc="../../assets/images/Chair.png" width="50" height="50" alt="Date de réservation">
+              <span class="cinephoria-big-text">{{ booking.numberOfSeats }}</span>
+            </div>
+          </div>
+        }
+      }
 
     </div>
 
