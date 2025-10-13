@@ -51,10 +51,16 @@ html {
   background-color: #1C1C1C;
 }
 
-.cinephoria-main-title {
+.cinephoria-brand-title {
   color: #FFFFFF;
   font-family: Great Vibes, sans-serif;
-  font-size: 4rem;
+  font-size: 64px;
+}
+
+.cinephoria-main-title {
+  color: #F1C40F;
+  font-family: Oswald, sans-serif;
+  font-size: 30px;
 }
 
 .cinephoria-subtitle {
@@ -105,18 +111,17 @@ html {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  border-width: 2px 0 2px 0;
-  border-style: solid;
-  border-color: #F1C40F;
-  height: 10rem;
+  display: flex;
+  height: 90px;
+  width: 100%
 }
 
-.cinephoria-employee-list {
+.cinephoria-list {
   background-color: #272727;
   border-radius: 0 0 2px 2px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: start;
   align-items: center;
   width: 1150px;
   height: 410px;
