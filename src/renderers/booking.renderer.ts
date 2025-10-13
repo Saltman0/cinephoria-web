@@ -87,7 +87,7 @@ export class BookingRenderer {
       movieImage: movieImage,
       showtimeDate: day + "/" + month + "/" + year,
       hours: startHour + "h" + startMinute + "-" + endHour + "h" + endMinute,
-      numberOfSeats: booking.bookingSeats.length + "place(s)"
+      numberOfSeats: booking.bookingSeats.length + " place(s)"
     }
   }
 
