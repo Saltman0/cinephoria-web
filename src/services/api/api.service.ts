@@ -200,11 +200,11 @@ export class ApiService {
     return response.json();
   }
 
-  public async getBookings(userId: number): Promise<BookingModel[]> {
+  public async getBookings(userId: number|null, showtimeId: number|null): Promise<BookingModel[]> {
     let bookings: BookingModel[] = [];
 
     let result = await this.getBookingsGQL.watch(
-        { userId: userId }
+        { userId: userId, showtimeId: showtimeId }
     ).result();
 
     result.data.bookings.forEach((booking: BookingModel) => {
