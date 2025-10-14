@@ -1,56 +1,70 @@
 <app-header></app-header>
 
-<main class="flex justify-center items-center">
+<main class="flex flex-col items-center px-4 lg:py-8">
 
-  <section class="w-90/100">
+  <section class="flex flex-col items-center px-5 pb-6">
 
-    <!-- Header -->
-    <div class="order-header flex justify-between">
+    <div class="cinephoria-table-header">
+      <span class="cinephoria-subtitle-2">Salles</span>
+      <div class="cinephoria-select-cinema flex justify-between items-center px-2">
+        <img ngSrc="../../assets/images/Placeholder.png" width="25" height="25" alt="Cinéma à choisir" />
 
-      <!-- Titre -->
-      <span class="cinephoria-subtitle">Salles</span>
+        <select (change)="loadHalls()" class="mx-1" name="cinema">
+          <option selected disabled>Choisissez un cinéma</option>
+          @for (cinema of cinemaList; track cinema.id) {
+            <option [value]="cinema.id">{{ cinema.name }}</option>
+          }
+        </select>
 
-      <!-- Bouton + -->
+        <img ngSrc="../../assets/images/Down_arrow.png" width="25" height="25" alt="Flèche de sélection de cinéma" />
+      </div>
 
+      <img ngSrc="../../assets/images/Plus.png" width="40" height="40" alt="Ajouter une salle"
+           (click)="openAddHallDialog()" class="cursor-pointer" />
     </div>
 
-    <div>
+    <div class="cinephoria-hall-list">
 
-      @for (hall of hallList; track hall.id) {
-        <div class="cinephoria-hall flex flex-col" style="background-image: url('assets/images/movies/{{ hall.movieImage }}')">
+      @if (isHallListLoading) {
+        <span class="loading loading-spinner loading-xl text-warning"></span>
+      } @else {
+        @for (hall of hallList; track hall.id) {
+          <div class="cinephoria-hall"
+               style="background-image: url('assets/images/movies/{{ hall.movieImage }}')">
 
-          <div class="flex justify-center items-center">
-            <img ngSrc="../../assets/images/Hall.png" width="25" height="25" alt="Numéro de salle">
-            <span>Salle {{ hall.number }}</span>
-          </div>
-
-          @if (hall.movieTitle !== null) {
-            <div class="flex justify-center items-center">
-              <img ngSrc="../../assets/images/Hall.png" width="25" height="25" alt="Nom du film">
-              <span>{{ hall.movieTitle }}</span>
+            <div class="flex justify-center items-center gap-2">
+              <img ngSrc="../../assets/images/Hall.png" width="25" height="25" alt="Numéro de salle">
+              <span class="cinephoria-big-text">Salle {{ hall.number }}</span>
             </div>
-          }
 
-          @if (hall.hours !== null) {
-            <div class="flex justify-center items-center">
-              <img ngSrc="../../assets/images/Clock.png" width="25" height="25" alt="Horaires du film">
-              <span>{{ hall.hours }}</span>
+            @if (hall.movieTitle !== null) {
+              <div class="flex justify-center items-center gap-2">
+                <img ngSrc="../../assets/images/Hall.png" width="25" height="25" alt="Nom du film">
+                <span class="cinephoria-big-text">{{ hall.movieTitle }}</span>
+              </div>
+            }
+
+            @if (hall.hours !== null) {
+              <div class="flex justify-center items-center gap-2">
+                <img ngSrc="../../assets/images/Clock.png" width="25" height="25" alt="Horaires du film">
+                <span class="cinephoria-big-text">{{ hall.hours }}</span>
+              </div>
+            }
+
+            <div class="flex justify-center items-center gap-10">
+              <button type="button" class="cinephoria-little-button" (click)="editHall(hall.id)">
+                <img ngSrc="../../assets/images/Pencil.png" alt="Modifier la salle" width="20" height="20" />
+                <span>Modifier</span>
+              </button>
+
+              <button type="button" class="cinephoria-little-button" (click)="deleteHall(hall.id)">
+                <img ngSrc="../../assets/images/Trash.png" alt="Supprimer la salle" width="20" height="20" />
+                <span>Supprimer</span>
+              </button>
             </div>
-          }
 
-          <div class="flex justify-center items-center">
-            <button type="button" class="cinephoria-button h-10 w-55" (click)="editHall(hall.id)">
-              <img ngSrc="../../assets/images/Pencil.png" alt="Modifier la salle" width="20" height="20" />
-              <span class="ml-7">Modifier</span>
-            </button>
-
-            <button type="button" class="cinephoria-button h-10 w-55" (click)="deleteHall(hall.id)">
-              <img ngSrc="../../assets/images/Pencil.png" alt="Supprimer la salle" width="20" height="20" />
-              <span class="ml-7">Supprimer</span>
-            </button>
           </div>
-
-        </div>
+        }
       }
 
     </div>
@@ -60,3 +74,5 @@
 </main>
 
 <app-footer></app-footer>
+
+<app-add-hall-dialog (hallAddedEvent)="loadHalls()"></app-add-hall-dialog>

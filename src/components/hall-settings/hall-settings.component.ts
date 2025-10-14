@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {HeaderComponent} from '../header/header.component';
 import {ApiService} from '../../services/api/api.service';
 import {FooterComponent} from '../footer/footer.component';
@@ -6,7 +6,8 @@ import {NgOptimizedImage} from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HallSettingsRenderer} from '../../renderers/hall-settings.renderer';
 import {HallModel} from '../../models/hall.model';
-import {LocalStorageService} from '../../services/local-storage/local-storage.service';
+import {CinemaModel} from '../../models/cinema.model';
+import {AddHallDialogComponent} from '../add-hall-dialog/add-hall-dialog.component';
 
 @Component({
   selector: 'app-hall-settings',
@@ -15,12 +16,15 @@ import {LocalStorageService} from '../../services/local-storage/local-storage.se
     FooterComponent,
     NgOptimizedImage,
     NgOptimizedImage,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AddHallDialogComponent
   ],
   templateUrl: './hall-settings.component.html',
   styleUrl: './hall-settings.component.scss'
 })
 export class HallSettingsComponent {
+  cinemaList: { id: number; name: string; }[] = [];
+
   hallList: {
     id: number,
     number: number,
@@ -29,23 +33,42 @@ export class HallSettingsComponent {
     hours: string|null
   }[] = [];
 
-  constructor(
-    private readonly hallSettingsRenderer: HallSettingsRenderer,
-    private readonly apiService: ApiService,
-    private readonly localStorageService: LocalStorageService) {}
+  isHallListLoading: boolean = false;
+
+  @ViewChild(AddHallDialogComponent) addHallDialogComponent!: AddHallDialogComponent;
+
+  constructor(private readonly hallSettingsRenderer: HallSettingsRenderer, private readonly apiService: ApiService) {}
 
   async ngOnInit(): Promise<void> {
-    const jwtToken = await this.apiService.login(
-      "baudoin.mathieu@protonmail.com", "0123456789"
-    );
+    await this.loadCinemas();
+  }
 
-    this.localStorageService.addJwtToken(jwtToken.value);
+  public async loadCinemas(): Promise<void> {
+    this.resetCinemas();
+
+    const cinemas: CinemaModel[] = await this.apiService.getCinemas();
+
+    for (const cinema of cinemas) {
+      this.cinemaList.push(this.hallSettingsRenderer.renderCinema(cinema));
+    }
+  }
+
+  public async loadHalls(): Promise<void> {
+    this.isHallListLoading = true;
+
+    this.resetHalls();
 
     const halls: HallModel[] = await this.apiService.getHalls(1);
 
     for (const hall of halls) {
-      this.hallList.push(await this.hallSettingsRenderer.render(hall));
+      this.hallList.push(await this.hallSettingsRenderer.renderHall(hall));
     }
+
+    this.isHallListLoading = false;
+  }
+
+  public openAddHallDialog() {
+    this.addHallDialogComponent.showAddHallDialog();
   }
 
   public editHall(id: number) {
@@ -54,5 +77,13 @@ export class HallSettingsComponent {
 
   public deleteHall(id: number) {
 
+  }
+
+  private resetCinemas(): void {
+    this.cinemaList = [];
+  }
+
+  private resetHalls(): void {
+    this.hallList = [];
   }
 }
