@@ -83,11 +83,9 @@ export class AddHallDialogComponent {
     for (let i: number = 0; i < nbRows; i++) {
 
       const row: string = String.fromCharCode(65 + i);
-      console.log('Row : ', row);
 
       for (let j: number = 0; j < nbSeats; j++) {
         const number: number = j + 1;
-        console.log('Number : ', number);
 
         await this.apiService.createSeat(
           this.localStorageService.getJwtToken(),
