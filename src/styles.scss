@@ -116,6 +116,16 @@ html {
   width: 100%
 }
 
+.cinephoria-hall {
+  border: 1px solid #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 350px;
+  height: 200px;
+}
+
 .cinephoria-list {
   background-color: #272727;
   border-radius: 0 0 2px 2px;
@@ -125,6 +135,20 @@ html {
   align-items: center;
   width: 1150px;
   height: 410px;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.cinephoria-hall-list {
+  background-color: #272727;
+  border-radius: 0 0 2px 2px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 1150px;
+  height: 440px;
   padding: 20px;
   overflow-y: auto;
 }
@@ -251,7 +275,7 @@ html {
   font-family: Raleway, sans-serif;
   font-size: 12px;
   font-weight: bold;
-  width: 85px;
+  width: 90px;
   height: 25px;
 }
 
