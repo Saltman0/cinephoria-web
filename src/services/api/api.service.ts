@@ -252,6 +252,27 @@ export class ApiService {
     return cinemas;
   }
 
+  public async createHall(token: string, number: number, projectionQuality: string, cinemaId: number): Promise<any> {
+    const response: Response = await fetch(this.userApiUrl + "hall", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        "number": number,
+        "projectionQuality": projectionQuality,
+        "cinemaId": cinemaId
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(response.status.toString());
+    }
+
+    return response.json();
+  }
+
   public async getHalls(cinemaId: number): Promise<HallModel[]> {
     let halls: HallModel[] = [];
 
@@ -268,6 +289,27 @@ export class ApiService {
     });
 
     return halls;
+  }
+
+  public async createSeat(token: string, row: string, number: number, hallId: number): Promise<any> {
+    const response: Response = await fetch(this.userApiUrl + "seat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        "row": row,
+        "number": number,
+        "hallId": hallId
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(response.status.toString());
+    }
+
+    return response.json();
   }
 
   public async getSeats(hallId: number): Promise<SeatModel[]> {
