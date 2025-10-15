@@ -31,7 +31,9 @@
 
               <!-- Icône de coeur -->
               <div class="w-10/100">
-                <img ngSrc="../../assets/images/Heart.png" width="50" height="50" alt="Note du film">
+                @if (movie.favorite) {
+                  <img ngSrc="../../assets/images/Heart.png" width="50" height="50" alt="Coup de coeur">
+                }
               </div>
 
               <span class="cinephoria-main-title w-38/100">{{ movie.title }}</span>
