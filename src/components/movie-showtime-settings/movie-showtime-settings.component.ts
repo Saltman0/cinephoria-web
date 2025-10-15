@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {HeaderComponent} from '../header/header.component';
 import {ApiService} from '../../services/api/api.service';
 import {FooterComponent} from '../footer/footer.component';
@@ -7,6 +7,8 @@ import {MovieModel} from '../../models/movie.model';
 import {MovieShowtimeSettingsRenderer} from '../../renderers/movie-showtime-settings.renderer';
 import {LocalStorageService} from '../../services/local-storage/local-storage.service';
 import {NgOptimizedImage} from '@angular/common';
+import {NavMobileComponent} from '../nav-mobile/nav-mobile.component';
+import {ShowtimeModel} from '../../models/showtime.model';
 
 @Component({
   selector: 'app-movie-showtime-settings',
@@ -15,18 +17,23 @@ import {NgOptimizedImage} from '@angular/common';
     FooterComponent,
     ReactiveFormsModule,
     NgOptimizedImage,
-    NgOptimizedImage
+    NgOptimizedImage,
+    NavMobileComponent
   ],
   templateUrl: './movie-showtime-settings.component.html',
   styleUrl: './movie-showtime-settings.component.scss'
 })
 export class MovieShowtimeSettingsComponent {
+  stars: number[] = [0, 1, 2, 3, 4];
+
   movieList: {
     id: number,
+    imageURL: string,
     favorite: boolean,
-    imageUrl: string,
-    minimumAge: number,
-    title: string
+    title: string,
+    nbShowtimes: number,
+    minimumAge: number
+    // TODO rating
   }[] = [];
 
   showtimeList: {
@@ -36,12 +43,25 @@ export class MovieShowtimeSettingsComponent {
     hallNumber: number
   }[] = [];
 
+  isMovieListLoading: boolean = false;
+  isShowtimeListLoading: boolean = false;
+
+  // TODO Viewchild
+
   constructor(
     private readonly movieShowtimeSettingsRenderer: MovieShowtimeSettingsRenderer,
     private readonly localStorageService: LocalStorageService,
     private readonly apiService: ApiService) {}
 
   async ngOnInit(): Promise<void> {
+    await this.loadMovieList();
+  }
+
+  public async loadMovieList(): Promise<void> {
+    this.resetMovieList();
+
+    this.isMovieListLoading = true;
+
     const jwtToken = await this.apiService.login(
       "baudoin.mathieu@protonmail.com", "0123456789"
     );
@@ -51,21 +71,61 @@ export class MovieShowtimeSettingsComponent {
     const moviesWithShowtimes: MovieModel[] = await this.apiService.getMoviesWithShowtimes();
 
     for (const movieWithShowtimes of moviesWithShowtimes) {
-
       this.movieList.push(await this.movieShowtimeSettingsRenderer.renderMovie(movieWithShowtimes));
-
-      for (const showtime of movieWithShowtimes.showtimes) {
-        this.showtimeList.push(await this.movieShowtimeSettingsRenderer.renderShowtime(showtime));
-      }
-
     }
+
+    this.isMovieListLoading = false;
   }
 
-  editShowtime(showtimeId: number) {
-    //this.router.navigate([`/booking-detail/${bookingId}`]);
+  public async loadShowtimeList(movieId: number): Promise<void> {
+    this.resetShowtimeList();
+
+    this.isShowtimeListLoading = true;
+
+    const jwtToken = await this.apiService.login(
+      "baudoin.mathieu@protonmail.com", "0123456789"
+    );
+
+    this.localStorageService.addJwtToken(jwtToken.value);
+
+    const showtimes: ShowtimeModel[] = await this.apiService.getShowtimes(movieId);
+
+    for (const showtime of showtimes) {
+      this.showtimeList.push(await this.movieShowtimeSettingsRenderer.renderShowtime(showtime));
+    }
+
+    this.isShowtimeListLoading = false;
   }
 
-  deleteShowtime(showtimeId: number) {
-    //this.router.navigate([`/booking-detail/${bookingId}`]);
+  public openAddMovieDialog() {
+
+  }
+
+  public openUpdateMovieDialog() {
+
+  }
+
+  public openDeleteMovieDialog() {
+
+  }
+
+  public openAddShowtimeDialog() {
+
+  }
+
+  public openUpdateShowtimeDialog(showtimeId: number) {
+
+  }
+
+  public openDeleteShowtimeDialog(showtimeId: number) {
+
+  }
+
+  private resetMovieList(): void {
+    this.movieList = [];
+  }
+
+  private resetShowtimeList(): void {
+    this.showtimeList = [];
   }
 }
