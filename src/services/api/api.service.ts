@@ -29,6 +29,7 @@ import {environment} from "../../environments/environment";
 export class ApiService {
 
   private bookingApiUrl = environment.BOOKING_API_URL;
+  private infrastructureApiUrl = environment.INFRASTRUCTURE_API_URL;
   private movieApiUrl = environment.MOVIE_API_URL;
   private userApiUrl = environment.USER_API_URL;
 
@@ -191,6 +192,22 @@ export class ApiService {
     return response.json();
   }
 
+  public async deleteMovie(token: string, movieId: number) {
+    const response: Response = await fetch(this.movieApiUrl + `movie/${encodeURIComponent(movieId)}`, {
+      method: "DELETE",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json"
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(response.status.toString());
+    }
+
+    return response.json();
+  }
+
   public async getBookings(userId: number|null, showtimeId: number|null): Promise<BookingModel[]> {
     let bookings: BookingModel[] = [];
 
@@ -244,7 +261,7 @@ export class ApiService {
   }
 
   public async createHall(token: string, number: number, projectionQuality: string, cinemaId: number): Promise<any> {
-    const response: Response = await fetch(this.userApiUrl + "hall", {
+    const response: Response = await fetch(this.infrastructureApiUrl + "hall", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -271,7 +288,7 @@ export class ApiService {
     projectionQuality: string,
     cinemaId: number
   ): Promise<any> {
-    const response: Response = await fetch(this.userApiUrl + `hall/${encodeURIComponent(hallId)}`, {
+    const response: Response = await fetch(this.infrastructureApiUrl + `hall/${encodeURIComponent(hallId)}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -311,7 +328,7 @@ export class ApiService {
   }
 
   public async deleteHall(token: string, hallId: number): Promise<any> {
-    const response: Response = await fetch(this.userApiUrl + `hall/${encodeURIComponent(hallId)}`, {
+    const response: Response = await fetch(this.infrastructureApiUrl + `hall/${encodeURIComponent(hallId)}`, {
       method: "DELETE",
       headers: {
         "Authorization": `Bearer ${token}`,
@@ -327,7 +344,7 @@ export class ApiService {
   }
 
   public async createSeat(token: string, row: string, number: number, hallId: number): Promise<any> {
-    const response: Response = await fetch(this.userApiUrl + "seat", {
+    const response: Response = await fetch(this.infrastructureApiUrl + "seat", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -362,7 +379,7 @@ export class ApiService {
   }
 
   public async deleteSeat(token: string, seatId: number): Promise<any> {
-    const response: Response = await fetch(this.userApiUrl + `seat/${encodeURIComponent(seatId)}`, {
+    const response: Response = await fetch(this.infrastructureApiUrl + `seat/${encodeURIComponent(seatId)}`, {
       method: "DELETE",
       headers: {
         "Authorization": `Bearer ${token}`,
