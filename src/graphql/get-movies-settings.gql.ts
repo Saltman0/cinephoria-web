@@ -11,22 +11,20 @@ export interface Response {
 @Injectable({
     providedIn: 'root',
 })
-export class GetMoviesWithShowtimesGql extends Query<Response> {
+export class GetMoviesSettingsGql extends Query<Response> {
     document = gql`
-      query GetMovieShowtimeSettings {
+      query GetMoviesSettings {
         movies {
           id
-          favorite
           imageURL
-          minimumAge
+          favorite
           title
+          minimumAge
           showtimes {
             id
+            price
             startTime
             endTime
-            hall {
-              number
-            }
           }
         }
       }
