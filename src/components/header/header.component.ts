@@ -1,9 +1,6 @@
-import { Component } from '@angular/core';
-import { NgOptimizedImage } from "@angular/common";
+import {Component, Input} from '@angular/core';
+import {NgOptimizedImage} from "@angular/common";
 import {RouterLink, RouterLinkActive} from '@angular/router';
-/*import { Router } from "@angular/router";
-import { DatabaseService } from "../../services/database/database.service";
-import { LocalStorageService } from "../../services/local-storage/local-storage.service";*/
 
 @Component({
   selector: 'app-header',
@@ -18,17 +15,7 @@ import { LocalStorageService } from "../../services/local-storage/local-storage.
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  firstName: string = "Mathieu";
-  lastName: string = "Baudoin";
 
-  /*constructor(private readonly router: Router,
-              private readonly databaseService: DatabaseService,
-              private readonly localStorageService: LocalStorageService) {}*/
+  @Input() mySpaceTitle = "Mon espace";
 
-  /*async disconnect(): Promise<void> {
-    this.databaseService.closeDatabase();
-    this.databaseService.deleteDatabase();
-    this.localStorageService.deleteJwtToken();
-    await this.router.navigate(['login']);
-  }*/
 }

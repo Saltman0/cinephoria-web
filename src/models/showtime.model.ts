@@ -6,15 +6,18 @@ export class ShowtimeModel {
     id: number;
     startTime: Date;
     endTime: Date;
+    price: number;
     movie: MovieModel;
     hall: HallModel;
     bookings: BookingModel[];
 
-    constructor(id: number, movie: MovieModel, startTime: Date, endTime: Date, hall: HallModel, bookings: BookingModel[]) {
+    constructor(id: number, startTime: Date, endTime: Date, price: number,
+                movie: MovieModel, hall: HallModel, bookings: BookingModel[]) {
         this.id = id;
-        this.movie = movie;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.price = price;
+        this.movie = movie;
         this.hall = hall;
         this.bookings = bookings;
     }

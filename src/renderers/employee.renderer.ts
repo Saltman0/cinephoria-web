@@ -6,7 +6,7 @@ import {UserModel} from '../models/user.model';
 })
 export class EmployeeRenderer {
 
-    public async render(user: UserModel) {
+    public render(user: UserModel) {
         return {
           id: user.id,
           email: user.email,

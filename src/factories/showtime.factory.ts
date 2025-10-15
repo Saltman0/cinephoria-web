@@ -9,8 +9,9 @@ import {BookingModel} from "../models/booking.model";
 })
 export class ShowtimeFactory {
 
-    public create(id: number, movie: MovieModel, startTime: Date, endTime: Date, hall: HallModel, bookings: BookingModel[]): ShowtimeModel {
-        return new ShowtimeModel(id, movie, startTime, endTime, hall, bookings);
+    public create(id: number, startTime: Date, endTime: Date, price: number,
+                  movie: MovieModel, hall: HallModel, bookings: BookingModel[]): ShowtimeModel {
+        return new ShowtimeModel(id, startTime, endTime, price, movie, hall, bookings);
     }
 
 }

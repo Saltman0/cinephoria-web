@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "daisyui";
 
 @font-face {
   font-family: "Great Vibes";
@@ -20,31 +21,88 @@
   src: url("./assets/fonts/Raleway.ttf") format("truetype");
 }
 
-body {
+html {
+  font-size: 16px;
   background-color: #1C1C1C;
+}
+
+.cinephoria-select-cinema {
+  width: 250px;
+  height: 35px;
+  background-color: #FFFFFF;
+  border-radius: 2px;
+  cursor: pointer;
+
+  select {
+    width: 100%;
+    height: 100%;
+    appearance: none;
+    color: #1C1C1C;
+    cursor: pointer;
+  }
+}
+
+.cinephoria-hamburger {
+  font-size: 2rem;
+  cursor: pointer;
 }
 
 .cinephoria-background {
   background-color: #1C1C1C;
 }
 
-.cinephoria-main-title {
+.cinephoria-brand-title {
   color: #FFFFFF;
   font-family: Great Vibes, sans-serif;
   font-size: 64px;
 }
 
+.cinephoria-main-title {
+  color: #F1C40F;
+  font-family: Oswald, sans-serif;
+  font-size: 30px;
+}
+
 .cinephoria-subtitle {
+  color: #FFFFFF;
+  font-family: Merriweather, sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.cinephoria-subtitle-2 {
   color: #FFFFFF;
   font-family: Merriweather, sans-serif;
   font-size: 24px;
   font-weight: bold;
 }
 
+.cinephoria-movie-image {
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.cinephoria-movie-image:focus {
+  outline: 2px solid #F1C40F;
+}
+
+.cinephoria-nav-icon {
+  box-shadow: 0 0 0 4px green;
+  border-radius: 8px;
+}
+
+.cinephoria-header {
+  color: #FFFFFF;
+  font-family: Merriweather, sans-serif;
+  font-size: 24px;
+}
+
 .cinephoria-footer {
   color: #FFFFFF;
   font-family: Merriweather, sans-serif;
   font-size: 16px;
+  height: 50px;
+  width: 100%;
 }
 
 .cinephoria-booking {
@@ -53,18 +111,61 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  border-width: 2px 0 2px 0;
-  border-style: solid;
-  border-color: #F1C40F;
-  height: 10rem;
+  display: flex;
+  height: 90px;
+  width: 100%
+}
+
+.cinephoria-hall {
+  border: 1px solid #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 350px;
+  height: 200px;
+}
+
+.cinephoria-administrator-button {
+  background-color: #E63946;
+  border: 2px solid #FFFFFF;
+  border-radius: 2px;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-family: Raleway, sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.cinephoria-list {
+  background-color: #272727;
+  border-radius: 0 0 2px 2px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  width: 1150px;
+  height: 410px;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.cinephoria-hall-list {
+  background-color: #272727;
+  border-radius: 0 0 2px 2px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 1150px;
+  height: 440px;
+  padding: 20px;
+  overflow-y: auto;
 }
 
 .cinephoria-employee {
-  background-color: #2f2f2f;
-  border-width: 2px 0 2px 0;
-  border-style: solid;
-  border-color: #F1C40F;
-  height: 10rem;
+  background-color: #1C1C1C;
 }
 
 .cinephoria-hall-number {
@@ -100,7 +201,7 @@ body {
 .cinephoria-big-text {
   color: #FFFFFF;
   font-family: Raleway, sans-serif;
-  font-size: 5dvw;
+  font-size: 24px;
 }
 
 .cinephoria-movie-title {
@@ -110,9 +211,16 @@ body {
 }
 
 .cinephoria-showtime {
-  color: #FFFFFF;
-  font-family: Raleway, sans-serif;
-  font-size: 24px;
+  background-color: #1C1C1C;
+  border: 2px solid #FFFFFF;
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 150px;
+  height: 140px;
+  padding: 8px;
 }
 
 .cinephoria-alert {
@@ -124,31 +232,34 @@ body {
 
 .cinephoria-table-header {
   background-color: #E63946;
+  border-radius: 2px 2px 0 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 1150px;
+  height: 90px;
+  padding: 20px;
 }
 
-.cinephoria-header {
-  color: #FFFFFF;
-  font-family: Merriweather, sans-serif;
-  font-size: 24px;
+.cinephoria-active-link {
   font-weight: bold;
+  cursor: default;
 }
 
 .cinephoria-button {
-  position: relative;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: #E63946;
   color: #FFFFFF;
   border-radius: 2px;
   font-family: Raleway, sans-serif;
+  font-size: 20px;
   font-weight: bold;
-}
-
-.cinephoria-button img {
-  position: absolute;
-  left: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 25px;
-  height: 25px;
+  width: 200px;
+  height: 50px;
 }
 
 .cinephoria-button:hover {
@@ -164,9 +275,41 @@ body {
   color: #1C1C1C;
 }
 
+.cinephoria-little-button {
+  cursor: pointer;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: #E63946;
+  color: #FFFFFF;
+  border-radius: 2px;
+  font-family: Raleway, sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  width: 90px;
+  height: 25px;
+}
+
+.cinephoria-little-button:hover {
+  background-color: #e62232;
+}
+
+.cinephoria-little-button:active {
+  background-color: #C41826;
+}
+
+.cinephoria-little-button:disabled {
+  background-color: lightgrey;
+  color: #1C1C1C;
+}
+
 .cinephoria-input {
   background-color: #FFFFFF;
+  border-radius: 2px;
   color: #1C1C1C;
+  font-size: 20px;
+  font-family: Raleway, sans-serif;
+  padding: 5px;
 }
 
 .cinephoria-input::placeholder {
@@ -189,13 +332,29 @@ body {
 
 .cinephoria-input-container input {
   width: 100%;
-  padding: 10px 10px 10px 40px;  /* Add padding to make space for the image */
+  padding: 10px 10px 10px 40px;
   border-radius: 2px;
-  font-size: 16px;
-  font-family: Raleway, sans-serif;
 }
 
 .cinephoria-input-container input:focus {
   border-color: unset;
   outline: none;
+}
+
+.cinephoria-small-input {
+  background-color: #FFFFFF;
+  border-radius: 2px;
+  color: #1C1C1C;
+  font-size: 16px;
+  font-family: Raleway, sans-serif;
+  padding: 5px;
+}
+
+.cinephoria-small-input::placeholder {
+  color: #1C1C1C;
+}
+
+.cinephoria-dialog-title {
+  font-size: 32px;
+  font-weight: bold;
 }
