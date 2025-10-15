@@ -32,7 +32,7 @@
               <!-- Icône de coeur -->
               <div class="w-10/100">
                 @if (movie.favorite) {
-                  <img ngSrc="../../assets/images/Heart.png" width="50" height="50" alt="Coup de coeur">
+                  <img ngSrc="../../assets/images/Heart.png" width="50" height="50" alt="Coup de coeur" />
                 }
               </div>
 
@@ -50,14 +50,15 @@
               </span>
                 <div class="flex justify-around w-full">
                   @for (star of stars; track star) {
-                    <img ngSrc="../../assets/images/Star.png" width="25" height="25" alt="Note du film">
+                    <img ngSrc="../../assets/images/Star.png" width="25" height="25" alt="Note du film" />
                   }
                 </div>
               </div>
 
               <div class="flex justify-end items-center w-12/100">
-                <img ngSrc="../../assets/images/Pencil.png" width="30" height="30" alt="Modifier le film">
-                <img ngSrc="../../assets/images/Trash.png" width="30" height="30" alt="Supprimer le film">
+                <img ngSrc="../../assets/images/Pencil.png" width="30" height="30" alt="Modifier le film" />
+                <img ngSrc="../../assets/images/Trash.png" width="30" height="30" alt="Supprimer le film"
+                     (click)="openDeleteMovieDialog(movie.id)" />
               </div>
 
             </div>
@@ -118,5 +119,7 @@
 </main>
 
 <app-footer></app-footer>
+
+<app-delete-movie-dialog [movieId]="movieIdToDelete" (movieDeletedEvent)="loadMovieList()"></app-delete-movie-dialog>
 
 <app-nav-mobile></app-nav-mobile>

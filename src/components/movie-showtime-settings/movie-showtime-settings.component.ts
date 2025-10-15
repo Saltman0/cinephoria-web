@@ -9,6 +9,7 @@ import {LocalStorageService} from '../../services/local-storage/local-storage.se
 import {NgOptimizedImage} from '@angular/common';
 import {NavMobileComponent} from '../nav-mobile/nav-mobile.component';
 import {ShowtimeModel} from '../../models/showtime.model';
+import {DeleteMovieDialogComponent} from '../delete-movie-dialog/delete-movie-dialog.component';
 
 @Component({
   selector: 'app-movie-showtime-settings',
@@ -18,7 +19,8 @@ import {ShowtimeModel} from '../../models/showtime.model';
     ReactiveFormsModule,
     NgOptimizedImage,
     NgOptimizedImage,
-    NavMobileComponent
+    NavMobileComponent,
+    DeleteMovieDialogComponent
   ],
   templateUrl: './movie-showtime-settings.component.html',
   styleUrl: './movie-showtime-settings.component.scss'
@@ -46,7 +48,9 @@ export class MovieShowtimeSettingsComponent {
   isMovieListLoading: boolean = false;
   isShowtimeListLoading: boolean = false;
 
-  // TODO Viewchild
+  movieIdToDelete: number = 0;
+
+  @ViewChild(DeleteMovieDialogComponent) deleteMovieDialog!: DeleteMovieDialogComponent;
 
   constructor(
     private readonly movieShowtimeSettingsRenderer: MovieShowtimeSettingsRenderer,
@@ -58,6 +62,7 @@ export class MovieShowtimeSettingsComponent {
   }
 
   public async loadMovieList(): Promise<void> {
+    this.resetShowtimeList();
     this.resetMovieList();
 
     this.isMovieListLoading = true;
@@ -105,8 +110,9 @@ export class MovieShowtimeSettingsComponent {
 
   }
 
-  public openDeleteMovieDialog() {
-
+  public openDeleteMovieDialog(movieId: number) {
+    this.movieIdToDelete = movieId;
+    this.deleteMovieDialog.showDeleteMovieDialog();
   }
 
   public openAddShowtimeDialog() {
