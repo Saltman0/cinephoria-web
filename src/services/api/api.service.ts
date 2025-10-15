@@ -28,10 +28,11 @@ import {environment} from "../../environments/environment";
 })
 export class ApiService {
 
-  private bookingApiUrl = environment.BOOKING_API_URL;
-  private infrastructureApiUrl = environment.INFRASTRUCTURE_API_URL;
-  private movieApiUrl = environment.MOVIE_API_URL;
-  private userApiUrl = environment.USER_API_URL;
+  private bookingApiUrl: string = environment.BOOKING_API_URL;
+  private infrastructureApiUrl: string = environment.INFRASTRUCTURE_API_URL;
+  private movieApiUrl: string = environment.MOVIE_API_URL;
+  private showtimeApiUrl: string = environment.MOVIE_API_URL;
+  private userApiUrl: string = environment.USER_API_URL;
 
   constructor(private readonly getMoviesSettingsGQL: GetMoviesSettingsGql,
               private readonly getBookingsGQL: GetBookingsGql,
@@ -241,6 +242,22 @@ export class ApiService {
     });
 
     return showtimes;
+  }
+
+  public async deleteShowtime(token: string, showtimeId: number) {
+    const response: Response = await fetch(this.showtimeApiUrl + `showtime/${encodeURIComponent(showtimeId)}`, {
+      method: "DELETE",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json"
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(response.status.toString());
+    }
+
+    return response.json();
   }
 
   public async getCinemas(): Promise<CinemaModel[]> {
