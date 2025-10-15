@@ -10,6 +10,7 @@ import {NgOptimizedImage} from '@angular/common';
 import {NavMobileComponent} from '../nav-mobile/nav-mobile.component';
 import {ShowtimeModel} from '../../models/showtime.model';
 import {DeleteMovieDialogComponent} from '../delete-movie-dialog/delete-movie-dialog.component';
+import {DeleteShowtimeDialogComponent} from '../delete-showtime-dialog/delete-showtime-dialog.component';
 
 @Component({
   selector: 'app-movie-showtime-settings',
@@ -20,7 +21,8 @@ import {DeleteMovieDialogComponent} from '../delete-movie-dialog/delete-movie-di
     NgOptimizedImage,
     NgOptimizedImage,
     NavMobileComponent,
-    DeleteMovieDialogComponent
+    DeleteMovieDialogComponent,
+    DeleteShowtimeDialogComponent
   ],
   templateUrl: './movie-showtime-settings.component.html',
   styleUrl: './movie-showtime-settings.component.scss'
@@ -42,15 +44,18 @@ export class MovieShowtimeSettingsComponent {
     id: number,
     date: string,
     hours: string,
-    hallNumber: number
+    hallNumber: number,
+    movieId: number
   }[] = [];
 
   isMovieListLoading: boolean = false;
   isShowtimeListLoading: boolean = false;
 
-  movieIdToDelete: number = 0;
+  selectedMovieId: number = 0;
+  selectedShowtimeId: number = 0;
 
   @ViewChild(DeleteMovieDialogComponent) deleteMovieDialog!: DeleteMovieDialogComponent;
+  @ViewChild(DeleteShowtimeDialogComponent) deleteShowtimeDialog!: DeleteShowtimeDialogComponent;
 
   constructor(
     private readonly movieShowtimeSettingsRenderer: MovieShowtimeSettingsRenderer,
@@ -111,7 +116,7 @@ export class MovieShowtimeSettingsComponent {
   }
 
   public openDeleteMovieDialog(movieId: number) {
-    this.movieIdToDelete = movieId;
+    this.selectedMovieId = movieId;
     this.deleteMovieDialog.showDeleteMovieDialog();
   }
 
@@ -123,8 +128,10 @@ export class MovieShowtimeSettingsComponent {
 
   }
 
-  public openDeleteShowtimeDialog(showtimeId: number) {
-
+  public openDeleteShowtimeDialog(showtimeId: number, movieId: number): void {
+    this.selectedShowtimeId = showtimeId;
+    this.selectedMovieId = movieId;
+    this.deleteShowtimeDialog.showDeleteMovieDialog();
   }
 
   private resetMovieList(): void {

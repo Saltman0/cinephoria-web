@@ -99,7 +99,8 @@
                   <span>Modifier</span>
                 </button>
 
-                <button type="button" class="cinephoria-little-button" (click)="openDeleteShowtimeDialog(showtime.id)">
+                <button type="button" class="cinephoria-little-button"
+                        (click)="openDeleteShowtimeDialog(showtime.id, showtime.movieId)">
                   <img ngSrc="../../assets/images/Trash.png" alt="Supprimer la séance" width="20" height="20" />
                   <span>Supprimer</span>
                 </button>
@@ -120,6 +121,11 @@
 
 <app-footer></app-footer>
 
-<app-delete-movie-dialog [movieId]="movieIdToDelete" (movieDeletedEvent)="loadMovieList()"></app-delete-movie-dialog>
+<app-delete-movie-dialog [movieId]="selectedMovieId" (movieDeletedEvent)="loadMovieList()"></app-delete-movie-dialog>
+
+<app-delete-showtime-dialog
+  [showtimeId]="selectedShowtimeId"
+  (showtimeDeletedEvent)="loadShowtimeList(selectedMovieId)">
+</app-delete-showtime-dialog>
 
 <app-nav-mobile></app-nav-mobile>
