@@ -3,13 +3,15 @@ import {HeaderComponent} from '../header/header.component';
 import {FooterComponent} from '../footer/footer.component';
 import {Router} from '@angular/router';
 import {NgOptimizedImage} from '@angular/common';
+import {NavMobileComponent} from '../nav-mobile/nav-mobile.component';
 
 @Component({
   selector: 'app-account-creation',
   imports: [
     HeaderComponent,
     FooterComponent,
-    NgOptimizedImage
+    NgOptimizedImage,
+    NavMobileComponent
   ],
   templateUrl: './administrator.component.html',
   styleUrl: './administrator.component.scss'

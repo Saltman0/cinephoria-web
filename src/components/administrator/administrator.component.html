@@ -1,30 +1,30 @@
-<app-header></app-header>
+<app-header mySpaceTitle="Administration"></app-header>
 
 <main class="flex justify-center items-center h-[80dvh]">
 
   <section class="flex flex-col justify-center w-full h-full">
 
     <div class="flex justify-center items-end h-1/2 w-full">
-      <button (click)="redirectToMovieShowtimeSettingsPage()" type="button" class="administrator-button flex flex-col justify-center items-center w-[350px] h-[200px] m-3">
-        <span class="mt-12">Gestion des films et des séances</span>
-        <img ngSrc="assets/images/Movie.png" width="50" height="50" alt="Gestion des films et des séances" class="mt-2" />
+      <button (click)="redirectToMovieShowtimeSettingsPage()" type="button" class="cinephoria-administrator-button flex flex-col justify-center items-center w-[350px] h-[200px] m-3">
+        <span>Gestion des films et des séances</span>
+        <img ngSrc="assets/images/Movie.png" width="50" height="50" alt="Gestion des films et des séances" />
       </button>
 
-      <button (click)="redirectToHallSettingsPage()" type="button" class="administrator-button flex flex-col justify-center items-center w-[350px] h-[200px] m-3">
-        <span class="mt-12">Gestion des salles</span>
-        <img ngSrc="assets/images/Hall.png" width="50" height="50" alt="Gestion des salles" class="mt-2" />
+      <button (click)="redirectToHallSettingsPage()" type="button" class="cinephoria-administrator-button flex flex-col justify-center items-center w-[350px] h-[200px] m-3">
+        <span>Gestion des salles</span>
+        <img ngSrc="assets/images/Hall.png" width="50" height="50" alt="Gestion des salles" />
       </button>
     </div>
 
     <div class="flex justify-center h-1/2 w-full">
-      <button (click)="redirectToEmployeeListPage()" type="button" class="administrator-button flex flex-col justify-center items-center w-[350px] h-[200px] m-3">
-        <span class="mt-12">Gestion des comptes Employé</span>
-        <img ngSrc="assets/images/Group.png" width="50" height="50" alt="Gestion des comptes Employé" class="mt-2" />
+      <button (click)="redirectToEmployeeListPage()" type="button" class="cinephoria-administrator-button flex flex-col justify-center items-center w-[350px] h-[200px] m-3">
+        <span>Gestion des comptes Employé</span>
+        <img ngSrc="assets/images/Group.png" width="50" height="50" alt="Gestion des comptes Employé" />
       </button>
 
-      <button (click)="redirectToDashboardPage()" type="button" class="administrator-button flex flex-col justify-center items-center w-[350px] h-[200px] m-3">
-        <span class="mt-12">Dashboard</span>
-        <img ngSrc="assets/images/Dashboard.png" width="50" height="50" alt="Dashboard" class="mt-2" />
+      <button (click)="redirectToDashboardPage()" type="button" class="cinephoria-administrator-button flex flex-col justify-center items-center w-[350px] h-[200px] m-3">
+        <span>Dashboard</span>
+        <img ngSrc="assets/images/Dashboard.png" width="50" height="50" alt="Dashboard" />
       </button>
     </div>
 
@@ -33,3 +33,5 @@
 </main>
 
 <app-footer></app-footer>
+
+<app-nav-mobile></app-nav-mobile>
