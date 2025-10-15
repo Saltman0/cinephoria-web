@@ -10,15 +10,16 @@ export class MovieShowtimeSettingsRenderer {
   public async renderMovie(movie: MovieModel) {
     return {
       id: movie.id,
+      imageURL: movie.imageURL,
       favorite: movie.favorite,
-      imageUrl: movie.imageURL,
-      minimumAge: movie.minimumAge,
-      title: movie.title
+      title: movie.title,
+      nbShowtimes: movie.showtimes.length,
+      minimumAge: movie.minimumAge
+      // TODO rating
     }
   }
 
   public async renderShowtime(showtime: ShowtimeModel) {
-
     const startTime = new Date(showtime.startTime);
     const endTime = new Date(showtime.endTime);
 
@@ -38,5 +39,4 @@ export class MovieShowtimeSettingsRenderer {
       hallNumber: showtime.hall.number
     }
   }
-
 }
