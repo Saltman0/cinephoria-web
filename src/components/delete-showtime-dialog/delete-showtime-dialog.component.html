@@ -1,0 +1,22 @@
+<dialog #deleteShowtimeDialog class="modal">
+
+  <div class="modal-box flex flex-col justify-center">
+    <span class="text-lg font-bold mb-2">Suppression de la séance</span>
+    <div class="my-2">
+      <span>Voulez-vous vraiment supprimer cette séance ?</span>
+      <br>
+      <span>Cette action sera irréversible.</span>
+    </div>
+    <div class="flex justify-end items-center gap-2 mt-2">
+      <button type="button" class="cinephoria-little-button" (click)="deleteShowtime()">
+        <span [class.hidden]="isDeletingShowtime">Oui</span>
+        <span [class.hidden]="!isDeletingShowtime" class="loading loading-spinner loading-xs"></span>
+      </button>
+      <button type="button" class="cinephoria-little-button" (click)="closeDeleteShowtimeDialog()">
+        <span [class.hidden]="isDeletingShowtime">Non</span>
+        <span [class.hidden]="!isDeletingShowtime" class="loading loading-spinner loading-xs"></span>
+      </button>
+    </div>
+  </div>
+
+</dialog>
