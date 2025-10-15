@@ -6,7 +6,7 @@ import {MovieModel} from '../../models/movie.model';
 import {MovieFactory} from '../../factories/movie.factory';
 import {BookingFactory} from '../../factories/booking.factory';
 import {UserModel} from '../../models/user.model';
-import {GetMoviesWithShowtimesGql} from '../../graphql/get-movies-with-showtimes-gql';
+import {GetMoviesSettingsGql} from '../../graphql/get-movies-settings.gql';
 import {ShowtimeModel} from '../../models/showtime.model';
 import {ShowtimeFactory} from '../../factories/showtime.factory';
 import {HallModel} from '../../models/hall.model';
@@ -32,7 +32,7 @@ export class ApiService {
   private movieApiUrl = environment.MOVIE_API_URL;
   private userApiUrl = environment.USER_API_URL;
 
-  constructor(private readonly getMoviesWithShowtimesGQL: GetMoviesWithShowtimesGql,
+  constructor(private readonly getMoviesSettingsGQL: GetMoviesSettingsGql,
               private readonly getBookingsGQL: GetBookingsGql,
               private readonly getShowtimesGQL: GetShowtimesGql,
               private readonly getHallSettingsGql: GetHallSettingsGql,
@@ -123,22 +123,13 @@ export class ApiService {
   public async getMoviesWithShowtimes(): Promise<MovieModel[]> {
     let moviesWithShowtimes: MovieModel[] = [];
 
-    let result = await this.getMoviesWithShowtimesGQL.watch().result();
+    let result = await this.getMoviesSettingsGQL.watch().result();
 
-    result.data.movies.forEach((movie: MovieModel) => {
-
-      let showtimes: ShowtimeModel[] = [];
-      movie.showtimes.forEach((showtime: ShowtimeModel) => {
-        showtimes.push(
-          this.showtimeFactory.create(
-            showtime.id, showtime.startTime, showtime.endTime, showtime.price, movie, showtime.hall, showtime.bookings
-          )
-        );
-      });
+    result.data.movies.forEach((movie: MovieModel): void => {
 
       moviesWithShowtimes.push(
         this.movieFactory.create(
-          movie.id, movie.favorite, movie.title, movie.imageURL, movie.minimumAge, showtimes
+          movie.id, movie.favorite, movie.title, movie.imageURL, movie.minimumAge, movie.showtimes
         )
       );
 
