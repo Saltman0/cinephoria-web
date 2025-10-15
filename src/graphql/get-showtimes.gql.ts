@@ -22,6 +22,9 @@ export class GetShowtimesGql extends Query<Response> {
             number
             projectionQuality
           }
+          movie {
+            id
+          }
         }
       }
     `;
