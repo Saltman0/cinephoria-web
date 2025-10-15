@@ -9,7 +9,7 @@
       <div class="cinephoria-select-cinema flex justify-between items-center px-2">
         <img ngSrc="../../assets/images/Placeholder.png" width="25" height="25" alt="Cinéma à choisir" />
 
-        <select (change)="loadHalls()" class="mx-1" name="cinema">
+        <select (change)="loadHallList()" class="mx-1" name="cinema">
           <option selected disabled>Choisissez un cinéma</option>
           @for (cinema of cinemaList; track cinema.id) {
             <option [value]="cinema.id">{{ cinema.name }}</option>
@@ -52,12 +52,21 @@
             }
 
             <div class="flex justify-center items-center gap-10">
-              <button type="button" class="cinephoria-little-button" (click)="editHall(hall.id)">
+              <button type="button" class="cinephoria-little-button"
+                      (click)="openUpdateHallDialog(
+                        hall.id,
+                        hall.cinemaId,
+                        hall.number,
+                        hall.projectionQuality,
+                        hall.nbRows,
+                        hall.nbSeats
+                      )"
+              >
                 <img ngSrc="../../assets/images/Pencil.png" alt="Modifier la salle" width="20" height="20" />
                 <span>Modifier</span>
               </button>
 
-              <button type="button" class="cinephoria-little-button" (click)="deleteHall(hall.id)">
+              <button type="button" class="cinephoria-little-button" (click)="openDeleteHallDialog(hall.id)">
                 <img ngSrc="../../assets/images/Trash.png" alt="Supprimer la salle" width="20" height="20" />
                 <span>Supprimer</span>
               </button>
@@ -75,4 +84,15 @@
 
 <app-footer></app-footer>
 
-<app-add-hall-dialog (hallAddedEvent)="loadHalls()"></app-add-hall-dialog>
+<app-add-hall-dialog (hallAddedEvent)="loadHallList()"></app-add-hall-dialog>
+<app-update-hall-dialog
+  [hallId]="hallIdToUpdate"
+  [cinemaId]="cinemaIdToUpdate"
+  [number]="numberToUpdate"
+  [projectionQuality]="projectionQualityToUpdate"
+  [nbRows]="nbRowsToUpdate"
+  [nbSeats]="nbSeatsToUpdate"
+  (hallUpdatedEvent)="loadHallList()"
+>
+</app-update-hall-dialog>
+<app-delete-hall-dialog (hallDeletedEvent)="loadHallList()" [hallId]="hallIdToDelete"></app-delete-hall-dialog>

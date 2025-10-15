@@ -8,6 +8,8 @@ import {HallSettingsRenderer} from '../../renderers/hall-settings.renderer';
 import {HallModel} from '../../models/hall.model';
 import {CinemaModel} from '../../models/cinema.model';
 import {AddHallDialogComponent} from '../add-hall-dialog/add-hall-dialog.component';
+import {UpdateHallDialogComponent} from '../update-hall-dialog/update-hall-dialog.component';
+import {DeleteHallDialogComponent} from '../delete-hall-dialog/delete-hall-dialog.component';
 
 @Component({
   selector: 'app-hall-settings',
@@ -17,7 +19,9 @@ import {AddHallDialogComponent} from '../add-hall-dialog/add-hall-dialog.compone
     NgOptimizedImage,
     NgOptimizedImage,
     ReactiveFormsModule,
-    AddHallDialogComponent
+    AddHallDialogComponent,
+    UpdateHallDialogComponent,
+    DeleteHallDialogComponent
   ],
   templateUrl: './hall-settings.component.html',
   styleUrl: './hall-settings.component.scss'
@@ -27,24 +31,39 @@ export class HallSettingsComponent {
 
   hallList: {
     id: number,
+    cinemaId: number,
     number: number,
+    projectionQuality: string|null,
+    nbRows: number,
+    nbSeats: number,
     movieTitle: string|null,
     movieImage: string|null,
     hours: string|null
   }[] = [];
 
+  hallIdToUpdate: number = 0;
+  cinemaIdToUpdate: number = 0;
+  numberToUpdate: number = 0;
+  projectionQualityToUpdate: string|null = "";
+  nbRowsToUpdate: number = 0;
+  nbSeatsToUpdate: number = 0;
+
+  hallIdToDelete: number = 0;
+
   isHallListLoading: boolean = false;
 
   @ViewChild(AddHallDialogComponent) addHallDialogComponent!: AddHallDialogComponent;
+  @ViewChild(UpdateHallDialogComponent) updateHallDialogComponent!: UpdateHallDialogComponent;
+  @ViewChild(DeleteHallDialogComponent) deleteHallDialogComponent!: DeleteHallDialogComponent;
 
   constructor(private readonly hallSettingsRenderer: HallSettingsRenderer, private readonly apiService: ApiService) {}
 
   async ngOnInit(): Promise<void> {
-    await this.loadCinemas();
+    await this.loadCinemaList();
   }
 
-  public async loadCinemas(): Promise<void> {
-    this.resetCinemas();
+  public async loadCinemaList(): Promise<void> {
+    this.resetCinemaList();
 
     const cinemas: CinemaModel[] = await this.apiService.getCinemas();
 
@@ -53,15 +72,17 @@ export class HallSettingsComponent {
     }
   }
 
-  public async loadHalls(): Promise<void> {
+  public async loadHallList(): Promise<void> {
     this.isHallListLoading = true;
 
-    this.resetHalls();
+    this.resetHallList();
 
-    const halls: HallModel[] = await this.apiService.getHalls(1);
+    let cinemaId = 1;
+
+    const halls: HallModel[] = await this.apiService.getHalls(cinemaId);
 
     for (const hall of halls) {
-      this.hallList.push(await this.hallSettingsRenderer.renderHall(hall));
+      this.hallList.push(await this.hallSettingsRenderer.renderHall(hall, cinemaId));
     }
 
     this.isHallListLoading = false;
@@ -71,19 +92,34 @@ export class HallSettingsComponent {
     this.addHallDialogComponent.showAddHallDialog();
   }
 
-  public editHall(id: number) {
+  public openUpdateHallDialog(
+    hallId: number,
+    cinemaId: number,
+    number: number,
+    projectionQuality: string | null,
+    nbRows: number,
+    nbSeats: number
+  ): void {
+    this.hallIdToUpdate = hallId;
+    this.cinemaIdToUpdate = cinemaId;
+    this.numberToUpdate = number;
+    this.projectionQualityToUpdate = projectionQuality;
+    this.nbRowsToUpdate = nbRows;
+    this.nbSeatsToUpdate = nbSeats;
 
+    this.updateHallDialogComponent.showUpdateHallDialog();
   }
 
-  public deleteHall(id: number) {
-
+  public openDeleteHallDialog(hallId: number) {
+    this.hallIdToDelete = hallId;
+    this.deleteHallDialogComponent.showDeleteHallDialog();
   }
 
-  private resetCinemas(): void {
+  private resetCinemaList(): void {
     this.cinemaList = [];
   }
 
-  private resetHalls(): void {
+  private resetHallList(): void {
     this.hallList = [];
   }
 }
