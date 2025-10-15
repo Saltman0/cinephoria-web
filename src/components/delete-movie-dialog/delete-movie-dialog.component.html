@@ -1,0 +1,22 @@
+<dialog #deleteMovieDialog class="modal">
+
+  <div class="modal-box flex flex-col justify-center">
+    <span class="text-lg font-bold mb-2">Suppression du film</span>
+    <div class="my-2">
+      <span>Voulez-vous vraiment supprimer ce film ?</span>
+      <br>
+      <span>Cette action sera irréversible.</span>
+    </div>
+    <div class="flex justify-end items-center gap-2 mt-2">
+      <button type="button" class="cinephoria-little-button" (click)="deleteMovie()">
+        <span [class.hidden]="isDeletingMovie">Oui</span>
+        <span [class.hidden]="!isDeletingMovie" class="loading loading-spinner loading-xs"></span>
+      </button>
+      <button type="button" class="cinephoria-little-button" (click)="closeDeleteMovieDialog()">
+        <span [class.hidden]="isDeletingMovie">Non</span>
+        <span [class.hidden]="!isDeletingMovie" class="loading loading-spinner loading-xs"></span>
+      </button>
+    </div>
+  </div>
+
+</dialog>
