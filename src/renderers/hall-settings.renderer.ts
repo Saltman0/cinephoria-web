@@ -3,13 +3,14 @@ import {ShowtimeModel} from '../models/showtime.model';
 import {MovieModel} from '../models/movie.model';
 import {HallModel} from '../models/hall.model';
 import {CinemaModel} from '../models/cinema.model';
+import {SeatModel} from '../models/seat.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HallSettingsRenderer {
 
-  public async renderHall(hall: HallModel) {
+  public async renderHall(hall: HallModel, cinemaId: number) {
 
     const currentShowtime: ShowtimeModel|null = hall.currentShowtime;
     let currentMovieTitle: string|null = null;
@@ -36,9 +37,15 @@ export class HallSettingsRenderer {
 
     }
 
+    const seats: SeatModel[] = hall.seats;
+
     return {
       id: hall.id,
+      cinemaId: cinemaId,
       number: hall.number,
+      projectionQuality: hall.projectionQuality,
+      nbRows: new Set(seats.map(seat => seat.row)).size,
+      nbSeats: new Set(seats.map(seat => seat.number)).size,
       movieTitle: currentMovieTitle,
       movieImage: currentMovieImage,
       hours: hours
