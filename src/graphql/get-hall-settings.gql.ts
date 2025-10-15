@@ -15,6 +15,7 @@ export class GetHallSettingsGql extends Query<Response> {
         halls(cinemaId: $cinemaId) {
           id
           number
+          projectionQuality
           currentShowtime {
             id
             startTime
@@ -23,6 +24,11 @@ export class GetHallSettingsGql extends Query<Response> {
               id
               title
             }
+          }
+          seats {
+            id
+            row
+            number
           }
         }
       }
