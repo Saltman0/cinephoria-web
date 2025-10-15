@@ -3,13 +3,18 @@ import {HeaderComponent} from '../header/header.component';
 import {FooterComponent} from '../footer/footer.component';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ApiService} from '../../services/api/api.service';
+import {NavMobileComponent} from '../nav-mobile/nav-mobile.component';
+import {NgOptimizedImage} from '@angular/common';
+import {LocalStorageService} from '../../services/local-storage/local-storage.service';
 
 @Component({
   selector: 'app-account-creation',
   imports: [
     HeaderComponent,
     FooterComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NavMobileComponent,
+    NgOptimizedImage
   ],
   templateUrl: './account-creation.component.html',
   styleUrl: './account-creation.component.scss'
@@ -20,18 +25,29 @@ export class AccountCreationComponent {
     password: new FormControl("", [Validators.required]),
     firstName: new FormControl("", [Validators.required]),
     lastName: new FormControl("", [Validators.required]),
-    phoneNumber: new FormControl("", [Validators.required, Validators.pattern("^\\+?[0-9]{1,3}([-\\s]?[0-9]{1,4}){2,4}$\n")])
+    phoneNumber: new FormControl(
+      "",
+      [Validators.required, Validators.pattern("^\\+?[0-9]{1,3}([-\\s]?[0-9]{1,4}){2,4}$\n")]
+    )
   });
 
-  constructor(private readonly apiService: ApiService) {}
+  constructor(private readonly localStorageService: LocalStorageService, private readonly apiService: ApiService) {}
 
   async submit() {
+    const jwtToken = await this.apiService.login(
+      "baudoin.mathieu@protonmail.com", "0123456789"
+    );
+
+    this.localStorageService.addJwtToken(jwtToken.value);
+
     await this.apiService.createUser(
+      this.localStorageService.getJwtToken(),
       <string> this.accountCreationForm.value.email,
       <string> this.accountCreationForm.value.password,
       <string> this.accountCreationForm.value.firstName,
       <string> this.accountCreationForm.value.lastName,
-      <string> this.accountCreationForm.value.phoneNumber
+      <string> this.accountCreationForm.value.phoneNumber,
+      "user"
     );
   }
 }

@@ -1,60 +1,54 @@
 <app-header></app-header>
 
-<main class="flex justify-center items-center">
+<main class="flex flex-col items-center justify-center px-4 lg:my-8">
 
-  <section class="w-90/100">
+  <section class="flex flex-col items-center p-5 lg:w-112.5 w-90 h-135" style="background-color: #272727;">
 
-    <!-- Header -->
-    <div class="bg-gray-700">
+      <span class="cinephoria-dialog-title">Inscription</span>
 
-      <span class="cinephoria-subtitle">Inscription</span>
+      <form [formGroup]="accountCreationForm" (ngSubmit)="submit()" method="POST"
+            class="flex flex-col justify-around items-center h-140">
 
-      <form [formGroup]="accountCreationForm" (ngSubmit)="submit()"
-            method="POST"
-            class="flex flex-col justify-evenly items-center h-[100dvh]">
+        <div class="cinephoria-input-container flex flex-col items-start">
+          <img ngSrc="../../assets/images/User.png" width="25" height="25" alt="Email"/>
+          <input type="email" formControlName="email" placeholder="Email" name="email" id="email"
+                 class="cinephoria-input h-8.75 w-62.5" required minlength="4" maxlength="50" />
+        </div>
 
-        <div class="flex flex-col items-start">
-          <label class="cinephoria-big-text">Email</label>
-          <input type="email" formControlName="email" name="email" id="email"
-                 class="cinephoria-input h-10 w-100" required minlength="4" maxlength="50"/>
+        <div class="cinephoria-input-container flex flex-col items-start">
+          <img ngSrc="../../assets/images/Lock.png" width="25" height="25" alt="Mot de passe"/>
+          <input type="password" formControlName="password" placeholder="Mot de passe" name="password" id="password"
+                 class="cinephoria-input h-8.75 w-62.5" required minlength="4" maxlength="64" />
         </div>
 
         <div class="flex flex-col items-start">
-          <label class="cinephoria-big-text">Mot de passe</label>
-          <input type="password" formControlName="password" name="password" id="password"
-                 class="cinephoria-input h-10 w-100" required minlength="4" maxlength="64"/>
+          <input type="text" formControlName="firstName" placeholder="Prénom" name="firstName" id="firstName"
+                 class="cinephoria-input h-8.75 w-62.5" required minlength="4" maxlength="30" />
         </div>
 
         <div class="flex flex-col items-start">
-          <label class="cinephoria-big-text">Prénom</label>
-          <input type="text" formControlName="firstName" name="firstName" id="firstName"
-                 class="cinephoria-input h-10 w-100" required minlength="4" maxlength="30"/>
+          <input type="text" formControlName="lastName" placeholder="Nom" name="lastName" id="lastName"
+                 class="cinephoria-input h-8.75 w-62.5" required minlength="4" maxlength="30" />
         </div>
 
-        <div class="flex flex-col items-start">
-          <label class="cinephoria-big-text">Nom</label>
-          <input type="text" formControlName="lastName" name="lastName" id="lastName"
-                 class="cinephoria-input h-10 w-100" required minlength="4" maxlength="30"/>
+        <div class="cinephoria-input-container flex flex-col items-start">
+          <img ngSrc="../../assets/images/Phone_2.png" width="25" height="25" alt="Numéro de téléphone"/>
+          <input type="text" formControlName="phoneNumber" placeholder="Numéro de téléphone" name="phoneNumber"
+                 id="phoneNumber" class="cinephoria-input h-8.75 w-62.5" required minlength="4" maxlength="20" />
         </div>
 
-        <div class="flex flex-col items-start">
-          <label class="cinephoria-big-text">Numéro de téléphone</label>
-          <input type="text" formControlName="phoneNumber" name="phoneNumber" id="phoneNumber"
-                 class="cinephoria-input h-10 w-100" required minlength="4" maxlength="20"/>
-        </div>
-
-        <div class="flex justify-evenly w-150">
-          <button type="submit" class="cinephoria-button h-10 w-40">
-            <span class="ml-3">Créer mon compte</span>
+        <div class="flex justify-center">
+          <button type="submit" class="cinephoria-button">
+            <span>Créer mon compte</span>
           </button>
         </div>
 
       </form>
-
-    </div>
 
   </section>
 
 </main>
 
 <app-footer></app-footer>
+
+<app-nav-mobile></app-nav-mobile>

@@ -3,13 +3,15 @@ import {HeaderComponent} from '../header/header.component';
 import {FooterComponent} from '../footer/footer.component';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ApiService} from '../../services/api/api.service';
+import {NavMobileComponent} from '../nav-mobile/nav-mobile.component';
 
 @Component({
   selector: 'app-contact',
   imports: [
     HeaderComponent,
     FooterComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NavMobileComponent
   ],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss'

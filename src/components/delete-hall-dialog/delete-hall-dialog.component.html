@@ -1,0 +1,22 @@
+<dialog #deleteHallDialog class="modal">
+
+  <div class="modal-box flex flex-col justify-center">
+    <span class="text-lg font-bold mb-2">Suppression d'une salle</span>
+    <div class="my-2">
+      <span>Voulez-vous vraiment supprimer cette salle ?</span>
+      <br>
+      <span>Cette action sera irréversible.</span>
+    </div>
+    <div class="flex justify-end items-center gap-2 mt-2">
+      <button type="button" class="cinephoria-little-button" (click)="deleteHall()">
+        <span [class.hidden]="isDeletingHall">Oui</span>
+        <span [class.hidden]="!isDeletingHall" class="loading loading-spinner loading-xs"></span>
+      </button>
+      <button type="button" class="cinephoria-little-button" (click)="closeDeleteHallDialog()">
+        <span [class.hidden]="isDeletingHall">Non</span>
+        <span [class.hidden]="!isDeletingHall" class="loading loading-spinner loading-xs"></span>
+      </button>
+    </div>
+  </div>
+
+</dialog>
