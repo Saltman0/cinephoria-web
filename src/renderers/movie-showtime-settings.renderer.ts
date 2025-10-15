@@ -36,7 +36,8 @@ export class MovieShowtimeSettingsRenderer {
       id: showtime.id,
       date: day + "/" + month + "/" + year,
       hours: startHour + "h" + startMinute + "-" + endHour + "h" + endMinute,
-      hallNumber: showtime.hall.number
+      hallNumber: showtime.hall.number,
+      movieId: showtime.movie.id
     }
   }
 }
