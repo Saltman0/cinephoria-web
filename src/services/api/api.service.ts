@@ -273,11 +273,39 @@ export class ApiService {
     return response.json();
   }
 
+  public async updateHall(
+    token: string,
+    hallId: number,
+    number: number,
+    projectionQuality: string,
+    cinemaId: number
+  ): Promise<any> {
+    const response: Response = await fetch(this.userApiUrl + `hall/${encodeURIComponent(hallId)}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        "number": number,
+        "projectionQuality": projectionQuality,
+        "cinemaId": cinemaId
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(response.status.toString());
+    }
+
+    return response.json();
+  }
+
   public async getHalls(cinemaId: number): Promise<HallModel[]> {
     let halls: HallModel[] = [];
 
     let result = await this.getHallSettingsGql.watch(
-      { cinemaId: cinemaId }
+      {cinemaId: cinemaId},
+      {fetchPolicy: "network-only"}
     ).result();
 
     result.data.halls.forEach((hall: HallModel) => {
@@ -289,6 +317,22 @@ export class ApiService {
     });
 
     return halls;
+  }
+
+  public async deleteHall(token: string, hallId: number): Promise<any> {
+    const response: Response = await fetch(this.userApiUrl + `hall/${encodeURIComponent(hallId)}`, {
+      method: "DELETE",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json"
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(response.status.toString());
+    }
+
+    return response.json();
   }
 
   public async createSeat(token: string, row: string, number: number, hallId: number): Promise<any> {
@@ -324,6 +368,22 @@ export class ApiService {
     });
 
     return seats;
+  }
+
+  public async deleteSeat(token: string, seatId: number): Promise<any> {
+    const response: Response = await fetch(this.userApiUrl + `seat/${encodeURIComponent(seatId)}`, {
+      method: "DELETE",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json"
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(response.status.toString());
+    }
+
+    return response.json();
   }
 
   public async getBookedSeats(showtimeId: number, userId: number|null): Promise<SeatModel[]> {
