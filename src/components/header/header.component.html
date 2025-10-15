@@ -23,8 +23,8 @@
   </nav>
 
   <div class="cinephoria-account lg:flex hidden justify-end items-center w-30/100">
-    <span class="cinephoria-header">Mon espace</span>
-    <img ngSrc="../../assets/images/Account.png" class="ml-2" width="50" height="50"  alt="Mon espace"/>
+    <span class="cinephoria-header">{{ mySpaceTitle }}</span>
+    <img ngSrc="../../assets/images/Account.png" class="ml-2" width="50" height="50"  [alt]="mySpaceTitle"/>
   </div>
 
 </header>

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {NgOptimizedImage} from "@angular/common";
 import {RouterLink, RouterLinkActive} from '@angular/router';
 
@@ -14,4 +14,8 @@ import {RouterLink, RouterLinkActive} from '@angular/router';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent {}
+export class HeaderComponent {
+
+  @Input() mySpaceTitle = "Mon espace";
+
+}
