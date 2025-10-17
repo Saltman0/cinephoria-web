@@ -1,11 +1,19 @@
 import {Injectable} from "@angular/core";
 import {MovieModel} from '../models/movie.model';
 import {ShowtimeModel} from '../models/showtime.model';
+import {CategoryModel} from '../models/category.model';
 
 @Injectable({
     providedIn: 'root'
 })
 export class MovieShowtimeSettingsRenderer {
+
+  public renderCategory(category: CategoryModel) {
+    return {
+      id: category.id,
+      name: category.name
+    }
+  }
 
   public async renderMovie(movie: MovieModel) {
     return {
