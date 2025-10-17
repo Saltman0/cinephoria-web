@@ -1,0 +1,73 @@
+<dialog #addMovieDialog class="modal">
+
+    <div class="modal-box flex flex-col justify-center items-center">
+
+        <span class="cinephoria-dialog-title">Ajout d'un film</span>
+
+        <form [formGroup]="movieForm" (ngSubmit)="createMovie()" method="POST"
+              class="flex flex-col justify-around items-center h-140">
+
+            <div class="cinephoria-select-cinema flex justify-between items-center px-2">
+                <select class="mx-1" formControlName="categoryId" name="cinemaId" id="cinemaId">
+                    <option selected disabled>Choisissez une catégorie</option>
+                    @for (category of categoryList; track category.id) {
+                        <option [value]="category.id">{{ category.name }}</option>
+                    }
+                </select>
+
+                <img ngSrc="../../assets/images/Down_arrow.png" width="25" height="25"
+                     alt="Flèche de sélection de la catégorie" />
+            </div>
+
+            <div class="flex flex-col items-start">
+                <input type="text" formControlName="title" placeholder="Titre du film"
+                       name="number" id="number" class="cinephoria-input h-8.75 w-62.5" required min="1"
+                       max="50" />
+            </div>
+
+            <div class="flex flex-col items-start">
+                <input type="text" formControlName="description" placeholder="Description du film"
+                       name="description" id="description" class="cinephoria-input h-8.75 w-62.5" required
+                       minlength="5" maxlength="200" />
+            </div>
+
+            <div class="flex flex-col items-start">
+                <input type="number" formControlName="minimumAge" placeholder="Âge minimum"
+                       name="minimumAge" id="minimumAge" class="cinephoria-input h-8.75 w-62.5" minlength="1"
+                       maxlength="18" />
+            </div>
+
+            <div class="cinephoria-select-cinema flex justify-between items-center px-2">
+                <select class="mx-1" formControlName="favorite" name="favorite" id="favorite" required>
+                    <option [selected]="true" [disabled]="true">Coup de coeur ?</option>
+                    <option value="true">Oui</option>
+                    <option value="false">Non</option>
+                </select>
+
+                <img ngSrc="../../assets/images/Down_arrow.png" width="25" height="25"
+                     alt="Flèche de sélection de la catégorie" />
+            </div>
+
+            <div class="flex flex-col items-start">
+                <input type="text" formControlName="imageURL" placeholder="URL du film"
+                       name="imageURL" id="imageURL" class="cinephoria-input h-8.75 w-62.5" required min="1"
+                       max="100" />
+            </div>
+
+            <div class="flex justify-end items-center gap-2 mt-2">
+                <button type="submit" class="cinephoria-button">
+                    <span [class.hidden]="isAddingMovie">Enregistrer</span>
+                    <span [class.hidden]="!isAddingMovie" class="loading loading-spinner loading-xl"></span>
+                </button>
+                <button type="button" class="cinephoria-button" (click)="closeAddMovieDialog()">
+                    <span [class.hidden]="isAddingMovie">Annuler</span>
+                    <span [class.hidden]="!isAddingMovie" class="loading loading-spinner loading-xl"></span>
+                </button>
+            </div>
+
+        </form>
+
+
+    </div>
+
+</dialog>
