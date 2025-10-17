@@ -22,6 +22,7 @@ import {SeatFactory} from '../../factories/seat.factory';
 import {GetBookedSeatsGql} from '../../graphql/get-booked-seats.gql';
 import {BookingSeatModel} from '../../models/bookingSeat.model';
 import {environment} from "../../environments/environment";
+import {CategoryModel} from '../../models/category.model';
 
 @Injectable({
   providedIn: 'root'
@@ -122,16 +123,31 @@ export class ApiService {
     return response.json();
   }
 
+  public async getCategories(): Promise<CategoryModel[]> {
+    const response: Response = await fetch(this.movieApiUrl + `category`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(response.status.toString());
+    }
+
+    return response.json();
+  }
+
   public async getMoviesWithShowtimes(): Promise<MovieModel[]> {
     let moviesWithShowtimes: MovieModel[] = [];
 
-    let result = await this.getMoviesSettingsGQL.watch().result();
+    let result = await this.getMoviesSettingsGQL.watch({fetchPolicy: "network-only"}).result();
 
     result.data.movies.forEach((movie: MovieModel): void => {
 
       moviesWithShowtimes.push(
         this.movieFactory.create(
-          movie.id, movie.favorite, movie.title, movie.imageURL, movie.minimumAge, movie.showtimes
+          movie.id, movie.favorite, movie.title, movie.imageURL, movie.minimumAge, movie.showtimes, movie.category
         )
       );
 
@@ -200,6 +216,38 @@ export class ApiService {
         "Authorization": `Bearer ${token}`,
         "Content-Type": "application/json"
       }
+    });
+
+    if (!response.ok) {
+      throw new Error(response.status.toString());
+    }
+
+    return response.json();
+  }
+
+  public async createMovie(
+    token: string,
+    title: string,
+    description: string,
+    minimumAge: number|null,
+    favorite: boolean,
+    imageURL: string,
+    categoryId: number
+  ): Promise<any> {
+    const response: Response = await fetch(this.movieApiUrl + "movie", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        "title": title,
+        "description": description,
+        "minimumAge": minimumAge,
+        "favorite": favorite,
+        "imageURL": imageURL,
+        "categoryId": categoryId
+      })
     });
 
     if (!response.ok) {
