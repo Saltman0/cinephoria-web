@@ -11,6 +11,7 @@ import {NavMobileComponent} from '../nav-mobile/nav-mobile.component';
 import {ShowtimeModel} from '../../models/showtime.model';
 import {DeleteMovieDialogComponent} from '../delete-movie-dialog/delete-movie-dialog.component';
 import {DeleteShowtimeDialogComponent} from '../delete-showtime-dialog/delete-showtime-dialog.component';
+import {AddMovieDialogComponent} from "../add-movie-dialog/add-movie-dialog.component";
 
 @Component({
   selector: 'app-movie-showtime-settings',
@@ -22,7 +23,8 @@ import {DeleteShowtimeDialogComponent} from '../delete-showtime-dialog/delete-sh
     NgOptimizedImage,
     NavMobileComponent,
     DeleteMovieDialogComponent,
-    DeleteShowtimeDialogComponent
+    DeleteShowtimeDialogComponent,
+    AddMovieDialogComponent
   ],
   templateUrl: './movie-showtime-settings.component.html',
   styleUrl: './movie-showtime-settings.component.scss'
@@ -54,6 +56,7 @@ export class MovieShowtimeSettingsComponent {
   selectedMovieId: number = 0;
   selectedShowtimeId: number = 0;
 
+  @ViewChild(AddMovieDialogComponent) addMovieDialog!: AddMovieDialogComponent;
   @ViewChild(DeleteMovieDialogComponent) deleteMovieDialog!: DeleteMovieDialogComponent;
   @ViewChild(DeleteShowtimeDialogComponent) deleteShowtimeDialog!: DeleteShowtimeDialogComponent;
 
@@ -108,7 +111,7 @@ export class MovieShowtimeSettingsComponent {
   }
 
   public openAddMovieDialog() {
-
+    this.addMovieDialog.showAddMovieDialog();
   }
 
   public openUpdateMovieDialog() {

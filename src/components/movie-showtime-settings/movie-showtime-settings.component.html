@@ -121,6 +121,8 @@
 
 <app-footer></app-footer>
 
+<app-add-movie-dialog (movieAddedEvent)="loadMovieList()"></app-add-movie-dialog>
+
 <app-delete-movie-dialog [movieId]="selectedMovieId" (movieDeletedEvent)="loadMovieList()"></app-delete-movie-dialog>
 
 <app-delete-showtime-dialog
