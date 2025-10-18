@@ -44,10 +44,14 @@ export class MovieShowtimeSettingsRenderer {
 
     return {
       id: showtime.id,
+      startTime: showtime.startTime,
+      endTime: showtime.endTime,
       date: day + "/" + month + "/" + year,
       hours: startHour + "h" + startMinute + "-" + endHour + "h" + endMinute,
+      hallId: showtime.hall.id,
       hallNumber: showtime.hall.number,
-      movieId: showtime.movie.id
+      movieId: showtime.movie.id,
+      price: showtime.price
     }
   }
 }
