@@ -361,6 +361,37 @@ export class ApiService {
     return response.json();
   }
 
+  public async updateShowtime(
+      token: string,
+      showtimeId: number,
+      movieId: number,
+      hallId: number,
+      startTime: string,
+      endTime: string,
+      price: number
+  ): Promise<any> {
+    const response: Response = await fetch(this.showtimeApiUrl + `showtime/${encodeURIComponent(showtimeId)}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        "movieId": movieId,
+        "hallId": hallId,
+        "startTime": startTime,
+        "endTime": endTime,
+        "price": price
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(response.status.toString());
+    }
+
+    return response.json();
+  }
+
   public async deleteShowtime(token: string, showtimeId: number) {
     const response: Response = await fetch(this.showtimeApiUrl + `showtime/${encodeURIComponent(showtimeId)}`, {
       method: "DELETE",
