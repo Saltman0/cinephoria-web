@@ -13,6 +13,7 @@ import {DeleteMovieDialogComponent} from '../delete-movie-dialog/delete-movie-di
 import {DeleteShowtimeDialogComponent} from '../delete-showtime-dialog/delete-showtime-dialog.component';
 import {AddMovieDialogComponent} from "../add-movie-dialog/add-movie-dialog.component";
 import {UpdateMovieDialogComponent} from "../update-movie-dialog/update-movie-dialog.component";
+import {AddShowtimeDialogComponent} from "../add-showtime-dialog/add-showtime-dialog.component";
 
 @Component({
   selector: 'app-movie-showtime-settings',
@@ -26,7 +27,8 @@ import {UpdateMovieDialogComponent} from "../update-movie-dialog/update-movie-di
     DeleteMovieDialogComponent,
     DeleteShowtimeDialogComponent,
     AddMovieDialogComponent,
-    UpdateMovieDialogComponent
+    UpdateMovieDialogComponent,
+    AddShowtimeDialogComponent
   ],
   templateUrl: './movie-showtime-settings.component.html',
   styleUrl: './movie-showtime-settings.component.scss'
@@ -63,6 +65,7 @@ export class MovieShowtimeSettingsComponent {
   @ViewChild(AddMovieDialogComponent) addMovieDialog!: AddMovieDialogComponent;
   @ViewChild(UpdateMovieDialogComponent) updateMovieDialog!: UpdateMovieDialogComponent;
   @ViewChild(DeleteMovieDialogComponent) deleteMovieDialog!: DeleteMovieDialogComponent;
+  @ViewChild(AddShowtimeDialogComponent) addShowtimeDialog!: AddShowtimeDialogComponent;
   @ViewChild(DeleteShowtimeDialogComponent) deleteShowtimeDialog!: DeleteShowtimeDialogComponent;
 
   constructor(
@@ -145,7 +148,7 @@ export class MovieShowtimeSettingsComponent {
   }
 
   public openAddShowtimeDialog() {
-
+    this.addShowtimeDialog.showAddShowtimeDialog();
   }
 
   public openUpdateShowtimeDialog(showtimeId: number) {

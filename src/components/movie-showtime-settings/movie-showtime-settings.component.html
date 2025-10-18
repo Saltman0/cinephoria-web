@@ -134,6 +134,7 @@
 <app-update-movie-dialog (movieUpdatedEvent)="loadMovieList()"></app-update-movie-dialog>
 <app-delete-movie-dialog [movieId]="selectedMovieId" (movieDeletedEvent)="loadMovieList()"></app-delete-movie-dialog>
 
+<app-add-showtime-dialog (showtimeAddedEvent)="loadShowtimeList(selectedMovieId)"></app-add-showtime-dialog>
 <app-delete-showtime-dialog
   [showtimeId]="selectedShowtimeId"
   (showtimeDeletedEvent)="loadShowtimeList(selectedMovieId)">
