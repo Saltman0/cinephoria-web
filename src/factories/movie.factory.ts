@@ -12,12 +12,13 @@ export class MovieFactory {
       id: number,
       favorite: boolean,
       title: string,
+      description: string,
       imageUrl: string,
       minimumAge: number,
       showtimes: ShowtimeModel[],
       category: CategoryModel
     ): MovieModel {
-        return new MovieModel(id, favorite, title, imageUrl, minimumAge, showtimes, category);
+        return new MovieModel(id, favorite, title, description, imageUrl, minimumAge, showtimes, category);
     }
 
 }
