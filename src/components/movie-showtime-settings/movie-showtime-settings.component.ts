@@ -12,6 +12,7 @@ import {ShowtimeModel} from '../../models/showtime.model';
 import {DeleteMovieDialogComponent} from '../delete-movie-dialog/delete-movie-dialog.component';
 import {DeleteShowtimeDialogComponent} from '../delete-showtime-dialog/delete-showtime-dialog.component';
 import {AddMovieDialogComponent} from "../add-movie-dialog/add-movie-dialog.component";
+import {UpdateMovieDialogComponent} from "../update-movie-dialog/update-movie-dialog.component";
 
 @Component({
   selector: 'app-movie-showtime-settings',
@@ -24,7 +25,8 @@ import {AddMovieDialogComponent} from "../add-movie-dialog/add-movie-dialog.comp
     NavMobileComponent,
     DeleteMovieDialogComponent,
     DeleteShowtimeDialogComponent,
-    AddMovieDialogComponent
+    AddMovieDialogComponent,
+    UpdateMovieDialogComponent
   ],
   templateUrl: './movie-showtime-settings.component.html',
   styleUrl: './movie-showtime-settings.component.scss'
@@ -34,11 +36,13 @@ export class MovieShowtimeSettingsComponent {
 
   movieList: {
     id: number,
+    categoryId: number,
     imageURL: string,
     favorite: boolean,
     title: string,
+    description: string,
     nbShowtimes: number,
-    minimumAge: number
+    minimumAge: number|null,
     // TODO rating
   }[] = [];
 
@@ -57,6 +61,7 @@ export class MovieShowtimeSettingsComponent {
   selectedShowtimeId: number = 0;
 
   @ViewChild(AddMovieDialogComponent) addMovieDialog!: AddMovieDialogComponent;
+  @ViewChild(UpdateMovieDialogComponent) updateMovieDialog!: UpdateMovieDialogComponent;
   @ViewChild(DeleteMovieDialogComponent) deleteMovieDialog!: DeleteMovieDialogComponent;
   @ViewChild(DeleteShowtimeDialogComponent) deleteShowtimeDialog!: DeleteShowtimeDialogComponent;
 
@@ -114,8 +119,24 @@ export class MovieShowtimeSettingsComponent {
     this.addMovieDialog.showAddMovieDialog();
   }
 
-  public openUpdateMovieDialog() {
-
+  public openUpdateMovieDialog(
+      movieId: number,
+      categoryId: number,
+      title: string,
+      description: string,
+      minimumAge: number|null,
+      favorite: boolean,
+      imageURL: string
+  ): void {
+    this.updateMovieDialog.showUpdateMovieDialog(
+        movieId,
+        categoryId,
+        title,
+        description,
+        minimumAge,
+        favorite,
+        imageURL
+    );
   }
 
   public openDeleteMovieDialog(movieId: number) {

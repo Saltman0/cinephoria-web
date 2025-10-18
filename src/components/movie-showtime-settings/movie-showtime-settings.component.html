@@ -56,7 +56,16 @@
               </div>
 
               <div class="flex justify-end items-center w-12/100">
-                <img ngSrc="../../assets/images/Pencil.png" width="30" height="30" alt="Modifier le film" />
+                <img ngSrc="../../assets/images/Pencil.png" width="30" height="30" alt="Modifier le film"
+                     (click)="openUpdateMovieDialog(
+                        movie.id,
+                        movie.categoryId,
+                        movie.title,
+                        movie.description,
+                        movie.minimumAge,
+                        movie.favorite,
+                        movie.imageURL
+                     )" />
                 <img ngSrc="../../assets/images/Trash.png" width="30" height="30" alt="Supprimer le film"
                      (click)="openDeleteMovieDialog(movie.id)" />
               </div>
@@ -122,7 +131,7 @@
 <app-footer></app-footer>
 
 <app-add-movie-dialog (movieAddedEvent)="loadMovieList()"></app-add-movie-dialog>
-
+<app-update-movie-dialog (movieUpdatedEvent)="loadMovieList()"></app-update-movie-dialog>
 <app-delete-movie-dialog [movieId]="selectedMovieId" (movieDeletedEvent)="loadMovieList()"></app-delete-movie-dialog>
 
 <app-delete-showtime-dialog
