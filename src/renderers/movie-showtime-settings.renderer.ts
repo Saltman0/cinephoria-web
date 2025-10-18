@@ -18,11 +18,13 @@ export class MovieShowtimeSettingsRenderer {
   public async renderMovie(movie: MovieModel) {
     return {
       id: movie.id,
+      categoryId: movie.category.id,
       imageURL: movie.imageURL,
       favorite: movie.favorite,
       title: movie.title,
-      nbShowtimes: movie.showtimes.length,
-      minimumAge: movie.minimumAge
+      description: movie.description,
+      minimumAge: movie.minimumAge,
+      nbShowtimes: movie.showtimes.length
       // TODO rating
     }
   }
