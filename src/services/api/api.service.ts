@@ -316,7 +316,7 @@ export class ApiService {
     let showtimes: ShowtimeModel[] = [];
 
     let result = await this.getShowtimesGQL.watch(
-      { movieId: movieId }
+      { movieId: movieId }, { fetchPolicy: "network-only" }
     ).result();
 
     result.data.showtimes.forEach((showtime: ShowtimeModel) => {
@@ -329,6 +329,36 @@ export class ApiService {
     });
 
     return showtimes;
+  }
+
+  public async createShowtime(
+      token: string,
+      movieId: number,
+      hallId: number,
+      startTime: string,
+      endTime: string,
+      price: number
+  ): Promise<any> {
+    const response: Response = await fetch(this.showtimeApiUrl + "showtime", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        "movieId": movieId,
+        "hallId": hallId,
+        "startTime": startTime,
+        "endTime": endTime,
+        "price": price
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(response.status.toString());
+    }
+
+    return response.json();
   }
 
   public async deleteShowtime(token: string, showtimeId: number) {
