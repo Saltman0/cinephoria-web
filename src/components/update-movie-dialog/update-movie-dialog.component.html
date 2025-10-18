@@ -8,7 +8,7 @@
               class="flex flex-col justify-around items-center h-140">
 
             <div class="cinephoria-select-cinema flex justify-between items-center px-2">
-                <select class="mx-1" formControlName="categoryId" name="cinemaId" id="cinemaId">
+                <select class="mx-1" formControlName="categoryId" name="categoryId" id="categoryId">
                     <option disabled>Choisissez une catégorie</option>
                     @for (category of categoryList; track category.id) {
                         <option [value]="category.id" [selected]="category.id === categoryId">
@@ -23,7 +23,7 @@
 
             <div class="flex flex-col items-start">
                 <input [value]="title" type="text" formControlName="title" placeholder="Titre du film"
-                       name="number" id="number" class="cinephoria-input h-8.75 w-62.5" required min="1"
+                       name="title" id="title" class="cinephoria-input h-8.75 w-62.5" required min="1"
                        max="50" />
             </div>
 
