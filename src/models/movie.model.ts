@@ -7,6 +7,7 @@ export class MovieModel {
     imageURL: string;
     minimumAge: number;
     title: string;
+    description: string;
     showtimes: ShowtimeModel[];
     category: CategoryModel;
 
@@ -14,6 +15,7 @@ export class MovieModel {
       id: number,
       favorite: boolean,
       title: string,
+      description: string,
       imageURL: string,
       minimumAge: number,
       showtimes: ShowtimeModel[],
@@ -24,6 +26,7 @@ export class MovieModel {
         this.imageURL = imageURL;
         this.minimumAge = minimumAge;
         this.title = title;
+        this.description = description;
         this.showtimes = showtimes;
         this.category = category;
     }
