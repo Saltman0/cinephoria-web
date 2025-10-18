@@ -19,7 +19,11 @@ export class GetMoviesSettingsGql extends Query<Response> {
           imageURL
           favorite
           title
+          description
           minimumAge
+          category {
+            id
+          }
           showtimes {
             id
             price
