@@ -14,6 +14,7 @@ import {DeleteShowtimeDialogComponent} from '../delete-showtime-dialog/delete-sh
 import {AddMovieDialogComponent} from "../add-movie-dialog/add-movie-dialog.component";
 import {UpdateMovieDialogComponent} from "../update-movie-dialog/update-movie-dialog.component";
 import {AddShowtimeDialogComponent} from "../add-showtime-dialog/add-showtime-dialog.component";
+import {UpdateShowtimeDialogComponent} from "../update-showtime-dialog/update-showtime-dialog.component";
 
 @Component({
   selector: 'app-movie-showtime-settings',
@@ -28,7 +29,8 @@ import {AddShowtimeDialogComponent} from "../add-showtime-dialog/add-showtime-di
     DeleteShowtimeDialogComponent,
     AddMovieDialogComponent,
     UpdateMovieDialogComponent,
-    AddShowtimeDialogComponent
+    AddShowtimeDialogComponent,
+    UpdateShowtimeDialogComponent
   ],
   templateUrl: './movie-showtime-settings.component.html',
   styleUrl: './movie-showtime-settings.component.scss'
@@ -51,9 +53,13 @@ export class MovieShowtimeSettingsComponent {
   showtimeList: {
     id: number,
     date: string,
+    startTime: Date,
+    endTime: Date,
     hours: string,
+    hallId: number,
     hallNumber: number,
-    movieId: number
+    movieId: number,
+    price: number
   }[] = [];
 
   isMovieListLoading: boolean = false;
@@ -66,6 +72,7 @@ export class MovieShowtimeSettingsComponent {
   @ViewChild(UpdateMovieDialogComponent) updateMovieDialog!: UpdateMovieDialogComponent;
   @ViewChild(DeleteMovieDialogComponent) deleteMovieDialog!: DeleteMovieDialogComponent;
   @ViewChild(AddShowtimeDialogComponent) addShowtimeDialog!: AddShowtimeDialogComponent;
+  @ViewChild(UpdateShowtimeDialogComponent) updateShowtimeDialog!: UpdateShowtimeDialogComponent;
   @ViewChild(DeleteShowtimeDialogComponent) deleteShowtimeDialog!: DeleteShowtimeDialogComponent;
 
   constructor(
@@ -151,8 +158,23 @@ export class MovieShowtimeSettingsComponent {
     this.addShowtimeDialog.showAddShowtimeDialog();
   }
 
-  public openUpdateShowtimeDialog(showtimeId: number) {
-
+  public openUpdateShowtimeDialog(
+      showtimeId: number,
+      movieId: number,
+      hallId: number,
+      startTime: Date,
+      endTime: Date,
+      price: number
+  ) {
+    this.selectedShowtimeId = showtimeId;
+    this.updateShowtimeDialog.showUpdateShowtimeDialog(
+        showtimeId,
+        movieId,
+        hallId,
+        startTime.toString(),
+        endTime.toString(),
+        price
+    );
   }
 
   public openDeleteShowtimeDialog(showtimeId: number, movieId: number): void {
