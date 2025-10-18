@@ -1,0 +1,67 @@
+<dialog #addShowtimeDialog class="modal">
+
+    <div class="modal-box flex flex-col justify-center items-center">
+
+        <span class="cinephoria-dialog-title">Ajout d'une séance</span>
+
+        <form [formGroup]="showtimeForm" (ngSubmit)="createShowtime()" method="POST"
+              class="flex flex-col justify-around items-center h-140">
+
+            <div class="cinephoria-select-cinema flex justify-between items-center px-2">
+                <select class="mx-1" formControlName="movieId" name="movieId" id="movieId" required>
+                    <option selected disabled>Choisissez un film</option>
+                    @for (movie of movieList; track movie.id) {
+                        <option [value]="movie.id">{{ movie.title }}</option>
+                    }
+                </select>
+
+                <img ngSrc="../../assets/images/Down_arrow.png" width="25" height="25"
+                     alt="Flèche de sélection du film" />
+            </div>
+
+            <div class="cinephoria-select-cinema flex justify-between items-center px-2">
+                <select class="mx-1" formControlName="hallId" name="hallId" id="hallId" required>
+                    <option selected disabled>Choisissez une salle</option>
+                    @for (hall of hallList; track hall.id) {
+                        <option [value]="hall.id">{{ hall.number }}</option>
+                    }
+                </select>
+
+                <img ngSrc="../../assets/images/Down_arrow.png" width="25" height="25"
+                     alt="Flèche de sélection de la salle" />
+            </div>
+
+            <div class="flex flex-col items-start">
+                <input type="datetime-local" formControlName="startTime" placeholder="Date de début de séance"
+                       name="startTime" id="startTime" class="cinephoria-input h-8.75 w-62.5" required minlength="5"
+                       maxlength="200" />
+            </div>
+
+            <div class="flex flex-col items-start">
+                <input type="datetime-local" formControlName="endTime" placeholder="Date de fin de séance"
+                       name="endTime" id="endTime" class="cinephoria-input h-8.75 w-62.5" minlength="1"
+                       maxlength="18" />
+            </div>
+
+            <div class="flex flex-col items-start">
+                <input type="number" formControlName="price" placeholder="Prix de la séance"
+                       name="price" id="price" class="cinephoria-input h-8.75 w-62.5" required min="1" max="100" />
+            </div>
+
+            <div class="flex justify-end items-center gap-2 mt-2">
+                <button type="submit" class="cinephoria-button">
+                    <span [class.hidden]="isAddingShowtime">Enregistrer</span>
+                    <span [class.hidden]="!isAddingShowtime" class="loading loading-spinner loading-xl"></span>
+                </button>
+                <button type="button" class="cinephoria-button" (click)="closeAddShowtimeDialog()">
+                    <span [class.hidden]="isAddingShowtime">Annuler</span>
+                    <span [class.hidden]="!isAddingShowtime" class="loading loading-spinner loading-xl"></span>
+                </button>
+            </div>
+
+        </form>
+
+
+    </div>
+
+</dialog>
