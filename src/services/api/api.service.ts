@@ -146,8 +146,14 @@ export class ApiService {
     result.data.movies.forEach((movie: MovieModel): void => {
 
       moviesWithShowtimes.push(
-        this.movieFactory.create(
-          movie.id, movie.favorite, movie.title, movie.imageURL, movie.minimumAge, movie.showtimes, movie.category
+        this.movieFactory.create(movie.id,
+          movie.favorite,
+          movie.title,
+          movie.description,
+          movie.imageURL,
+          movie.minimumAge,
+          movie.showtimes,
+          movie.category
         )
       );
 
@@ -236,6 +242,39 @@ export class ApiService {
   ): Promise<any> {
     const response: Response = await fetch(this.movieApiUrl + "movie", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        "title": title,
+        "description": description,
+        "minimumAge": minimumAge,
+        "favorite": favorite,
+        "imageURL": imageURL,
+        "categoryId": categoryId
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(response.status.toString());
+    }
+
+    return response.json();
+  }
+
+  public async updateMovie(
+      token: string,
+      movieId: number,
+      title: string,
+      description: string,
+      minimumAge: number|null,
+      favorite: boolean,
+      imageURL: string,
+      categoryId: number
+  ): Promise<any> {
+    const response: Response = await fetch(this.movieApiUrl + `movie/${encodeURIComponent(movieId)}`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`
