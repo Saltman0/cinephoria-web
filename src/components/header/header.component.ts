@@ -40,5 +40,4 @@ export class HeaderComponent {
 
     await this.router.navigate(['/home']);
   }
-
 }
