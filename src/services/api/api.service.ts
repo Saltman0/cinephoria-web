@@ -47,10 +47,11 @@ export class ApiService {
               private readonly cinemaFactory: CinemaFactory,
               private readonly hallFactory: HallFactory,
               private readonly seatFactory: SeatFactory,
-              private showtimeFactory: ShowtimeFactory) {}
+              private showtimeFactory: ShowtimeFactory
+  ) {}
 
   public async login(email: string, password: string): Promise<any> {
-    const response = await fetch(this.userApiUrl + "login", {
+    const response: Response = await fetch(this.userApiUrl + "login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
