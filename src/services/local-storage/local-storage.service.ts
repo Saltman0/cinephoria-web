@@ -5,8 +5,8 @@ import { Injectable } from "@angular/core";
 })
 export class LocalStorageService {
 
-    public getJwtToken(): string {
-        return <string>localStorage.getItem("jwtToken");
+    public getJwtToken(): string|null {
+        return localStorage.getItem("jwtToken");
     }
 
     public addJwtToken(jwtToken: string): void {
