@@ -25,7 +25,7 @@ export class DeleteShowtimeDialogComponent {
   public async deleteShowtime(): Promise<void> {
     this.isDeletingShowtime = true;
 
-    await this.apiService.deleteShowtime(this.localStorageService.getJwtToken(), this.showtimeId);
+    await this.apiService.deleteShowtime(<string> this.localStorageService.getJwtToken(), this.showtimeId);
 
     this.showtimeDeletedEvent.emit(true);
 

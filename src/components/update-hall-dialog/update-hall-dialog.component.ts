@@ -73,14 +73,10 @@ export class UpdateHallDialogComponent {
   public async updateHall(): Promise<void> {
     this.isUpdatingHall = true;
 
-    const jwtToken = await this.apiService.login(
-      "baudoin.mathieu@protonmail.com", "0123456789"
-    );
-
-    this.localStorageService.addJwtToken(jwtToken.value);
+    const jwtToken: string = <string> this.localStorageService.getJwtToken();
 
     const hall = await this.apiService.updateHall(
-      this.localStorageService.getJwtToken(),
+        jwtToken,
       this.hallId,
       <number><unknown> this.hallForm.value.number,
       <string> this.hallForm.value.projectionQuality,
@@ -90,10 +86,7 @@ export class UpdateHallDialogComponent {
     const seats: SeatModel[] = hall.seats;
 
     for (const seat of seats) {
-      await this.apiService.deleteSeat(
-        this.localStorageService.getJwtToken(),
-        seat.id
-      );
+      await this.apiService.deleteSeat(jwtToken, seat.id);
     }
 
     const nbRows = <number><unknown> this.hallForm.value.nbRows;
@@ -106,10 +99,10 @@ export class UpdateHallDialogComponent {
         const number: number = j + 1;
 
         await this.apiService.createSeat(
-          this.localStorageService.getJwtToken(),
-          row,
-          number,
-          hall.id
+            jwtToken,
+            row,
+            number,
+            hall.id
         );
       }
 

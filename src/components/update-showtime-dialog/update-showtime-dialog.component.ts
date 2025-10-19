@@ -84,14 +84,8 @@ export class UpdateShowtimeDialogComponent {
   public async updateShowtime(): Promise<void> {
     this.isUpdatingShowtime = true;
 
-    const jwtToken = await this.apiService.login(
-        "baudoin.mathieu@protonmail.com", "0123456789"
-    );
-
-    this.localStorageService.addJwtToken(jwtToken.value);
-
     await this.apiService.updateShowtime(
-        this.localStorageService.getJwtToken(),
+        <string> this.localStorageService.getJwtToken(),
         this.showtimeId,
         <number><unknown> this.showtimeForm.value.movieId,
         <number><unknown> this.showtimeForm.value.hallId,

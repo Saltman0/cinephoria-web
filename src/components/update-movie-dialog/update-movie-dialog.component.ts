@@ -76,15 +76,8 @@ export class UpdateMovieDialogComponent {
   public async updateMovie(): Promise<void> {
     this.isUpdatingMovie = true;
 
-    const jwtToken = await this.apiService.login(
-      "baudoin.mathieu@protonmail.com", "0123456789"
-    );
-
-    this.localStorageService.addJwtToken(jwtToken.value);
-
-    console.log(this.movieForm.value);
     await this.apiService.updateMovie(
-      this.localStorageService.getJwtToken(),
+      <string> this.localStorageService.getJwtToken(),
       this.movieId,
       <string> this.movieForm.value.title,
       <string> this.movieForm.value.description,

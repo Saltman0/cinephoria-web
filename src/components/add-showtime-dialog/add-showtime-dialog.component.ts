@@ -77,14 +77,8 @@ export class AddShowtimeDialogComponent {
   public async createShowtime(): Promise<void> {
     this.isAddingShowtime = true;
 
-    const jwtToken = await this.apiService.login(
-      "baudoin.mathieu@protonmail.com", "0123456789"
-    );
-
-    this.localStorageService.addJwtToken(jwtToken.value);
-
     await this.apiService.createShowtime(
-      this.localStorageService.getJwtToken(),
+        <string> this.localStorageService.getJwtToken(),
         <number><unknown> this.showtimeForm.value.movieId,
         <number><unknown> this.showtimeForm.value.hallId,
         <string> this.showtimeForm.value.startTime,

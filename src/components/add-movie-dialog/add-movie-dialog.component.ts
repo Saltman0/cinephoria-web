@@ -68,14 +68,8 @@ export class AddMovieDialogComponent {
   public async createMovie(): Promise<void> {
     this.isAddingMovie = true;
 
-    const jwtToken = await this.apiService.login(
-      "baudoin.mathieu@protonmail.com", "0123456789"
-    );
-
-    this.localStorageService.addJwtToken(jwtToken.value);
-
     await this.apiService.createMovie(
-      this.localStorageService.getJwtToken(),
+      <string> this.localStorageService.getJwtToken(),
       <string> this.movieForm.value.title,
       <string> this.movieForm.value.description,
       <number|null> this.movieForm.value.minimumAge,

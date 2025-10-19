@@ -56,7 +56,7 @@ export class UpdateEmployeeDialogComponent {
 
     await this.apiService.updateUser(
       employeeId,
-      this.localStorageService.getJwtToken(),
+      <string> this.localStorageService.getJwtToken(),
       <string> this.employeeForm.value.email,
       <string> this.employeeForm.value.password,
       <string> this.employeeForm.value.firstName,

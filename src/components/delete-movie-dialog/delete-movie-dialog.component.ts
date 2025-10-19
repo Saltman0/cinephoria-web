@@ -25,7 +25,7 @@ export class DeleteMovieDialogComponent {
   public async deleteMovie() {
     this.isDeletingMovie = true;
 
-    await this.apiService.deleteMovie(this.localStorageService.getJwtToken(), this.movieId);
+    await this.apiService.deleteMovie(<string> this.localStorageService.getJwtToken(), this.movieId);
 
     this.movieDeletedEvent.emit(true);
 

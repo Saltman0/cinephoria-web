@@ -8,6 +8,8 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {BookingRenderer} from '../../renderers/booking.renderer';
 import {NavMobileComponent} from '../nav-mobile/nav-mobile.component';
 import {CinemaModel} from '../../models/cinema.model';
+import {LocalStorageService} from "../../services/local-storage/local-storage.service";
+import {jwtDecode} from "jwt-decode";
 
 @Component({
   selector: 'app-home',
@@ -38,7 +40,9 @@ export class OrderComponent {
 
   constructor(
     private readonly bookingRenderer: BookingRenderer,
-    private readonly apiService: ApiService) {}
+    private readonly apiService: ApiService,
+    private readonly localStorageService: LocalStorageService
+  ) {}
 
   async ngOnInit(): Promise<void> {
     await this.loadCinemas();
@@ -58,7 +62,8 @@ export class OrderComponent {
 
     this.resetBookings();
 
-    const bookings: BookingModel[] = await this.apiService.getBookings(1, null);
+    const userId: number = jwtDecode<{id: number}>(<string> this.localStorageService.getJwtToken()).id;
+    const bookings: BookingModel[] = await this.apiService.getBookings(userId, null);
 
     for (const booking of bookings) {
       this.bookingList.push(await this.bookingRenderer.render(booking));

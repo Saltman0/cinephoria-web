@@ -7,7 +7,7 @@ import {NavMobileComponent} from '../nav-mobile/nav-mobile.component';
 import {NgOptimizedImage} from '@angular/common';
 
 @Component({
-  selector: 'app-contact',
+  selector: 'app-forgotten-password',
   imports: [
     HeaderComponent,
     FooterComponent,

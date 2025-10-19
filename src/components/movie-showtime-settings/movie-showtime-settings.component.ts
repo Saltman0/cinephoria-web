@@ -90,12 +90,6 @@ export class MovieShowtimeSettingsComponent {
 
     this.isMovieListLoading = true;
 
-    const jwtToken = await this.apiService.login(
-      "baudoin.mathieu@protonmail.com", "0123456789"
-    );
-
-    this.localStorageService.addJwtToken(jwtToken.value);
-
     const moviesWithShowtimes: MovieModel[] = await this.apiService.getMoviesWithShowtimes();
 
     for (const movieWithShowtimes of moviesWithShowtimes) {
@@ -109,12 +103,6 @@ export class MovieShowtimeSettingsComponent {
     this.resetShowtimeList();
 
     this.isShowtimeListLoading = true;
-
-    const jwtToken = await this.apiService.login(
-      "baudoin.mathieu@protonmail.com", "0123456789"
-    );
-
-    this.localStorageService.addJwtToken(jwtToken.value);
 
     const showtimes: ShowtimeModel[] = await this.apiService.getShowtimes(movieId);
 

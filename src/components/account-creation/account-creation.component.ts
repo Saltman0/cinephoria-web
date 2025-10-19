@@ -34,14 +34,8 @@ export class AccountCreationComponent {
   constructor(private readonly localStorageService: LocalStorageService, private readonly apiService: ApiService) {}
 
   async submit() {
-    const jwtToken = await this.apiService.login(
-      "baudoin.mathieu@protonmail.com", "0123456789"
-    );
-
-    this.localStorageService.addJwtToken(jwtToken.value);
-
     await this.apiService.createUser(
-      this.localStorageService.getJwtToken(),
+      <string> this.localStorageService.getJwtToken(),
       <string> this.accountCreationForm.value.email,
       <string> this.accountCreationForm.value.password,
       <string> this.accountCreationForm.value.firstName,

@@ -75,7 +75,7 @@ export class EmployeeListComponent {
     this.isCreatingEmployee = true;
 
     await this.apiService.createUser(
-      this.localStorageService.getJwtToken(),
+      <string> this.localStorageService.getJwtToken(),
       <string> this.employeeForm.value.email,
       <string> this.employeeForm.value.password,
       <string> this.employeeForm.value.firstName,
@@ -114,14 +114,8 @@ export class EmployeeListComponent {
   public async loadEmployeeList(): Promise<void> {
     this.resetEmployeeList();
 
-    const jwtToken = await this.apiService.login(
-      "baudoin.mathieu@protonmail.com", "0123456789"
-    );
-
-    this.localStorageService.addJwtToken(jwtToken.value);
-
     const employees: UserModel[] = await this.apiService.getUsers(
-      this.localStorageService.getJwtToken(), "employee"
+      <string> this.localStorageService.getJwtToken(), "employee"
     );
 
     for (const employee of employees) {

@@ -25,13 +25,7 @@ export class DeleteEmployeeDialogComponent {
   public async deleteEmployee(employeeId: number) {
     this.isDeletingEmployee = true;
 
-    const jwtToken = await this.apiService.login(
-      "baudoin.mathieu@protonmail.com", "0123456789"
-    );
-
-    this.localStorageService.addJwtToken(jwtToken.value);
-
-    await this.apiService.deleteUser(this.localStorageService.getJwtToken(), employeeId);
+    await this.apiService.deleteUser(<string> this.localStorageService.getJwtToken(), employeeId);
 
     this.employeeDeletedEvent.emit(true);
 

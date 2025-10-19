@@ -65,14 +65,8 @@ export class AddHallDialogComponent {
   public async createHall(): Promise<void> {
     this.isAddingHall = true;
 
-    const jwtToken = await this.apiService.login(
-      "baudoin.mathieu@protonmail.com", "0123456789"
-    );
-
-    this.localStorageService.addJwtToken(jwtToken.value);
-
     const hall = await this.apiService.createHall(
-      this.localStorageService.getJwtToken(),
+      <string> this.localStorageService.getJwtToken(),
       <number><unknown> this.hallForm.value.number,
       <string> this.hallForm.value.projectionQuality,
       <number><unknown> this.hallForm.value.cinemaId
@@ -88,7 +82,7 @@ export class AddHallDialogComponent {
         const number: number = j + 1;
 
         await this.apiService.createSeat(
-          this.localStorageService.getJwtToken(),
+          <string> this.localStorageService.getJwtToken(),
           row,
           number,
           hall.id

@@ -26,18 +26,14 @@ export class DeleteHallDialogComponent {
   public async deleteHall() {
     this.isDeletingHall = true;
 
-    const jwtToken = await this.apiService.login(
-      "baudoin.mathieu@protonmail.com", "0123456789"
-    );
-
-    this.localStorageService.addJwtToken(jwtToken.value);
+    const jwtToken: string = <string> this.localStorageService.getJwtToken();
 
     const seats: SeatModel[] = await this.apiService.getSeats(this.hallId);
 
-    await this.apiService.deleteHall(this.localStorageService.getJwtToken(), this.hallId);
+    await this.apiService.deleteHall(jwtToken, this.hallId);
 
     for (const seat of seats) {
-      await this.apiService.deleteSeat(this.localStorageService.getJwtToken(), seat.id);
+      await this.apiService.deleteSeat(jwtToken, seat.id);
     }
 
     this.hallDeletedEvent.emit(true);
