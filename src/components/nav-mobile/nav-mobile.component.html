@@ -20,10 +20,54 @@
         <img ngSrc="assets/images/Contact.png" width="35" height="35" alt="Contact"/>
       </a>
     </li>
-    <li>
-      <a class="flex flex-col items-center" routerLink="/login" routerLinkActive="cinephoria-active-link" ariaCurrentWhenActive="page">
-        <img ngSrc="assets/images/Account.png" width="35" height="35" alt="Mon espace"/>
-      </a>
-    </li>
+      <details class="dropdown dropdown-top dropdown-end">
+          @switch (role) {
+              @case ("user") {
+                  <summary class="flex justify-center items-center cursor-pointer">
+                      <img ngSrc="../../assets/images/Account.png" class="ml-2" width="35" height="35"
+                           alt="Mon espace" />
+                  </summary>
+                  <ul class="menu dropdown-content bg-neutral-800 rounded-box w-52 p-2 shadow-sm">
+                      <li><a class="cinephoria-main-text" routerLink="/order">Mes commandes</a></li>
+                      <li><a class="cinephoria-main-text" (click)="logout()">Se déconnecter</a></li>
+                  </ul>
+              }
+              @case ("employee") {
+                  <summary class="flex justify-center items-center cursor-pointer">
+                      <img ngSrc="../../assets/images/Account.png" class="ml-2" width="35" height="35"
+                           alt="Intranet" />
+                  </summary>
+                  <ul class="menu dropdown-content bg-neutral-800 rounded-box w-52 p-2 shadow-sm">
+                      <li><a class="cinephoria-main-text" routerLink="/hall-settings">Configuration des salles</a></li>
+                      <li><a class="cinephoria-main-text" (click)="logout()">Se déconnecter</a></li>
+                  </ul>
+              }
+              @case ("admin") {
+                  <summary class="flex justify-center items-center cursor-pointer">
+                      <img ngSrc="../../assets/images/Account.png" class="ml-2" width="35" height="35"
+                           alt="Administration" />
+                  </summary>
+                  <ul class="menu dropdown-content bg-neutral-800 rounded-box w-52 p-2 shadow-sm">
+                      <li>
+                          <a class="cinephoria-main-text" routerLink="/movie-showtime-settings">
+                              Configuration des films et séances
+                          </a>
+                      </li>
+                      <li><a class="cinephoria-main-text" routerLink="/hall-settings">Configuration des salles</a></li>
+                      <li><a class="cinephoria-main-text" (click)="logout()">Se déconnecter</a></li>
+                  </ul>
+              }
+              @default {
+                  <summary class="flex justify-center items-center cursor-pointer">
+                      <img ngSrc="../../assets/images/Account.png" class="ml-2" width="35" height="35"
+                           alt="Mon espace" />
+                  </summary>
+                  <ul class="menu dropdown-content bg-neutral-800 rounded-box w-52 p-2 shadow-sm">
+                      <li><a class="cinephoria-main-text" routerLink="/login">Se connecter</a></li>
+                      <li><a class="cinephoria-main-text" routerLink="/account-creation">Créer un compte</a></li>
+                  </ul>
+              }
+          }
+      </details>
   </ul>
 </nav>
