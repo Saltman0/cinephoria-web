@@ -1,7 +1,7 @@
 import {ShowtimeModel} from "./showtime.model";
 import {CinemaModel} from './cinema.model';
-import {IncidentModel} from '../../../../Back/CinephoriaGraphQL/src/models';
 import {SeatModel} from './seat.model';
+import {IncidentModel} from "./incident.model";
 
 export class HallModel {
     id: number;
