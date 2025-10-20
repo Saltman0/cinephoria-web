@@ -2,8 +2,8 @@ import {Injectable} from "@angular/core";
 import {ShowtimeModel} from "../models/showtime.model";
 import {HallModel} from "../models/hall.model";
 import {CinemaModel} from '../models/cinema.model';
-import {IncidentModel} from '../../../../Back/CinephoriaGraphQL/src/models';
 import {SeatModel} from '../models/seat.model';
+import {IncidentModel} from "../models/incident.model";
 
 @Injectable({
     providedIn: 'root'
