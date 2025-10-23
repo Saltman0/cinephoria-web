@@ -43,6 +43,11 @@
                            alt="Intranet" />
                   </summary>
                   <ul class="menu dropdown-content bg-neutral-800 rounded-box w-52 p-2 shadow-sm">
+                      <li>
+                          <a class="cinephoria-main-text" routerLink="/movie-showtime-settings">
+                              Configuration des films
+                          </a>
+                      </li>
                       <li><a class="cinephoria-main-text" routerLink="/hall-settings">Configuration des salles</a></li>
                       <li><a class="cinephoria-main-text" (click)="logout()">Se déconnecter</a></li>
                   </ul>
@@ -56,10 +61,15 @@
                   <ul class="menu dropdown-content bg-neutral-800 rounded-box w-52 p-2 shadow-sm">
                       <li>
                           <a class="cinephoria-main-text" routerLink="/movie-showtime-settings">
-                              Configuration des films et séances
+                              Configuration des films
                           </a>
                       </li>
                       <li><a class="cinephoria-main-text" routerLink="/hall-settings">Configuration des salles</a></li>
+                      <li>
+                          <a class="cinephoria-main-text" routerLink="/employee">
+                              Configuration des employés
+                          </a>
+                      </li>
                       <li><a class="cinephoria-main-text" (click)="logout()">Se déconnecter</a></li>
                   </ul>
               }

@@ -114,9 +114,7 @@ export class EmployeeListComponent {
   public async loadEmployeeList(): Promise<void> {
     this.resetEmployeeList();
 
-    const employees: UserModel[] = await this.apiService.getUsers(
-      <string> this.localStorageService.getJwtToken(), "employee"
-    );
+    const employees: UserModel[] = await this.apiService.getUsers("employee");
 
     for (const employee of employees) {
       this.employeeList.push(this.employeeRenderer.render(employee));

@@ -71,7 +71,6 @@ export class ApiService {
     const response: Response = await fetch(this.userApiUrl + `user/${userId}`, {
       method: "GET",
       headers: {
-        "Authorization": `Bearer ${token}`,
         "Content-Type": "application/json"
       }
     });
@@ -85,18 +84,16 @@ export class ApiService {
 
   /**
    * Retourne les utilisateurs
-   * @param token
    * @param role
    */
-  public async getUsers(token: string, role: string|null): Promise<UserModel[]> {
+  public async getUsers(role: string|null): Promise<UserModel[]> {
     let roleQueryParam: string|null = null;
     if (role !== null) {
-      roleQueryParam = "?role=" + role;
+      roleQueryParam = "?role=" + encodeURIComponent(role);
     }
     const response: Response = await fetch(this.userApiUrl + `user` + roleQueryParam, {
       method: "GET",
       headers: {
-        "Authorization": `Bearer ${token}`,
         "Content-Type": "application/json"
       }
     });
@@ -142,7 +139,10 @@ export class ApiService {
   public async getMoviesWithShowtimes(): Promise<MovieModel[]> {
     let moviesWithShowtimes: MovieModel[] = [];
 
-    let result = await this.getMoviesSettingsGQL.watch({fetchPolicy: "network-only"}).result();
+    let result = await this.getMoviesSettingsGQL.watch(
+        {},
+        { fetchPolicy: "no-cache" }
+    ).result();
 
     result.data.movies.forEach((movie: MovieModel): void => {
 
@@ -301,7 +301,8 @@ export class ApiService {
     let bookings: BookingModel[] = [];
 
     let result = await this.getBookingsGQL.watch(
-        { userId: userId, showtimeId: showtimeId }
+        { userId: userId, showtimeId: showtimeId },
+        { fetchPolicy: "no-cache" }
     ).result();
 
     result.data.bookings.forEach((booking: BookingModel) => {
@@ -317,7 +318,8 @@ export class ApiService {
     let showtimes: ShowtimeModel[] = [];
 
     let result = await this.getShowtimesGQL.watch(
-      { movieId: movieId }, { fetchPolicy: "network-only" }
+        { movieId: movieId },
+        { fetchPolicy: "no-cache" }
     ).result();
 
     result.data.showtimes.forEach((showtime: ShowtimeModel) => {
@@ -412,7 +414,7 @@ export class ApiService {
   public async getCinemas(): Promise<CinemaModel[]> {
     let cinemas: CinemaModel[] = [];
 
-    let result = await this.getCinemasGql.watch().result();
+    let result = await this.getCinemasGql.watch({}, { fetchPolicy: "no-cache" }).result();
 
     result.data.cinemas.forEach((cinema: CinemaModel) => {
       cinemas.push(
@@ -478,8 +480,8 @@ export class ApiService {
     let halls: HallModel[] = [];
 
     let result = await this.getHallSettingsGql.watch(
-      {cinemaId: cinemaId},
-      {fetchPolicy: "network-only"}
+      { cinemaId: cinemaId },
+      { fetchPolicy: "no-cache" }
     ).result();
 
     result.data.halls.forEach((hall: HallModel) => {
@@ -534,7 +536,8 @@ export class ApiService {
     let seats: SeatModel[] = [];
 
     let result = await this.getSeatsGql.watch(
-      { hallId: hallId }
+        { hallId: hallId },
+        { fetchPolicy: "no-cache" }
     ).result();
 
     result.data.seats.forEach((seat: SeatModel) => {
@@ -564,7 +567,8 @@ export class ApiService {
     let seats: SeatModel[] = [];
 
     let result = await this.getBookedSeatsGql.watch(
-      { showtimeId: showtimeId, userId: userId }
+        { showtimeId: showtimeId, userId: userId },
+        { fetchPolicy: "no-cache" }
     ).result();
 
     result.data.bookings.forEach((booking: BookingModel) => {

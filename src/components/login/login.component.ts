@@ -41,6 +41,10 @@ export class LoginComponent {
 
     this.localStorageService.addJwtToken(result.value);
 
+    const resultUser = await this.apiService.getUser(<string> this.localStorageService.getJwtToken());
+
+    this.localStorageService.addCurrentRole(resultUser.role);
+
     await this.router.navigate(['/home']);
   }
 }
