@@ -17,4 +17,16 @@ export class LocalStorageService {
         localStorage.removeItem("jwtToken");
     }
 
+    public getCurrentRole(): string|null {
+        return localStorage.getItem("currentRole");
+    }
+
+    public addCurrentRole(currentRole: string): void {
+        localStorage.setItem("currentRole", currentRole);
+    }
+
+    public deleteCurrentRole(): void {
+        localStorage.removeItem("currentRole");
+    }
+
 }
