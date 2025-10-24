@@ -1,5 +1,6 @@
 import {ShowtimeModel} from "./showtime.model";
 import {CategoryModel} from './category.model';
+import {RatingModel} from "./rating.model";
 
 export class MovieModel {
     id: number;
@@ -9,6 +10,7 @@ export class MovieModel {
     title: string;
     description: string;
     showtimes: ShowtimeModel[];
+    ratings: RatingModel[];
     category: CategoryModel;
 
     constructor(
@@ -19,6 +21,7 @@ export class MovieModel {
       imageURL: string,
       minimumAge: number,
       showtimes: ShowtimeModel[],
+      ratings: RatingModel[],
       category: CategoryModel
     ) {
         this.id = id;
@@ -28,6 +31,7 @@ export class MovieModel {
         this.title = title;
         this.description = description;
         this.showtimes = showtimes;
+        this.ratings = ratings;
         this.category = category;
     }
 }
