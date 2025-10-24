@@ -43,7 +43,7 @@ export class LoginComponent {
 
     const resultUser = await this.apiService.getUser(<string> this.localStorageService.getJwtToken());
 
-    this.localStorageService.addCurrentRole(resultUser.role);
+    this.localStorageService.addCurrentUser(JSON.stringify({id: resultUser.id, role: resultUser.role}));
 
     await this.router.navigate(['/home']);
   }
