@@ -9,15 +9,20 @@ export class EmployeeGuard implements CanActivate {
 
   constructor(private localStorageService: LocalStorageService, private router: Router) {}
 
-  canActivate(): boolean {
-    const currentRole: string|null = this.localStorageService.getCurrentRole();
+  public canActivate(): boolean {
+    const currentUser: string|null = this.localStorageService.getCurrentUser();
 
-    if (currentRole === "admin" || currentRole === "employee") {
-      return true;
+    if (currentUser === null) {
+      this.router.navigate(['/home']);
+      return false;
     }
 
-    this.router.navigate(['/home']);
+    const currentRole: string = JSON.parse(currentUser).role;
+    if (currentRole !== "admin" && currentRole !== "employee") {
+      this.router.navigate(['/home']);
+      return false;
+    }
 
-    return false;
+    return true;
   }
 }
