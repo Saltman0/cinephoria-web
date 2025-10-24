@@ -30,24 +30,30 @@
           <div class="cinephoria-booking lg:flex-row flex-col justify-between items-center p-2.5 my-1"
                style="background-image: url('assets/images/movies/{{ booking.movieImage }}')">
 
-            <div class="flex justify-start items-center w-28/100">
+            <div class="flex justify-start items-center w-25/100">
               <span class="cinephoria-main-title">{{ booking.movieTitle }}</span>
             </div>
 
             <div class="flex justify-center items-center gap-2 w-20/100">
-              <img ngSrc="../../assets/images/Calendar.png" width="50" height="50" alt="Date de réservation">
+              <img ngSrc="../../assets/images/Calendar.png" width="50" height="50" alt="Date de réservation" />
               <span class="cinephoria-big-text">{{ booking.showtimeDate }}</span>
             </div>
 
-            <div class="flex justify-center items-center gap-2 w-22/100">
-              <img ngSrc="../../assets/images/Clock.png" width="50" height="50" alt="Date de réservation">
+            <div class="flex justify-center items-center gap-2 w-20/100">
+              <img ngSrc="../../assets/images/Clock.png" width="50" height="50" alt="Date de réservation" />
               <span class="cinephoria-big-text">{{ booking.hours }}</span>
             </div>
 
             <div class="flex justify-center items-center gap-2 w-15/100">
-              <img ngSrc="../../assets/images/Chair.png" width="50" height="50" alt="Date de réservation">
+              <img ngSrc="../../assets/images/Chair.png" width="50" height="50" alt="Date de réservation" />
               <span class="cinephoria-big-text">{{ booking.numberOfSeats }}</span>
             </div>
+
+            <div class="flex justify-center items-center w-5/100">
+              <img ngSrc="../../assets/images/Star_2.png" width="50" height="50" alt="Donner un avis sur le film"
+                   class="cursor-pointer" (click)="openAddRatingDialog(booking.movieId)" />
+            </div>
+
           </div>
         }
       }
@@ -61,3 +67,5 @@
 <app-footer></app-footer>
 
 <app-nav-mobile></app-nav-mobile>
+
+<app-add-rating-dialog [movieId]="selectedMovieId" [userId]="selectedUserId"></app-add-rating-dialog>

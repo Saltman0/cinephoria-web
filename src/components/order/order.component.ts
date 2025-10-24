@@ -1,4 +1,5 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
+import {jwtDecode} from "jwt-decode";
 import {HeaderComponent} from '../header/header.component';
 import {ApiService} from '../../services/api/api.service';
 import {FooterComponent} from '../footer/footer.component';
@@ -9,7 +10,7 @@ import {BookingRenderer} from '../../renderers/booking.renderer';
 import {NavMobileComponent} from '../nav-mobile/nav-mobile.component';
 import {CinemaModel} from '../../models/cinema.model';
 import {LocalStorageService} from "../../services/local-storage/local-storage.service";
-import {jwtDecode} from "jwt-decode";
+import {AddRatingDialogComponent} from "../add-rating-dialog/add-rating-dialog.component";
 
 @Component({
   selector: 'app-home',
@@ -19,7 +20,8 @@ import {jwtDecode} from "jwt-decode";
     NgOptimizedImage,
     NgOptimizedImage,
     ReactiveFormsModule,
-    NavMobileComponent
+    NavMobileComponent,
+    AddRatingDialogComponent
   ],
   templateUrl: './order.component.html',
   styleUrl: './order.component.scss'
@@ -29,6 +31,7 @@ export class OrderComponent {
 
   bookingList: {
     id: number,
+    movieId: number,
     movieTitle: string,
     movieImage: string,
     showtimeDate: string,
@@ -38,6 +41,11 @@ export class OrderComponent {
 
   isBookingListLoading: boolean = false;
 
+  selectedMovieId!: number;
+  selectedUserId!: number;
+
+  @ViewChild(AddRatingDialogComponent) addRatingDialog!: AddRatingDialogComponent;
+
   constructor(
     private readonly bookingRenderer: BookingRenderer,
     private readonly apiService: ApiService,
@@ -45,6 +53,7 @@ export class OrderComponent {
   ) {}
 
   async ngOnInit(): Promise<void> {
+    this.selectedUserId = JSON.parse(<string> this.localStorageService.getCurrentUser()).id;
     await this.loadCinemas();
   }
 
@@ -66,10 +75,15 @@ export class OrderComponent {
     const bookings: BookingModel[] = await this.apiService.getBookings(userId, null);
 
     for (const booking of bookings) {
-      this.bookingList.push(await this.bookingRenderer.render(booking));
+      this.bookingList.push(await this.bookingRenderer.renderBooking(booking));
     }
 
     this.isBookingListLoading = false;
+  }
+
+  public openAddRatingDialog(movieId: number) {
+    this.selectedMovieId = movieId;
+    this.addRatingDialog.showAddRatingDialog();
   }
 
   private resetBookings(): void {
