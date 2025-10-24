@@ -154,6 +154,7 @@ export class ApiService {
           movie.imageURL,
           movie.minimumAge,
           movie.showtimes,
+          movie.ratings,
           movie.category
         )
       );
