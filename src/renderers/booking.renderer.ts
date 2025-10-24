@@ -61,11 +61,11 @@ export class BookingRenderer {
     }
   }
 
-  public async render(booking: BookingModel) {
-
+  public async renderBooking(booking: BookingModel) {
     const showtime: ShowtimeModel = booking.showtime;
     const movie: MovieModel = showtime.movie;
 
+    const movieId: number = movie.id;
     const movieTitle: string = movie.title;
     const movieImage: string = movie.imageURL;
 
@@ -83,6 +83,7 @@ export class BookingRenderer {
 
     return {
       id: booking.id,
+      movieId: movieId,
       movieTitle: movieTitle,
       movieImage: movieImage,
       showtimeDate: day + "/" + month + "/" + year,
