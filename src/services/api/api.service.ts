@@ -297,6 +297,36 @@ export class ApiService {
     return response.json();
   }
 
+  public async createRating(
+    token: string,
+    number: number,
+    description: string,
+    validated: boolean,
+    movieId: number,
+    userId: number
+  ): Promise<any> {
+    const response: Response = await fetch(this.movieApiUrl + "rating", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        "number": number,
+        "description": description,
+        "validated": validated,
+        "movieId": movieId,
+        "userId": userId
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(response.status.toString());
+    }
+
+    return response.json();
+  }
+
   public async getBookings(userId: number|null, showtimeId: number|null): Promise<BookingModel[]> {
     let bookings: BookingModel[] = [];
 
