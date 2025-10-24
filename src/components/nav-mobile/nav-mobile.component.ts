@@ -23,14 +23,16 @@ export class NavMobileComponent {
   ) {}
 
   async ngOnInit(): Promise<void> {
-    this.role = this.localStorageService.getCurrentRole() !== null
-        ? <string> this.localStorageService.getCurrentRole()
-        : "visitor";
+    const currentUser: string|null = this.localStorageService.getCurrentUser();
+
+    if (currentUser !== null) {
+      this.role = JSON.parse(currentUser).role;
+    }
   }
 
   public async logout(): Promise<void> {
     this.localStorageService.deleteJwtToken();
-    this.localStorageService.deleteCurrentRole();
+    this.localStorageService.deleteCurrentUser();
 
     this.role = "visitor";
 
