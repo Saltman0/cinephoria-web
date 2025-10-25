@@ -13,6 +13,7 @@ import {ForgottenPasswordComponent} from '../forgotten-password/forgotten-passwo
 import {EmployeeGuard} from "../../guards/employee.guard";
 import {AdminGuard} from "../../guards/admin.guard";
 import {UserGuard} from "../../guards/user.guard";
+import {AuthGuard} from "../../guards/auth.guard";
 
 export const root: string = "http://localhost:4200/";
 
@@ -21,22 +22,27 @@ export const routes: Routes = [
   { path: 'home', title: "Home page", component: HomeComponent },
   { path: 'login', title: "Login page", component: LoginComponent },
   { path: 'booking', title: "Booking page", component: BookingComponent },
-  { path: 'order', title: "Order page", component: OrderComponent, canActivate: [UserGuard] },
-  { path: 'employee', title: "Employee page", component: EmployeeListComponent, canActivate: [AdminGuard] },
+  { path: 'order', title: "Order page", component: OrderComponent, canActivate: [UserGuard, AuthGuard] },
+  { path: 'employee', title: "Employee page", component: EmployeeListComponent, canActivate: [AdminGuard, AuthGuard] },
   {
     path: 'movie-showtime-settings',
     title: "Movie Showtime settings page",
     component: MovieShowtimeSettingsComponent,
-    canActivate: [EmployeeGuard]
+    canActivate: [EmployeeGuard, AuthGuard]
   },
   {
     path: 'hall-settings',
     title: "Hall settings page",
     component: HallSettingsComponent,
-    canActivate: [EmployeeGuard]
+    canActivate: [EmployeeGuard, AuthGuard]
   },
   { path: 'contact', title: "Contact page", component: ContactComponent },
   { path: 'account-creation', title: "Account creation page", component: AccountCreationComponent },
-  { path: 'administrator', title: "Administrator page", component: AdministratorComponent, canActivate: [AdminGuard] },
+  {
+    path: 'administrator',
+    title: "Administrator page",
+    component: AdministratorComponent,
+    canActivate: [AdminGuard, AuthGuard]
+  },
   { path: 'forgotten-password', title: "Forgotten password page", component: ForgottenPasswordComponent }
 ];
