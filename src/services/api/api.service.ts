@@ -23,6 +23,7 @@ import {GetBookedSeatsGql} from '../../graphql/get-booked-seats.gql';
 import {BookingSeatModel} from '../../models/bookingSeat.model';
 import {environment} from "../../environments/environment";
 import {CategoryModel} from '../../models/category.model';
+import {GetMoviesGql} from "../../graphql/get-movies.gql";
 
 @Injectable({
   providedIn: 'root'
@@ -35,19 +36,21 @@ export class ApiService {
   private showtimeApiUrl: string = environment.MOVIE_API_URL;
   private userApiUrl: string = environment.USER_API_URL;
 
-  constructor(private readonly getMoviesSettingsGQL: GetMoviesSettingsGql,
-              private readonly getBookingsGQL: GetBookingsGql,
-              private readonly getShowtimesGQL: GetShowtimesGql,
-              private readonly getHallSettingsGql: GetHallSettingsGql,
-              private readonly getCinemasGql: GetCinemasGql,
-              private readonly getSeatsGql: GetSeatsGql,
-              private readonly getBookedSeatsGql: GetBookedSeatsGql,
-              private readonly bookingFactory: BookingFactory,
-              private readonly movieFactory: MovieFactory,
-              private readonly cinemaFactory: CinemaFactory,
-              private readonly hallFactory: HallFactory,
-              private readonly seatFactory: SeatFactory,
-              private showtimeFactory: ShowtimeFactory
+  constructor(
+      private readonly getMoviesGQL: GetMoviesGql,
+      private readonly getMoviesSettingsGQL: GetMoviesSettingsGql,
+      private readonly getBookingsGQL: GetBookingsGql,
+      private readonly getShowtimesGQL: GetShowtimesGql,
+      private readonly getHallSettingsGql: GetHallSettingsGql,
+      private readonly getCinemasGql: GetCinemasGql,
+      private readonly getSeatsGql: GetSeatsGql,
+      private readonly getBookedSeatsGql: GetBookedSeatsGql,
+      private readonly bookingFactory: BookingFactory,
+      private readonly movieFactory: MovieFactory,
+      private readonly cinemaFactory: CinemaFactory,
+      private readonly hallFactory: HallFactory,
+      private readonly seatFactory: SeatFactory,
+      private showtimeFactory: ShowtimeFactory
   ) {}
 
   public async login(email: string, password: string): Promise<any> {
@@ -177,6 +180,30 @@ export class ApiService {
     }
 
     return response.json();
+  }
+
+  public async getMoviesGql(): Promise<MovieModel[]> {
+    let movies: MovieModel[] = [];
+
+    let result = await this.getMoviesGQL.watch().result();
+
+    result.data.movies.forEach((movie: MovieModel): void => {
+      movies.push(
+          this.movieFactory.create(
+              movie.id,
+              movie.favorite,
+              movie.title,
+              movie.description,
+              movie.imageURL,
+              movie.minimumAge,
+              movie.showtimes,
+              movie.ratings,
+              movie.category
+          )
+      );
+    });
+
+    return movies;
   }
 
   /**
