@@ -10,6 +10,7 @@ import {MovieModel} from '../../models/movie.model';
 import {SeatModel} from '../../models/seat.model';
 import {SeatService} from '../../services/seat/seat.service';
 import {NavMobileComponent} from '../nav-mobile/nav-mobile.component';
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-booking',
@@ -51,10 +52,32 @@ export class BookingComponent {
 
   constructor(private readonly apiService: ApiService,
               private readonly seatService: SeatService,
-              private readonly bookingRenderer: BookingRenderer) {}
+              private readonly bookingRenderer: BookingRenderer,
+              private readonly activatedRoute: ActivatedRoute
+  ) {}
 
   async ngOnInit(): Promise<void> {
+    let cinemaId: number = this.activatedRoute.snapshot.queryParams['cinemaId'];
+    let movieId: number = this.activatedRoute.snapshot.queryParams['movieId'];
+    let showtimeId: number = this.activatedRoute.snapshot.queryParams['showtimeId'];
+
     await this.loadCinemas();
+    if (cinemaId && movieId && showtimeId) {
+      cinemaId = Number(cinemaId);
+      movieId = Number(movieId);
+      showtimeId = Number(showtimeId);
+
+      await this.loadMovies();
+      await this.loadShowtimes(movieId);
+      const selectedShowtime = this.showtimeList.find(
+          showtime => showtime.id === showtimeId
+      );
+      await this.loadSeats(
+          <number> selectedShowtime?.hallId,
+          <number> selectedShowtime?.price,
+          <number> selectedShowtime?.id
+      );
+    }
   }
 
   public async loadCinemas(): Promise<void> {
