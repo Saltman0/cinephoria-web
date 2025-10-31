@@ -1,0 +1,26 @@
+<dialog #paymentDialog class="modal">
+
+    <div class="modal-box">
+
+        <div class="stripe-container">
+            <h2 class="title">💳 Paiement sécurisé</h2>
+
+            <div class="price-display">
+                <span class="label">Total :</span>
+                <span class="price">{{ price }} €</span>
+            </div>
+
+            <div id="card-element" class="card-element"></div>
+
+            <button (click)="pay()" class="pay-button" [disabled]="isPaymentLoading">
+                @if (isPaymentLoading) {
+                    <span>Paiement en cours...</span>
+                } @else {
+                    <span>Payez {{ price }} €</span>
+                }
+            </button>
+        </div>
+
+    </div>
+
+</dialog>
