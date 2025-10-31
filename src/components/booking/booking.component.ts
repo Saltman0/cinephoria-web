@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {HeaderComponent} from '../header/header.component';
 import {ApiService} from '../../services/api/api.service';
 import {FooterComponent} from '../footer/footer.component';
@@ -10,7 +10,9 @@ import {MovieModel} from '../../models/movie.model';
 import {SeatModel} from '../../models/seat.model';
 import {SeatService} from '../../services/seat/seat.service';
 import {NavMobileComponent} from '../nav-mobile/nav-mobile.component';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
+import {LocalStorageService} from "../../services/local-storage/local-storage.service";
+import {PaymentDialogComponent} from "../payment-dialog/payment-dialog.component";
 
 @Component({
   selector: 'app-booking',
@@ -18,7 +20,8 @@ import {ActivatedRoute} from "@angular/router";
     HeaderComponent,
     FooterComponent,
     NgOptimizedImage,
-    NavMobileComponent
+    NavMobileComponent,
+    PaymentDialogComponent
   ],
   templateUrl: './booking.component.html',
   styleUrl: './booking.component.scss'
@@ -50,9 +53,13 @@ export class BookingComponent {
   isShowtimeListLoading: boolean = false;
   isSeatListLoading: boolean = false;
 
+  @ViewChild(PaymentDialogComponent) paymentDialog!: PaymentDialogComponent;
+
   constructor(private readonly apiService: ApiService,
               private readonly seatService: SeatService,
+              private readonly localStorageService: LocalStorageService,
               private readonly bookingRenderer: BookingRenderer,
+              private readonly router: Router,
               private readonly activatedRoute: ActivatedRoute
   ) {}
 
@@ -159,17 +166,23 @@ export class BookingComponent {
   }
 
   public async book(): Promise<void> {
-    // TODO Effectuer le paiement
+    await this.paymentDialog.showPaymentDialog(this.totalPrice);
+  }
 
+  public async confirmBooking() {
     let seatIds: number[] = [];
     this.selectedSeatList.forEach(selectedSeat => {
       seatIds.push(selectedSeat.id);
     });
 
-    // TODO Modifier le user ID par celui de l'utilisateur connecté
-    await this.apiService.createBooking('tokenAInserer', 1, this.selectedShowtime.id, seatIds);
+    await this.apiService.createBooking(
+        <string> this.localStorageService.getJwtToken(),
+        JSON.parse(<string> this.localStorageService.getCurrentUser()).id,
+        this.selectedShowtime.id,
+        seatIds
+    );
 
-    // TODO Lorsque c'est fini, afficher un message pour dire que c'est ok et recharger la page
+    await this.router.navigate(['/order']);
   }
 
   private resetMovies(): void {
