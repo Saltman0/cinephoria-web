@@ -744,4 +744,21 @@ export class ApiService {
 
     return response.json();
   }
+
+  public async createPayment(token: string, price: number): Promise<any> {
+    const response: Response = await fetch(this.bookingApiUrl + "payment", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ "price": price })
+    });
+
+    if (!response.ok) {
+      throw new Error(response.status.toString());
+    }
+
+    return response.json();
+  }
 }
