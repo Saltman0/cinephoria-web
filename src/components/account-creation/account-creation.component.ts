@@ -6,6 +6,7 @@ import {ApiService} from '../../services/api/api.service';
 import {NavMobileComponent} from '../nav-mobile/nav-mobile.component';
 import {NgOptimizedImage} from '@angular/common';
 import {LocalStorageService} from '../../services/local-storage/local-storage.service';
+import {AlertComponent} from "../alert/alert.component";
 
 @Component({
   selector: 'app-account-creation',
@@ -14,7 +15,8 @@ import {LocalStorageService} from '../../services/local-storage/local-storage.se
     FooterComponent,
     ReactiveFormsModule,
     NavMobileComponent,
-    NgOptimizedImage
+    NgOptimizedImage,
+    AlertComponent
   ],
   templateUrl: './account-creation.component.html',
   styleUrl: './account-creation.component.scss'
@@ -31,17 +33,33 @@ export class AccountCreationComponent {
     )
   });
 
+  type: string|null = null;
+  message: string|null = null;
+
+  isCreatingAccount: boolean = false;
+
   constructor(private readonly localStorageService: LocalStorageService, private readonly apiService: ApiService) {}
 
   async submit() {
-    await this.apiService.createUser(
-      <string> this.localStorageService.getJwtToken(),
-      <string> this.accountCreationForm.value.email,
-      <string> this.accountCreationForm.value.password,
-      <string> this.accountCreationForm.value.firstName,
-      <string> this.accountCreationForm.value.lastName,
-      <string> this.accountCreationForm.value.phoneNumber,
-      "user"
-    );
+    try {
+      this.isCreatingAccount = true;
+
+      await this.apiService.createUser(
+          <string> this.localStorageService.getJwtToken(),
+          <string> this.accountCreationForm.value.email,
+          <string> this.accountCreationForm.value.password,
+          <string> this.accountCreationForm.value.firstName,
+          <string> this.accountCreationForm.value.lastName,
+          <string> this.accountCreationForm.value.phoneNumber,
+          "user"
+      );
+      this.type = "success";
+      this.message = "Le compte a été créé avec succès !";
+    } catch (error) {
+      this.type = "error";
+      this.message = "Une erreur est survenue.";
+    } finally {
+      this.isCreatingAccount = false;
+    }
   }
 }
