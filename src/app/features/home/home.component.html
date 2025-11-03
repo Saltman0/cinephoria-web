@@ -1,53 +1,9 @@
 <app-header></app-header>
 
 <main class="px-5 my-4">
-
-  <section class="p-5 border-b-2 border-amber-300">
-
-    <div class="h-1/10 p-2">
-      <span class="cinephoria-subtitle-2">Dernières affiches</span>
-    </div>
-
-    <div class="h-9/10 flex flex-wrap justify-around p-2">
-
-      @if (lastMovies.length === 0) {
-        <span class="loading loading-spinner loading-xl text-warning"></span>
-      } @else {
-        @for (lastMovie of lastMovies; track lastMovie.id) {
-          <img ngSrc="../../assets/images/movies/{{ lastMovie.imageURL }}" alt="{{ lastMovie.title }}"
-               width="150" height="230" class="cinephoria-movie-image w-30 lg:w-37.5 mx-1 my-1" />
-        } @empty {
-          <li>Aucun film.</li>
-        }
-      }
-
-    </div>
-
-  </section>
-
-  <section class="p-5 border-t-2 border-amber-300">
-
-    <div class="h-1/10 p-2">
-      <span class="cinephoria-subtitle-2">Coups de coeur</span>
-    </div>
-
-    <div class="h-9/10 flex flex-wrap justify-around p-2">
-
-      @if (lastMovies.length === 0) {
-        <span class="loading loading-spinner loading-xl text-warning"></span>
-      } @else {
-        @for (favoriteMovie of favoriteMovies; track favoriteMovie.id) {
-          <img ngSrc="../../assets/images/movies/{{ favoriteMovie.imageURL }}" alt="{{ favoriteMovie.title }}"
-               width="150" height="230" class="cinephoria-movie-image w-30 lg:w-37.5 mx-1 my-1" />
-        } @empty {
-          <li>Aucun film.</li>
-        }
-      }
-
-    </div>
-
-  </section>
-
+    <app-movie-list title="Dernières affiches" [movieList]="lastMovies"></app-movie-list>
+    <hr class="border-1 text-amber-300 my-5">
+    <app-movie-list title="Coups de coeur" [movieList]="favoriteMovies"></app-movie-list>
 </main>
 
 <app-footer></app-footer>
