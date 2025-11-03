@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ApiService} from '../../core/services/api/api.service';
-import {HeaderComponent} from '../header/header.component';
-import {FooterComponent} from '../footer/footer.component';
+import {HeaderComponent} from '../../shared/header/header.component';
+import {FooterComponent} from '../../shared/footer/footer.component';
 import {NavMobileComponent} from '../nav-mobile/nav-mobile.component';
 import {AlertComponent} from "../../shared/alert/alert.component";
 

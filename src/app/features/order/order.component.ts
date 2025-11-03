@@ -1,8 +1,8 @@
 import {Component, ViewChild} from '@angular/core';
 import {jwtDecode} from "jwt-decode";
-import {HeaderComponent} from '../header/header.component';
+import {HeaderComponent} from '../../shared/header/header.component';
 import {ApiService} from '../../core/services/api/api.service';
-import {FooterComponent} from '../footer/footer.component';
+import {FooterComponent} from '../../shared/footer/footer.component';
 import {NgOptimizedImage} from '@angular/common';
 import {BookingModel} from '../../core/models/booking.model';
 import {ReactiveFormsModule} from '@angular/forms';

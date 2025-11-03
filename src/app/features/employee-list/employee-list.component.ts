@@ -1,7 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
-import {HeaderComponent} from '../header/header.component';
+import {HeaderComponent} from '../../shared/header/header.component';
 import {ApiService} from '../../core/services/api/api.service';
-import {FooterComponent} from '../footer/footer.component';
+import {FooterComponent} from '../../shared/footer/footer.component';
 import {NgOptimizedImage, TitleCasePipe} from '@angular/common';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {EmployeeRenderer} from '../../core/renderers/employee.renderer';
