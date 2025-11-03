@@ -1,0 +1,140 @@
+<app-header></app-header>
+
+<main class="p-5 my-4">
+
+  <section class="flex flex-col items-center p-5">
+
+    <label for="cinema" class="cinephoria-header">Sélectionnez votre cinéma :</label>
+    <div class="cinephoria-select-cinema flex justify-between items-center px-2">
+      <img ngSrc="../../../assets/images/Placeholder.png" width="25" height="25" alt="Cinéma à choisir" />
+
+      <select (change)="loadMovies()" class="mx-1" name="cinema">
+        <option selected disabled>Choisissez un cinéma</option>
+        @for (cinema of cinemaList; track cinema.id) {
+          <option [value]="cinema.id">{{ cinema.name }}</option>
+        }
+      </select>
+
+      <img ngSrc="../../../assets/images/Down_arrow.png" width="25" height="25" alt="Flèche du sélection de cinéma" />
+    </div>
+
+  </section>
+
+  <section class="max-h-137.5 overflow-y-auto flex flex-wrap justify-center items-stretch p-5">
+
+    @if (movieList.length === 0) {
+      <span class="loading loading-spinner loading-xl text-warning" [class.hidden]="!isMovieListLoading"></span>
+    } @else {
+      @for (movie of movieList; track movie.id) {
+        <img (click)="loadShowtimes(movie.id)" ngSrc="../../assets/images/movies/{{ movie.imageURL }}"
+             alt="{{ movie.title }}" width="150" height="230" tabindex="0"
+             class="cinephoria-movie-image w-30 lg:w-37.5 m-1" />
+      }
+    }
+
+  </section>
+
+  @if (showtimeList.length === 0) {
+    <section class="flex-col items-center p-5 mx-5 mt-5 border-2 rounded-xs bg-neutral-800"
+             [class.flex]="isShowtimeListLoading" [class.hidden]="!isShowtimeListLoading">
+      <span class="loading loading-spinner loading-xl text-warning"></span>
+    </section>
+  } @else {
+    <section class="flex flex-col p-5 mx-5 mt-5 border-2 rounded-xs bg-neutral-800">
+
+      <span class="cinephoria-subtitle-2">Choisissez votre séance</span>
+
+      <div class="flex justify-center overflow-x-auto">
+        @for (showtime of showtimeList; track showtime.id) {
+          <div class="cinephoria-showtime m-2">
+
+            <div class="flex justify-center items-center w-full">
+              <img ngSrc="../../../assets/images/Clock.png" width="25" height="25" alt="Horaires de la séance"
+                   class="mr-auto" />
+              <span class="ml-1 mr-auto">{{ showtime.hours }}</span>
+            </div>
+
+            <div class="flex justify-center items-center w-full">
+              <img ngSrc="../../../assets/images/Hall.png" width="25" height="25" alt="Numéro de la salle"
+                   class="mr-auto" />
+              <span class="ml-2 mr-auto">Salle {{ showtime.hallNumber }}</span>
+            </div>
+
+            @if (showtime.projectionQuality !== null) {
+              <div class="flex justify-center items-center w-full">
+                <img ngSrc="../../../assets/images/Camera.png" width="25" height="25"
+                     alt="Qualité de projection de la salle" class="mr-auto" />
+                <span class="ml-2 mr-auto">{{ showtime.projectionQuality }}</span>
+              </div>
+            }
+
+            <button (click)="loadSeats(showtime.hallId, showtime.price, showtime.id)" type="button"
+                    class="cinephoria-little-button">
+              <img ngSrc="../../../assets/images/Ticket.png" alt="Réserver" width="20" height="20" />
+              <span>Réserver</span>
+            </button>
+
+          </div>
+        } @empty {
+          <li>Aucun showtime.</li>
+        }
+      </div>
+
+    </section>
+  }
+
+  @if (seatList.length === 0) {
+    <section class="lg:flex-row flex-col justify-around items-center gap-4 p-5 mx-5 mb-5 border-2 rounded-xsbg-neutral-800"
+             [class.flex]="isSeatListLoading" [class.hidden]="!isSeatListLoading">
+      <span class="loading loading-spinner loading-xl text-warning"></span>
+    </section>
+  } @else {
+    <section class="flex lg:flex-row flex-col justify-around items-center gap-4 p-5 mx-5 mb-5 border-2 rounded-xs
+    bg-neutral-800">
+
+      <div class="w-full flex flex-col justify-center items-center">
+
+        <span class="cinephoria-subtitle-2 mb-3">Choisissez vos places</span>
+        <div class="flex flex-col justify-center items-center">
+          @for (row of seatList; track row.row) {
+            <div class="flex justify-center items-center">
+              @for (seat of row.seats; track seat.id) {
+                <img [class.selected-seat]="isSelected(seat.id)" [class.locked-seat]="isAlreadyBooked(seat.id)"
+                     (click)="isAlreadyBooked(seat.id)
+                     ? $event.stopPropagation()
+                     : selectSeat(seat.id, seat.row, seat.number)"
+                     ngSrc="../../../assets/images/Chair_top_view.png" width="25" height="25"
+                     alt="{{ seat.row }}{{ seat.number }}"/>
+              }
+            </div>
+          }
+        </div>
+
+      </div>
+
+      <div class="w-full flex flex-col justify-center items-center">
+
+        <span class="cinephoria-subtitle-2">Prix : {{ totalPrice }} €</span>
+        <div class="flex">
+          <span class="cinephoria-big-text mr-1">Siège(s)</span>
+          @for (selectedSeat of selectedSeatList; track selectedSeat.id) {
+            <span class="cinephoria-big-text mx-1">{{ selectedSeat.row + selectedSeat.number }}@if (!$last) {,}</span>
+          }
+        </div>
+        <button (click)="book()" type="button" class="cinephoria-button mt-1">
+          <img ngSrc="../../../assets/images/Ticket.png" alt="Réserver" width="35" height="35" class="ml-5 mr-auto" />
+          <span class="mr-10">Réserver</span>
+        </button>
+
+      </div>
+
+    </section>
+  }
+
+</main>
+
+<app-footer></app-footer>
+
+<app-nav-mobile></app-nav-mobile>
+
+<app-payment-dialog (paymentDoneEvent)="confirmBooking()"></app-payment-dialog>

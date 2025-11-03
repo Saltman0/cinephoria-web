@@ -1,0 +1,71 @@
+<app-header></app-header>
+
+<main class="flex flex-col items-center px-4 lg:py-8">
+
+  <section class="flex flex-col items-center px-5 pb-6">
+
+    <div class="cinephoria-table-header">
+      <span class="cinephoria-subtitle-2">Commandes</span>
+      <div class="cinephoria-select-cinema flex justify-between items-center px-2">
+        <img ngSrc="../../../assets/images/Placeholder.png" width="25" height="25" alt="Cinéma à choisir" />
+
+        <select (change)="loadBookings()" class="mx-1" name="cinema">
+          <option selected disabled>Choisissez un cinéma</option>
+          @for (cinema of cinemaList; track cinema.id) {
+            <option [value]="cinema.id">{{ cinema.name }}</option>
+          }
+        </select>
+
+        <img ngSrc="../../../assets/images/Down_arrow.png" width="25" height="25" alt="Flèche du sélection de cinéma" />
+      </div>
+    </div>
+
+    <div class="cinephoria-list">
+
+      @if (isBookingListLoading) {
+        <span class="loading loading-spinner loading-xl text-warning"></span>
+      } @else {
+        @for (booking of bookingList; track booking.id) {
+
+          <div class="cinephoria-booking lg:flex-row flex-col justify-between items-center p-2.5 my-1"
+               style="background-image: url('assets/images/movies/{{ booking.movieImage }}')">
+
+            <div class="flex justify-start items-center w-25/100">
+              <span class="cinephoria-main-title">{{ booking.movieTitle }}</span>
+            </div>
+
+            <div class="flex justify-center items-center gap-2 w-20/100">
+              <img ngSrc="../../../assets/images/Calendar.png" width="50" height="50" alt="Date de réservation" />
+              <span class="cinephoria-big-text">{{ booking.showtimeDate }}</span>
+            </div>
+
+            <div class="flex justify-center items-center gap-2 w-20/100">
+              <img ngSrc="../../../assets/images/Clock.png" width="50" height="50" alt="Date de réservation" />
+              <span class="cinephoria-big-text">{{ booking.hours }}</span>
+            </div>
+
+            <div class="flex justify-center items-center gap-2 w-15/100">
+              <img ngSrc="../../../assets/images/Chair.png" width="50" height="50" alt="Date de réservation" />
+              <span class="cinephoria-big-text">{{ booking.numberOfSeats }}</span>
+            </div>
+
+            <div class="flex justify-center items-center w-5/100">
+              <img ngSrc="../../../assets/images/Star_2.png" width="50" height="50" alt="Donner un avis sur le film"
+                   class="cursor-pointer" (click)="openAddRatingDialog(booking.movieId)" />
+            </div>
+
+          </div>
+        }
+      }
+
+    </div>
+
+  </section>
+
+</main>
+
+<app-footer></app-footer>
+
+<app-nav-mobile></app-nav-mobile>
+
+<app-add-rating-dialog [movieId]="selectedMovieId" [userId]="selectedUserId"></app-add-rating-dialog>
