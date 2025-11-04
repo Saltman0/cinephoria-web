@@ -15,6 +15,7 @@ import {EmployeeGuard} from "./core/guards/employee.guard";
 import {AdminGuard} from "./core/guards/admin.guard";
 import {UserGuard} from "./core/guards/user.guard";
 import {AuthGuard} from "./core/guards/auth.guard";
+import {ResetPasswordComponent} from "./features/reset-password/reset-password.component";
 
 export const root: string = "http://localhost:4200/";
 
@@ -46,5 +47,6 @@ export const routes: Routes = [
     component: AdministratorComponent,
     canActivate: [AdminGuard, AuthGuard]
   },
-  { path: 'forgotten-password', title: "Forgotten password page", component: ForgottenPasswordComponent }
+  { path: 'forgotten-password', title: "Forgotten password page", component: ForgottenPasswordComponent },
+  { path: 'reset-password', title: "Reset password page", component: ResetPasswordComponent }
 ];
