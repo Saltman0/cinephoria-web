@@ -36,7 +36,7 @@ export class ContactComponent {
     try {
       this.isSendingMail = true;
 
-      await this.apiService.sendMail(
+      await this.apiService.sendContactMail(
           <string> this.contactForm.value.contactEmail,
           <string> this.contactForm.value.contactTitle,
           <string> this.contactForm.value.contactDescription
@@ -44,11 +44,11 @@ export class ContactComponent {
 
       this.type = "success";
       this.message = "Le mail a été envoyé avec succès !";
-      this.isSendingMail = false;
     } catch (error) {
-      this.isSendingMail = false;
       this.type = "error";
       this.message = "Une erreur est survenue.";
+    } finally {
+      this.isSendingMail = false;
     }
   }
 }

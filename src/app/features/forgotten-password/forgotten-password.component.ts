@@ -5,6 +5,7 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {ApiService} from '../../core/services/api/api.service';
 import {NavMobileComponent} from '../nav-mobile/nav-mobile.component';
 import {NgOptimizedImage} from '@angular/common';
+import {AlertComponent} from "../../shared/alert/alert.component";
 
 @Component({
   selector: 'app-forgotten-password',
@@ -13,7 +14,8 @@ import {NgOptimizedImage} from '@angular/common';
     FooterComponent,
     ReactiveFormsModule,
     NavMobileComponent,
-    NgOptimizedImage
+    NgOptimizedImage,
+    AlertComponent
   ],
   templateUrl: './forgotten-password.component.html',
   styleUrl: './forgotten-password.component.scss'
@@ -26,14 +28,39 @@ export class ForgottenPasswordComponent {
     ),
   });
 
+  type: string|null = null;
+  message: string|null = null;
+
+  isSendingMail: boolean = false;
+
   constructor(private readonly apiService: ApiService) {}
 
-  public async submit() {
-    await this.apiService.sendMail(
-      <string> this.forgottenPasswordForm.value.email,
-      "Cinéphoria - Réinitialisation de mot de passe",
-      "Votre mot de passe a été réinitialisé ! " +
-      "Veuillez modifier votre mot de passe vers le lien suivant : lien"
-    );
+  public async sendResetPasswordLink() {
+    this.type = this.message = null;
+    this.isSendingMail = true;
+
+    const email: string = <string> this.forgottenPasswordForm.value.email;
+
+    try {
+      const resetPasswordLink = await this.apiService.forgotPassword(email);
+
+      await this.apiService.sendForgotPasswordMail(
+          <string> this.forgottenPasswordForm.value.email,
+          "Cinéphoria - Réinitialisation de mot de passe",
+          "Votre mot de passe a été réinitialisé ! " +
+          `Veuillez modifier votre mot de passe vers le lien suivant : ${resetPasswordLink}`
+      );
+
+      this.type = "success";
+      this.message = "Vous avez reçu un mail de réinitialisation de mot de passe.";
+    } catch (error) {
+      this.type = "error";
+      this.message = "Une erreur est survenue.";
+    } finally {
+      this.isSendingMail = false;
+    }
+
+
+
   }
 }

@@ -643,7 +643,7 @@ export class ApiService {
     return seats;
   }
 
-  public async sendMail(email: string, title: string, description: string): Promise<any> {
+  public async sendContactMail(email: string, title: string, description: string): Promise<any> {
     const response: Response = await fetch("https://formspree.io/f/xjkojppa", {
       method: "POST",
       headers: {
@@ -753,6 +753,54 @@ export class ApiService {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({ "price": price })
+    });
+
+    if (!response.ok) {
+      throw new Error(response.status.toString());
+    }
+
+    return response.json();
+  }
+
+  public async forgotPassword(email: string): Promise<any> {
+    const response: Response = await fetch(this.userApiUrl + "password/forgot-password", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ "email": email })
+    });
+
+    if (!response.ok) {
+      throw new Error(response.status.toString());
+    }
+
+    return response.json();
+  }
+
+  public async sendForgotPasswordMail(email: string, title: string, description: string): Promise<any> {
+    const response: Response = await fetch("https://formspree.io/f/xdkprvjg", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({email: email, title: title, description: description})
+    });
+
+    if (!response.ok) {
+      throw new Error(response.status.toString());
+    }
+
+    return response.json();
+  }
+
+  public async resetPassword(token: string, password: string): Promise<any> {
+    const response: Response = await fetch(this.userApiUrl + "password/reset-password", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ "token": token, "password": password })
     });
 
     if (!response.ok) {
