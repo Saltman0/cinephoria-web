@@ -24,6 +24,7 @@ import {BookingSeatModel} from '../../models/bookingSeat.model';
 import {environment} from "../../../../environments/environment";
 import {CategoryModel} from '../../models/category.model';
 import {GetMoviesGql} from "../../graphql/get-movies.gql";
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +38,7 @@ export class ApiService {
   private userApiUrl: string = environment.USER_API_URL;
 
   constructor(
+      private readonly router: Router,
       private readonly getMoviesGQL: GetMoviesGql,
       private readonly getMoviesSettingsGQL: GetMoviesSettingsGql,
       private readonly getBookingsGQL: GetBookingsGql,
@@ -50,7 +52,7 @@ export class ApiService {
       private readonly cinemaFactory: CinemaFactory,
       private readonly hallFactory: HallFactory,
       private readonly seatFactory: SeatFactory,
-      private showtimeFactory: ShowtimeFactory
+      private readonly showtimeFactory: ShowtimeFactory
   ) {}
 
   public async login(email: string, password: string): Promise<any> {
@@ -286,6 +288,9 @@ export class ApiService {
     });
 
     if (!response.ok) {
+        if (response.status === 401) {
+            this.router.navigate(['/login']);
+        }
       throw new Error(response.status.toString());
     }
 
@@ -349,6 +354,9 @@ export class ApiService {
     });
 
     if (!response.ok) {
+        if (response.status === 401) {
+            this.router.navigate(['/login']);
+        }
       throw new Error(response.status.toString());
     }
 
@@ -416,6 +424,9 @@ export class ApiService {
     });
 
     if (!response.ok) {
+        if (response.status === 401) {
+            this.router.navigate(['/login']);
+        }
       throw new Error(response.status.toString());
     }
 
@@ -501,6 +512,9 @@ export class ApiService {
     });
 
     if (!response.ok) {
+        if (response.status === 401) {
+            this.router.navigate(['/login']);
+        }
       throw new Error(response.status.toString());
     }
 
@@ -584,6 +598,9 @@ export class ApiService {
     });
 
     if (!response.ok) {
+        if (response.status === 401) {
+            this.router.navigate(['/login']);
+        }
       throw new Error(response.status.toString());
     }
 
@@ -653,6 +670,9 @@ export class ApiService {
     });
 
     if (!response.ok) {
+        if (response.status === 401) {
+            this.router.navigate(['/login']);
+        }
       throw new Error(response.status.toString());
     }
 
@@ -685,6 +705,9 @@ export class ApiService {
     });
 
     if (!response.ok) {
+        if (response.status === 401) {
+            this.router.navigate(['/login']);
+        }
       throw new Error(response.status.toString());
     }
 
@@ -739,7 +762,10 @@ export class ApiService {
     });
 
     if (!response.ok) {
-      throw new Error(response.status.toString());
+        if (response.status === 401) {
+            this.router.navigate(['/login']);
+        }
+        throw new Error(response.status.toString());
     }
 
     return response.json();
@@ -756,7 +782,10 @@ export class ApiService {
     });
 
     if (!response.ok) {
-      throw new Error(response.status.toString());
+        if (response.status === 401) {
+            this.router.navigate(['/login']);
+        }
+        throw new Error(response.status.toString());
     }
 
     return response.json();
@@ -772,6 +801,9 @@ export class ApiService {
     });
 
     if (!response.ok) {
+        if (response.status === 401) {
+            this.router.navigate(['/login']);
+        }
       throw new Error(response.status.toString());
     }
 
@@ -788,6 +820,9 @@ export class ApiService {
     });
 
     if (!response.ok) {
+        if (response.status === 401) {
+            this.router.navigate(['/login']);
+        }
       throw new Error(response.status.toString());
     }
 
@@ -804,6 +839,9 @@ export class ApiService {
     });
 
     if (!response.ok) {
+        if (response.status === 401) {
+            this.router.navigate(['/login']);
+        }
       throw new Error(response.status.toString());
     }
 
