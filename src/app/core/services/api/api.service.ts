@@ -14,8 +14,6 @@ import {GetHallSettingsGql} from '../../graphql/get-hall-settings.gql';
 import {HallFactory} from '../../factories/hall.factory';
 import {GetShowtimesGql} from '../../graphql/get-showtimes.gql';
 import {CinemaModel} from '../../models/cinema.model';
-import {CinemaFactory} from '../../factories/cinema.factory';
-import {GetCinemasGql} from '../../graphql/get-cinemas.gql';
 import {SeatModel} from '../../models/seat.model';
 import {GetSeatsGql} from '../../graphql/get-seats.gql';
 import {SeatFactory} from '../../factories/seat.factory';
@@ -44,12 +42,10 @@ export class ApiService {
         private readonly getBookingsGQL: GetBookingsGql,
         private readonly getShowtimesGQL: GetShowtimesGql,
         private readonly getHallSettingsGql: GetHallSettingsGql,
-        private readonly getCinemasGql: GetCinemasGql,
         private readonly getSeatsGql: GetSeatsGql,
         private readonly getBookedSeatsGql: GetBookedSeatsGql,
         private readonly bookingFactory: BookingFactory,
         private readonly movieFactory: MovieFactory,
-        private readonly cinemaFactory: CinemaFactory,
         private readonly hallFactory: HallFactory,
         private readonly seatFactory: SeatFactory,
         private readonly showtimeFactory: ShowtimeFactory
@@ -185,25 +181,40 @@ export class ApiService {
         return response.json();
     }
 
-    public async getMoviesGql(): Promise<MovieModel[]> {
+    public async getMoviesGql(
+        categoryId: number|null,
+        startDate: Date|null,
+        endDate: Date|null,
+        cinemaId: number|null
+    ): Promise<MovieModel[]> {
         let movies: MovieModel[] = [];
 
-        let result = await this.getMoviesGQL.watch().result();
+        let result = await this.getMoviesGQL.watch(
+            {categoryId: categoryId, startDate: startDate?.toString(), endDate: endDate?.toString(), cinemaId: cinemaId}
+        ).result();
 
         result.data.movies.forEach((movie: MovieModel): void => {
-            movies.push(
-                this.movieFactory.create(
-                    movie.id,
-                    movie.favorite,
-                    movie.title,
-                    movie.description,
-                    movie.imageURL,
-                    movie.minimumAge,
-                    movie.showtimes,
-                    movie.ratings,
-                    movie.category
-                )
+
+            const showtimes: ShowtimeModel[] = movie.showtimes.filter(
+                (showtime: ShowtimeModel): boolean => showtime.hall !== null
             );
+
+            if (showtimes.length > 0) {
+                movies.push(
+                    this.movieFactory.create(
+                        movie.id,
+                        movie.favorite,
+                        movie.title,
+                        movie.description,
+                        movie.imageURL,
+                        movie.minimumAge,
+                        showtimes,
+                        movie.ratings,
+                        movie.category
+                    )
+                );
+            }
+
         });
 
         return movies;
@@ -482,20 +493,18 @@ export class ApiService {
     }
 
     public async getCinemas(): Promise<CinemaModel[]> {
-        let cinemas: CinemaModel[] = [];
-
-        let result = await this.getCinemasGql.watch({}, {fetchPolicy: "no-cache"}).result();
-
-        result.data.cinemas.forEach((cinema: CinemaModel) => {
-            cinemas.push(
-                this.cinemaFactory.create(
-                    cinema.id, cinema.name, cinema.address, cinema.postalCode, cinema.city, cinema.phoneNumber,
-                    cinema.openHour, cinema.closeHour, cinema.halls
-                )
-            );
+        const response: Response = await fetch(this.infrastructureApiUrl + `cinema`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
         });
 
-        return cinemas;
+        if (!response.ok) {
+            throw new Error(response.status.toString());
+        }
+
+        return response.json();
     }
 
     public async createHall(token: string, number: number, projectionQuality: string, cinemaId: number): Promise<any> {
