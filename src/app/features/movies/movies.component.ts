@@ -37,7 +37,11 @@ export class MoviesComponent {
   }[] = [];
   showtimeList: { [movieId: number]: {id: number, date: string, hours: string}[] } = {};
 
-  selectedCinemaId!: number;
+  selectedCinemaId: number|null = null;
+  selectedCategoryId: number|null = null;
+  selectedShowtimeDateStart: Date|null = null;
+  selectedShowtimeDateEnd: Date|null = null;
+
   selectedMovie: {
     id: number,
     favorite: boolean,
@@ -79,16 +83,19 @@ export class MoviesComponent {
     }
   }
 
-  public async loadMoviesAndShowtimes(event: Event): Promise<void> {
-    const cinemaId: number = <number><unknown>(event.target as HTMLInputElement).value;
-
-    this.selectedCinemaId = <number><unknown> cinemaId;
+  public async loadMoviesAndShowtimes(): Promise<void> {
     this.resetMovieList();
     this.resetShowtimeList();
+    this.resetSelectedMovie();
 
     this.isMovieListLoading = true;
 
-    const movies: MovieModel[] = await this.apiService.getMoviesGql();
+    const movies: MovieModel[] = await this.apiService.getMoviesGql(
+        this.selectedCategoryId !== null ? Number(this.selectedCategoryId) : null,
+        this.selectedShowtimeDateStart,
+        this.selectedShowtimeDateEnd,
+        this.selectedCinemaId !== null ? Number(this.selectedCinemaId) : null,
+    );
 
     for (const movie of movies) {
       this.movieList.push(this.movieRenderer.renderMovie(movie));
@@ -124,18 +131,30 @@ export class MoviesComponent {
     this.selectedShowtimes[id] = this.showtimeList[id];
   }
 
-  public redirectToBookingPage(
-      selectedCinemaId: number,
-      selectedMovieId: number,
-      selectedShowtimeId: number
-  ): void {
+  public redirectToBookingPage(selectedMovieId: number, selectedShowtimeId: number): void {
     this.router.navigate(['/booking'], {
       queryParams: {
-        cinemaId: selectedCinemaId,
+        cinemaId: this.selectedCinemaId,
         movieId: selectedMovieId,
         showtimeId: selectedShowtimeId
       }
     });
+  }
+
+  public selectCinemaId(event: Event): void {
+    this.selectedCinemaId = <number><unknown>(event.target as HTMLInputElement).value;
+  }
+
+  public selectCategoryId(event: Event): void {
+    this.selectedCategoryId = <number><unknown>(event.target as HTMLInputElement).value;
+  }
+
+  public selectShowtimeDateStart(event: Event): void {
+    this.selectedShowtimeDateStart = <Date><unknown>(event.target as HTMLInputElement).value;
+  }
+
+  public selectShowtimeDateEnd(event: Event): void {
+    this.selectedShowtimeDateEnd = <Date><unknown>(event.target as HTMLInputElement).value;
   }
 
   private resetMovieList(): void {
@@ -144,5 +163,9 @@ export class MoviesComponent {
 
   private resetShowtimeList(): void {
     this.showtimeList = [];
+  }
+
+  private resetSelectedMovie(): void {
+    this.selectedMovie = null;
   }
 }

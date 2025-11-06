@@ -8,22 +8,23 @@
             <div class="cinephoria-select-cinema flex justify-between items-center px-2">
                 <img ngSrc="../../../assets/images/Placeholder.png" width="25" height="25" alt="Cinéma à choisir" />
 
-                <select (change)="loadMoviesAndShowtimes($event)" class="mx-1" name="cinema">
-                    <option selected disabled>Choisissez un cinéma</option>
+                <select (change)="selectCinemaId($event)" class="mx-1" name="cinema">
+                    <option selected>Aucun</option>
                     @for (cinema of cinemaList; track cinema.id) {
                         <option [value]="cinema.id">{{ cinema.name }}</option>
                     }
+                    <option [value]="2">Blabla</option>
                 </select>
 
                 <img ngSrc="../../../assets/images/Down_arrow.png" width="25" height="25"
                      alt="Flèche du sélection de cinéma"/>
             </div>
 
-            <div class="cinephoria-select-cinema flex justify-between items-center px-2">
+            <div class="cinephoria-select-category flex justify-between items-center px-2">
                 <img ngSrc="../../../assets/images/Label.png" width="25" height="25" alt="Catégorie à choisir" />
 
-                <select multiple (change)="loadMoviesAndShowtimes($event)" class="mx-1" name="cinema">
-                    <option>Choisissez une catégorie</option>
+                <select (change)="selectCategoryId($event)" class="mx-1" name="cinema">
+                    <option selected>Aucun</option>
                     @for (category of categoryList; track category.id) {
                         <option [value]="category.id">{{ category.name }}</option>
                     }
@@ -36,17 +37,21 @@
             <div class="flex justify-center items-center gap-2">
                 <div class="cinephoria-input flex justify-between items-center gap-2">
                     <img ngSrc="../../../assets/images/Calendar.png" width="25" height="25" alt="Date de début de séance"/>
-                    <input (change)="loadMoviesAndShowtimes($event)" type="date" name="showtimeDateStart"
+                    <input (change)="selectShowtimeDateStart($event)" type="date" name="showtimeDateStart"
                            id="showtimeDateStart" placeholder="Choisissez une date de début de séance"/>
                 </div>
 
                 <div class="cinephoria-input flex justify-between items-center gap-2">
                     <img ngSrc="../../../assets/images/Calendar.png" width="25" height="25" alt="Date de fin de séance"/>
-                    <input (change)="loadMoviesAndShowtimes($event)" type="date" name="showtimeDateEnd"
+                    <input (change)="selectShowtimeDateEnd($event)" type="date" name="showtimeDateEnd"
                            id="showtimeDateEnd" placeholder="Choisissez une date de fin de séance"/>
                 </div>
 
             </div>
+
+            <button type="button" class="cinephoria-button border" (click)="loadMoviesAndShowtimes()">
+                <span>Rechercher</span>
+            </button>
         </div>
 
     </section>
@@ -128,12 +133,8 @@
                                         <span class="ml-1 mr-auto">{{ selectedShowtime.hours }}</span>
                                     </div>
 
-                                    <button
-                                            (click)="redirectToBookingPage(
-                                                selectedCinemaId,
-                                                selectedMovie.id,
-                                                selectedShowtime.id
-                                            )" type="button" class="cinephoria-little-button">
+                                    <button (click)="redirectToBookingPage(selectedMovie.id, selectedShowtime.id)"
+                                            type="button" class="cinephoria-little-button">
                                         <img ngSrc="../../../assets/images/Ticket.png" alt="Réserver"
                                              width="20" height="20" />
                                         <span>Réserver</span>
