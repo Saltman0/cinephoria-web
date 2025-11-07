@@ -2,11 +2,11 @@ import {Component} from '@angular/core';
 import {HeaderComponent} from '../../shared/header/header.component';
 import {FooterComponent} from '../../shared/footer/footer.component';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {ApiService} from '../../core/services/api/api.service';
 import {NavMobileComponent} from '../nav-mobile/nav-mobile.component';
 import {NgOptimizedImage} from '@angular/common';
 import {AlertComponent} from "../../shared/alert/alert.component";
 import {ActivatedRoute} from "@angular/router";
+import {UserApiService} from "../../core/services/api/user.api.service";
 
 @Component({
   selector: 'app-reset-password',
@@ -40,7 +40,7 @@ export class ResetPasswordComponent {
 
   isResettingPassword: boolean = false;
 
-  constructor(private readonly activatedRoute: ActivatedRoute, private readonly apiService: ApiService) {}
+  constructor(private readonly activatedRoute: ActivatedRoute, private readonly userApiService: UserApiService) {}
 
   ngOnInit(): void {
     this.token = this.activatedRoute.snapshot.queryParams['token'];
@@ -55,7 +55,7 @@ export class ResetPasswordComponent {
 
     try {
       if (newPassword === confirmPassword) {
-        await this.apiService.resetPassword(this.token, newPassword);
+        await this.userApiService.resetPassword(this.token, newPassword);
         this.displayMessage("success", "Votre mot de passe a été modifié avec succès !");
       } else {
         this.displayMessage("error", "Les deux mots de passe ne correspondent pas.");

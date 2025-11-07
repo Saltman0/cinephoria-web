@@ -1,11 +1,9 @@
 import {Component, ViewChild} from '@angular/core';
 import {HeaderComponent} from '../../shared/header/header.component';
-import {ApiService} from '../../core/services/api/api.service';
 import {FooterComponent} from '../../shared/footer/footer.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MovieModel} from '../../core/models/movie.model';
 import {MovieShowtimeSettingsRenderer} from '../../core/renderers/movie-showtime-settings.renderer';
-import {LocalStorageService} from '../../core/services/local-storage/local-storage.service';
 import {NgOptimizedImage} from '@angular/common';
 import {NavMobileComponent} from '../nav-mobile/nav-mobile.component';
 import {ShowtimeModel} from '../../core/models/showtime.model';
@@ -15,6 +13,8 @@ import {AddMovieDialogComponent} from "../add-movie-dialog/add-movie-dialog.comp
 import {UpdateMovieDialogComponent} from "../update-movie-dialog/update-movie-dialog.component";
 import {AddShowtimeDialogComponent} from "../add-showtime-dialog/add-showtime-dialog.component";
 import {UpdateShowtimeDialogComponent} from "../update-showtime-dialog/update-showtime-dialog.component";
+import {MovieApiService} from "../../core/services/api/movie.api.service";
+import {ShowtimeApiService} from "../../core/services/api/showtime.api.service";
 
 @Component({
   selector: 'app-movie-showtime-settings',
@@ -77,8 +77,9 @@ export class MovieShowtimeSettingsComponent {
 
   constructor(
     private readonly movieShowtimeSettingsRenderer: MovieShowtimeSettingsRenderer,
-    private readonly localStorageService: LocalStorageService,
-    private readonly apiService: ApiService) {}
+    private readonly movieApiService: MovieApiService,
+    private readonly showtimeApiService: ShowtimeApiService
+  ) {}
 
   async ngOnInit(): Promise<void> {
     await this.loadMovieList();
@@ -90,7 +91,7 @@ export class MovieShowtimeSettingsComponent {
 
     this.isMovieListLoading = true;
 
-    const moviesWithShowtimes: MovieModel[] = await this.apiService.getMoviesWithShowtimes();
+    const moviesWithShowtimes: MovieModel[] = await this.movieApiService.getMoviesWithShowtimes();
 
     for (const movieWithShowtimes of moviesWithShowtimes) {
       this.movieList.push(await this.movieShowtimeSettingsRenderer.renderMovie(movieWithShowtimes));
@@ -104,7 +105,7 @@ export class MovieShowtimeSettingsComponent {
 
     this.isShowtimeListLoading = true;
 
-    const showtimes: ShowtimeModel[] = await this.apiService.getShowtimes(movieId);
+    const showtimes: ShowtimeModel[] = await this.showtimeApiService.getShowtimes(movieId);
 
     for (const showtime of showtimes) {
       this.showtimeList.push(await this.movieShowtimeSettingsRenderer.renderShowtime(showtime));

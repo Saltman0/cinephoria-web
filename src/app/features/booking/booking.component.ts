@@ -1,6 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
 import {HeaderComponent} from '../../shared/header/header.component';
-import {ApiService} from '../../core/services/api/api.service';
 import {FooterComponent} from '../../shared/footer/footer.component';
 import {NgOptimizedImage} from '@angular/common';
 import {CinemaModel} from '../../core/models/cinema.model';
@@ -13,6 +12,10 @@ import {NavMobileComponent} from '../nav-mobile/nav-mobile.component';
 import {ActivatedRoute, Router} from "@angular/router";
 import {LocalStorageService} from "../../core/services/local-storage/local-storage.service";
 import {PaymentDialogComponent} from "../payment-dialog/payment-dialog.component";
+import {MovieApiService} from "../../core/services/api/movie.api.service";
+import {InfrastructureApiService} from "../../core/services/api/infrastructure.api.service";
+import {ShowtimeApiService} from "../../core/services/api/showtime.api.service";
+import {BookingApiService} from "../../core/services/api/booking.api.service";
 
 @Component({
   selector: 'app-booking',
@@ -55,12 +58,16 @@ export class BookingComponent {
 
   @ViewChild(PaymentDialogComponent) paymentDialog!: PaymentDialogComponent;
 
-  constructor(private readonly apiService: ApiService,
-              private readonly seatService: SeatService,
-              private readonly localStorageService: LocalStorageService,
-              private readonly bookingRenderer: BookingRenderer,
-              private readonly router: Router,
-              private readonly activatedRoute: ActivatedRoute
+  constructor(
+      private readonly bookingApiService: BookingApiService,
+      private readonly infrastructureApiService: InfrastructureApiService,
+      private readonly movieApiService: MovieApiService,
+      private readonly showtimeApiService: ShowtimeApiService,
+      private readonly seatService: SeatService,
+      private readonly localStorageService: LocalStorageService,
+      private readonly bookingRenderer: BookingRenderer,
+      private readonly router: Router,
+      private readonly activatedRoute: ActivatedRoute
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -88,7 +95,7 @@ export class BookingComponent {
   }
 
   public async loadCinemas(): Promise<void> {
-    const cinemas: CinemaModel[] = await this.apiService.getCinemas();
+    const cinemas: CinemaModel[] = await this.infrastructureApiService.getCinemas();
 
     this.cinemaList = [];
     for (const cinema of cinemas) {
@@ -104,7 +111,7 @@ export class BookingComponent {
     this.isMovieListLoading = true;
     this.isShowtimeListLoading = false;
     this.isSeatListLoading = false;
-    const movies: MovieModel[] = await this.apiService.getMovies();
+    const movies: MovieModel[] = await this.movieApiService.getMovies();
 
     for (const movie of movies) {
       this.movieList.push(this.bookingRenderer.renderMovie(movie));
@@ -117,7 +124,7 @@ export class BookingComponent {
 
     this.isShowtimeListLoading = true;
     this.isSeatListLoading = false;
-    const showtimes: ShowtimeModel[] = await this.apiService.getShowtimes(movieId);
+    const showtimes: ShowtimeModel[] = await this.showtimeApiService.getShowtimes(movieId);
 
     for (const showtime of showtimes) {
       this.showtimeList.push(this.bookingRenderer.renderShowtime(showtime));
@@ -133,8 +140,8 @@ export class BookingComponent {
     this.selectedShowtime.id = showtimeId;
     this.selectedShowtime.price = price;
 
-    const seats: SeatModel[] = await this.apiService.getSeats(hallId);
-    const alreadyBookedSeatList: SeatModel[] = await this.apiService.getBookedSeats(
+    const seats: SeatModel[] = await this.infrastructureApiService.getSeats(hallId);
+    const alreadyBookedSeatList: SeatModel[] = await this.bookingApiService.getBookedSeats(
       showtimeId, null
     );
 
@@ -175,7 +182,7 @@ export class BookingComponent {
       seatIds.push(selectedSeat.id);
     });
 
-    await this.apiService.createBooking(
+    await this.bookingApiService.createBooking(
         <string> this.localStorageService.getJwtToken(),
         JSON.parse(<string> this.localStorageService.getCurrentUser()).id,
         this.selectedShowtime.id,

@@ -2,11 +2,11 @@ import {Component} from '@angular/core';
 import {HeaderComponent} from '../../shared/header/header.component';
 import {FooterComponent} from '../../shared/footer/footer.component';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {ApiService} from '../../core/services/api/api.service';
 import {NavMobileComponent} from '../nav-mobile/nav-mobile.component';
 import {NgOptimizedImage} from '@angular/common';
 import {LocalStorageService} from '../../core/services/local-storage/local-storage.service';
 import {AlertComponent} from "../../shared/alert/alert.component";
+import {UserApiService} from "../../core/services/api/user.api.service";
 
 @Component({
   selector: 'app-account-creation',
@@ -38,13 +38,16 @@ export class AccountCreationComponent {
 
   isCreatingAccount: boolean = false;
 
-  constructor(private readonly localStorageService: LocalStorageService, private readonly apiService: ApiService) {}
+  constructor(
+      private readonly localStorageService: LocalStorageService,
+      private readonly userApiService: UserApiService
+  ) {}
 
   async submit() {
     try {
       this.isCreatingAccount = true;
 
-      await this.apiService.createUser(
+      await this.userApiService.createUser(
           <string> this.localStorageService.getJwtToken(),
           <string> this.accountCreationForm.value.email,
           <string> this.accountCreationForm.value.password,

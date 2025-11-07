@@ -2,9 +2,11 @@ import {Component, ElementRef, output, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {NgOptimizedImage} from '@angular/common';
 import {LocalStorageService} from '../../core/services/local-storage/local-storage.service';
-import {ApiService} from '../../core/services/api/api.service';
 import {MovieModel} from "../../core/models/movie.model";
 import {HallModel} from "../../core/models/hall.model";
+import {MovieApiService} from "../../core/services/api/movie.api.service";
+import {InfrastructureApiService} from "../../core/services/api/infrastructure.api.service";
+import {ShowtimeApiService} from "../../core/services/api/showtime.api.service";
 
 @Component({
   selector: 'app-update-showtime-dialog',
@@ -53,7 +55,9 @@ export class UpdateShowtimeDialogComponent {
 
   constructor(
     private readonly localStorageService: LocalStorageService,
-    private readonly apiService: ApiService
+    private readonly movieApiService: MovieApiService,
+    private readonly infrastructureApiService: InfrastructureApiService,
+    private readonly showtimeApiService: ShowtimeApiService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -64,7 +68,7 @@ export class UpdateShowtimeDialogComponent {
   public async loadMovieList(): Promise<void> {
     this.resetMovieList();
 
-    const movies: MovieModel[] = await this.apiService.getMovies();
+    const movies: MovieModel[] = await this.movieApiService.getMovies();
 
     for (const movie of movies) {
       this.movieList.push({id: movie.id, title: movie.title});
@@ -74,7 +78,7 @@ export class UpdateShowtimeDialogComponent {
   public async loadHallList(): Promise<void> {
     this.resetHallList();
 
-    const halls: HallModel[] = await this.apiService.getHalls(1);
+    const halls: HallModel[] = await this.infrastructureApiService.getHalls(1);
 
     for (const hall of halls) {
       this.hallList.push({id: hall.id, number: hall.number});
@@ -84,7 +88,7 @@ export class UpdateShowtimeDialogComponent {
   public async updateShowtime(): Promise<void> {
     this.isUpdatingShowtime = true;
 
-    await this.apiService.updateShowtime(
+    await this.showtimeApiService.updateShowtime(
         <string> this.localStorageService.getJwtToken(),
         this.showtimeId,
         <number><unknown> this.showtimeForm.value.movieId,

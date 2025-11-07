@@ -1,6 +1,6 @@
 import {Component, ElementRef, Input, output, ViewChild} from '@angular/core';
 import {LocalStorageService} from '../../core/services/local-storage/local-storage.service';
-import {ApiService} from '../../core/services/api/api.service';
+import {MovieApiService} from "../../core/services/api/movie.api.service";
 
 @Component({
   selector: 'app-delete-movie-dialog',
@@ -11,7 +11,7 @@ import {ApiService} from '../../core/services/api/api.service';
 export class DeleteMovieDialogComponent {
   constructor(
     private readonly localStorageService: LocalStorageService,
-    private readonly apiService: ApiService
+    private readonly movieApiService: MovieApiService
   ) {}
 
   @ViewChild('deleteMovieDialog') deleteMovieDialog!: ElementRef<HTMLDialogElement>;
@@ -25,7 +25,7 @@ export class DeleteMovieDialogComponent {
   public async deleteMovie() {
     this.isDeletingMovie = true;
 
-    await this.apiService.deleteMovie(<string> this.localStorageService.getJwtToken(), this.movieId);
+    await this.movieApiService.deleteMovie(<string> this.localStorageService.getJwtToken(), this.movieId);
 
     this.movieDeletedEvent.emit(true);
 

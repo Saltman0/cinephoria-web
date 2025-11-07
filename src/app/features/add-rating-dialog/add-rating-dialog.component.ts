@@ -1,7 +1,7 @@
 import {Component, ElementRef, Input, output, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {LocalStorageService} from '../../core/services/local-storage/local-storage.service';
-import {ApiService} from '../../core/services/api/api.service';
+import {MovieApiService} from "../../core/services/api/movie.api.service";
 
 @Component({
   selector: 'app-add-rating-dialog',
@@ -32,12 +32,15 @@ export class AddRatingDialogComponent {
 
   @ViewChild('addRatingDialog') addRatingDialog!: ElementRef<HTMLDialogElement>;
 
-  constructor(private readonly localStorageService: LocalStorageService, private readonly apiService: ApiService) {}
+  constructor(
+      private readonly localStorageService: LocalStorageService,
+      private readonly movieApiService: MovieApiService
+  ) {}
 
   public async createRating(): Promise<void> {
     this.isAddingRating = true;
 
-    await this.apiService.createRating(
+    await this.movieApiService.createRating(
       <string> this.localStorageService.getJwtToken(),
       <number><unknown> this.ratingForm.value.number,
       <string> this.ratingForm.value.description,

@@ -2,10 +2,11 @@ import {Component} from '@angular/core';
 import {HeaderComponent} from '../../shared/header/header.component';
 import {FooterComponent} from '../../shared/footer/footer.component';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {ApiService} from '../../core/services/api/api.service';
 import {NavMobileComponent} from '../nav-mobile/nav-mobile.component';
 import {NgOptimizedImage} from '@angular/common';
 import {AlertComponent} from "../../shared/alert/alert.component";
+import {UserApiService} from "../../core/services/api/user.api.service";
+import {MailApiService} from "../../core/services/api/mail.api.service";
 
 @Component({
   selector: 'app-forgotten-password',
@@ -33,7 +34,7 @@ export class ForgottenPasswordComponent {
 
   isSendingMail: boolean = false;
 
-  constructor(private readonly apiService: ApiService) {}
+  constructor(private readonly userApiService: UserApiService, private readonly mailApiService: MailApiService) {}
 
   public async sendResetPasswordLink() {
     this.type = this.message = null;
@@ -42,9 +43,9 @@ export class ForgottenPasswordComponent {
     const email: string = <string> this.forgottenPasswordForm.value.email;
 
     try {
-      const resetPasswordLink = await this.apiService.forgotPassword(email);
+      const resetPasswordLink = await this.userApiService.forgotPassword(email);
 
-      await this.apiService.sendForgotPasswordMail(
+      await this.mailApiService.sendForgotPasswordMail(
           <string> this.forgottenPasswordForm.value.email,
           "Cinéphoria - Réinitialisation de mot de passe",
           "Votre mot de passe a été réinitialisé ! " +

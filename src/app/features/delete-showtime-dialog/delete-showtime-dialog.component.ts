@@ -1,6 +1,6 @@
 import {Component, ElementRef, Input, output, ViewChild} from '@angular/core';
 import {LocalStorageService} from '../../core/services/local-storage/local-storage.service';
-import {ApiService} from '../../core/services/api/api.service';
+import {ShowtimeApiService} from "../../core/services/api/showtime.api.service";
 
 @Component({
   selector: 'app-delete-showtime-dialog',
@@ -11,7 +11,7 @@ import {ApiService} from '../../core/services/api/api.service';
 export class DeleteShowtimeDialogComponent {
   constructor(
     private readonly localStorageService: LocalStorageService,
-    private readonly apiService: ApiService
+    private readonly showtimeApiService: ShowtimeApiService
   ) {}
 
   @ViewChild('deleteShowtimeDialog') deleteMovieDialog!: ElementRef<HTMLDialogElement>;
@@ -25,7 +25,7 @@ export class DeleteShowtimeDialogComponent {
   public async deleteShowtime(): Promise<void> {
     this.isDeletingShowtime = true;
 
-    await this.apiService.deleteShowtime(<string> this.localStorageService.getJwtToken(), this.showtimeId);
+    await this.showtimeApiService.deleteShowtime(<string> this.localStorageService.getJwtToken(), this.showtimeId);
 
     this.showtimeDeletedEvent.emit(true);
 

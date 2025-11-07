@@ -1,10 +1,10 @@
 import {Component, ElementRef, output, ViewChild} from '@angular/core';
 import {LocalStorageService} from '../../core/services/local-storage/local-storage.service';
-import {ApiService} from '../../core/services/api/api.service';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {NgOptimizedImage} from '@angular/common';
 import {CinemaModel} from '../../core/models/cinema.model';
 import {HallSettingsRenderer} from '../../core/renderers/hall-settings.renderer';
+import {InfrastructureApiService} from "../../core/services/api/infrastructure.api.service";
 
 @Component({
   selector: 'app-add-hall-dialog',
@@ -45,7 +45,7 @@ export class AddHallDialogComponent {
 
   constructor(
     private readonly localStorageService: LocalStorageService,
-    private readonly apiService: ApiService,
+    private readonly infrastructureApiService: InfrastructureApiService,
     private readonly hallSettingsRenderer: HallSettingsRenderer) {}
 
   async ngOnInit(): Promise<void> {
@@ -55,7 +55,7 @@ export class AddHallDialogComponent {
   public async loadCinemas(): Promise<void> {
     this.resetCinemas();
 
-    const cinemas: CinemaModel[] = await this.apiService.getCinemas();
+    const cinemas: CinemaModel[] = await this.infrastructureApiService.getCinemas();
 
     for (const cinema of cinemas) {
       this.cinemaList.push(this.hallSettingsRenderer.renderCinema(cinema));
@@ -65,7 +65,7 @@ export class AddHallDialogComponent {
   public async createHall(): Promise<void> {
     this.isAddingHall = true;
 
-    const hall = await this.apiService.createHall(
+    const hall = await this.infrastructureApiService.createHall(
       <string> this.localStorageService.getJwtToken(),
       <number><unknown> this.hallForm.value.number,
       <string> this.hallForm.value.projectionQuality,
@@ -81,7 +81,7 @@ export class AddHallDialogComponent {
       for (let j: number = 0; j < nbSeats; j++) {
         const number: number = j + 1;
 
-        await this.apiService.createSeat(
+        await this.infrastructureApiService.createSeat(
           <string> this.localStorageService.getJwtToken(),
           row,
           number,

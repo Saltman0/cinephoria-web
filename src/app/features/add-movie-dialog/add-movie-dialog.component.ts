@@ -1,10 +1,10 @@
 import {Component, ElementRef, output, ViewChild} from '@angular/core';
 import {LocalStorageService} from '../../core/services/local-storage/local-storage.service';
-import {ApiService} from '../../core/services/api/api.service';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {NgOptimizedImage} from '@angular/common';
 import {CategoryModel} from '../../core/models/category.model';
 import {MovieShowtimeSettingsRenderer} from '../../core/renderers/movie-showtime-settings.renderer';
+import {MovieApiService} from "../../core/services/api/movie.api.service";
 
 @Component({
   selector: 'app-add-movie-dialog',
@@ -48,7 +48,7 @@ export class AddMovieDialogComponent {
 
   constructor(
     private readonly localStorageService: LocalStorageService,
-    private readonly apiService: ApiService,
+    private readonly movieApiService: MovieApiService,
     private readonly movieShowtimeSettingsRenderer: MovieShowtimeSettingsRenderer) {}
 
   async ngOnInit(): Promise<void> {
@@ -58,7 +58,7 @@ export class AddMovieDialogComponent {
   public async loadCategoryList(): Promise<void> {
     this.resetCategoryList();
 
-    const categories: CategoryModel[] = await this.apiService.getCategories();
+    const categories: CategoryModel[] = await this.movieApiService.getCategories();
 
     for (const category of categories) {
       this.categoryList.push(this.movieShowtimeSettingsRenderer.renderCategory(category));
@@ -68,7 +68,7 @@ export class AddMovieDialogComponent {
   public async createMovie(): Promise<void> {
     this.isAddingMovie = true;
 
-    await this.apiService.createMovie(
+    await this.movieApiService.createMovie(
       <string> this.localStorageService.getJwtToken(),
       <string> this.movieForm.value.title,
       <string> this.movieForm.value.description,

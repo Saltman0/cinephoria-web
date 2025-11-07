@@ -1,8 +1,8 @@
 import {Component, ElementRef, Input, output, ViewChild} from '@angular/core';
 import {LocalStorageService} from '../../core/services/local-storage/local-storage.service';
-import {ApiService} from '../../core/services/api/api.service';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {NgOptimizedImage} from '@angular/common';
+import {UserApiService} from "../../core/services/api/user.api.service";
 
 @Component({
   selector: 'app-update-employee-dialog',
@@ -48,13 +48,13 @@ export class UpdateEmployeeDialogComponent {
 
   constructor(
     private readonly localStorageService: LocalStorageService,
-    private readonly apiService: ApiService
+    private readonly userApiService: UserApiService
   ) {}
 
   public async updateEmployee(employeeId: number) {
     this.isUpdatingEmployee = true;
 
-    await this.apiService.updateUser(
+    await this.userApiService.updateUser(
       employeeId,
       <string> this.localStorageService.getJwtToken(),
       <string> this.employeeForm.value.email,

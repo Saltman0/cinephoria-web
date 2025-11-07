@@ -1,10 +1,10 @@
 import {Component} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {ApiService} from '../../core/services/api/api.service';
 import {HeaderComponent} from '../../shared/header/header.component';
 import {FooterComponent} from '../../shared/footer/footer.component';
 import {NavMobileComponent} from '../nav-mobile/nav-mobile.component';
 import {AlertComponent} from "../../shared/alert/alert.component";
+import {MailApiService} from "../../core/services/api/mail.api.service";
 
 @Component({
   selector: 'app-contact',
@@ -30,13 +30,13 @@ export class ContactComponent {
 
   isSendingMail: boolean = false;
 
-  constructor(private readonly apiService: ApiService) {}
+  constructor(private readonly mailApiService: MailApiService) {}
 
   async submit() {
     try {
       this.isSendingMail = true;
 
-      await this.apiService.sendContactMail(
+      await this.mailApiService.sendContactMail(
           <string> this.contactForm.value.contactEmail,
           <string> this.contactForm.value.contactTitle,
           <string> this.contactForm.value.contactDescription

@@ -1,7 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 import {jwtDecode} from "jwt-decode";
 import {HeaderComponent} from '../../shared/header/header.component';
-import {ApiService} from '../../core/services/api/api.service';
 import {FooterComponent} from '../../shared/footer/footer.component';
 import {NgOptimizedImage} from '@angular/common';
 import {BookingModel} from '../../core/models/booking.model';
@@ -11,6 +10,8 @@ import {NavMobileComponent} from '../nav-mobile/nav-mobile.component';
 import {CinemaModel} from '../../core/models/cinema.model';
 import {LocalStorageService} from "../../core/services/local-storage/local-storage.service";
 import {AddRatingDialogComponent} from "../add-rating-dialog/add-rating-dialog.component";
+import {BookingApiService} from "../../core/services/api/booking.api.service";
+import {InfrastructureApiService} from "../../core/services/api/infrastructure.api.service";
 
 @Component({
   selector: 'app-home',
@@ -48,7 +49,8 @@ export class OrderComponent {
 
   constructor(
     private readonly bookingRenderer: BookingRenderer,
-    private readonly apiService: ApiService,
+    private readonly bookingApiService: BookingApiService,
+    private readonly infrastructureApiService: InfrastructureApiService,
     private readonly localStorageService: LocalStorageService
   ) {}
 
@@ -58,7 +60,7 @@ export class OrderComponent {
   }
 
   public async loadCinemas(): Promise<void> {
-    const cinemas: CinemaModel[] = await this.apiService.getCinemas();
+    const cinemas: CinemaModel[] = await this.infrastructureApiService.getCinemas();
 
     this.cinemaList = [];
     for (const cinema of cinemas) {
@@ -72,7 +74,7 @@ export class OrderComponent {
     this.resetBookings();
 
     const userId: number = jwtDecode<{id: number}>(<string> this.localStorageService.getJwtToken()).id;
-    const bookings: BookingModel[] = await this.apiService.getBookings(userId, null);
+    const bookings: BookingModel[] = await this.bookingApiService.getBookings(userId, null);
 
     for (const booking of bookings) {
       this.bookingList.push(await this.bookingRenderer.renderBooking(booking));

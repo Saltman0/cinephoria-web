@@ -1,6 +1,6 @@
 import {Component, ElementRef, Input, output, ViewChild} from '@angular/core';
 import {LocalStorageService} from '../../core/services/local-storage/local-storage.service';
-import {ApiService} from '../../core/services/api/api.service';
+import {UserApiService} from "../../core/services/api/user.api.service";
 
 @Component({
   selector: 'app-delete-employee-dialog',
@@ -11,7 +11,7 @@ import {ApiService} from '../../core/services/api/api.service';
 export class DeleteEmployeeDialogComponent {
   constructor(
     private readonly localStorageService: LocalStorageService,
-    private readonly apiService: ApiService
+    private readonly userApiService: UserApiService
   ) {}
 
   @ViewChild('deleteEmployeeDialog') deleteEmployeeDialog!: ElementRef<HTMLDialogElement>;
@@ -25,7 +25,7 @@ export class DeleteEmployeeDialogComponent {
   public async deleteEmployee(employeeId: number) {
     this.isDeletingEmployee = true;
 
-    await this.apiService.deleteUser(<string> this.localStorageService.getJwtToken(), employeeId);
+    await this.userApiService.deleteUser(<string> this.localStorageService.getJwtToken(), employeeId);
 
     this.employeeDeletedEvent.emit(true);
 

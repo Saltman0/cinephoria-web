@@ -4,7 +4,9 @@ import {NgOptimizedImage} from '@angular/common';
 import {MovieModel} from "../../core/models/movie.model";
 import {HallModel} from "../../core/models/hall.model";
 import {LocalStorageService} from '../../core/services/local-storage/local-storage.service';
-import {ApiService} from '../../core/services/api/api.service';
+import {MovieApiService} from "../../core/services/api/movie.api.service";
+import {InfrastructureApiService} from "../../core/services/api/infrastructure.api.service";
+import {ShowtimeApiService} from "../../core/services/api/showtime.api.service";
 
 @Component({
   selector: 'app-add-showtime-dialog',
@@ -46,7 +48,9 @@ export class AddShowtimeDialogComponent {
 
   constructor(
     private readonly localStorageService: LocalStorageService,
-    private readonly apiService: ApiService
+    private readonly infrastructureApiService: InfrastructureApiService,
+    private readonly movieApiService: MovieApiService,
+    private readonly showtimeApiService: ShowtimeApiService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -57,7 +61,7 @@ export class AddShowtimeDialogComponent {
   public async loadMovieList(): Promise<void> {
     this.resetMovieList();
 
-    const movies: MovieModel[] = await this.apiService.getMovies();
+    const movies: MovieModel[] = await this.movieApiService.getMovies();
 
     for (const movie of movies) {
       this.movieList.push({id: movie.id, title: movie.title});
@@ -67,7 +71,7 @@ export class AddShowtimeDialogComponent {
   public async loadHallList(): Promise<void> {
     this.resetHallList();
 
-    const halls: HallModel[] = await this.apiService.getHalls(1);
+    const halls: HallModel[] = await this.infrastructureApiService.getHalls(1);
 
     for (const hall of halls) {
       this.hallList.push({id: hall.id, number: hall.number});
@@ -77,7 +81,7 @@ export class AddShowtimeDialogComponent {
   public async createShowtime(): Promise<void> {
     this.isAddingShowtime = true;
 
-    await this.apiService.createShowtime(
+    await this.showtimeApiService.createShowtime(
         <string> this.localStorageService.getJwtToken(),
         <number><unknown> this.showtimeForm.value.movieId,
         <number><unknown> this.showtimeForm.value.hallId,

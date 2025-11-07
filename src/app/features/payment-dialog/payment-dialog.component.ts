@@ -1,8 +1,8 @@
 import {Component, ElementRef, output, ViewChild} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {ApiService} from "../../core/services/api/api.service";
 import {LocalStorageService} from "../../core/services/local-storage/local-storage.service";
 import {loadStripe, Stripe, StripeCardElement} from "@stripe/stripe-js";
+import {BookingApiService} from "../../core/services/api/booking.api.service";
 
 @Component({
   selector: 'app-payment-dialog',
@@ -28,11 +28,11 @@ export class PaymentDialogComponent {
 
   constructor(
       private readonly localStorageService: LocalStorageService,
-      private readonly apiService: ApiService
+      private readonly bookingApiService: BookingApiService
   ) {}
 
   public async loadPaymentIntent() {
-    const response: { clientSecret: string } = await this.apiService.createPayment(
+    const response: { clientSecret: string } = await this.bookingApiService.createPayment(
         <string> this.localStorageService.getJwtToken(),
         this.price * 100
     );

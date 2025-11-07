@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import {Router} from "@angular/router";
 import {HeaderComponent} from '../../shared/header/header.component';
-import {ApiService} from '../../core/services/api/api.service';
 import {FooterComponent} from '../../shared/footer/footer.component';
 import {NgOptimizedImage} from '@angular/common';
 import {CinemaModel} from '../../core/models/cinema.model';
@@ -10,6 +9,8 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {CategoryModel} from "../../core/models/category.model";
 import {MovieRenderer} from "../../core/renderers/movie.renderer";
 import {MovieModel} from "../../core/models/movie.model";
+import {MovieApiService} from "../../core/services/api/movie.api.service";
+import {InfrastructureApiService} from "../../core/services/api/infrastructure.api.service";
 
 @Component({
   selector: 'app-booking',
@@ -57,7 +58,8 @@ export class MoviesComponent {
   isMovieListLoading: boolean = false;
 
   constructor(
-      private readonly apiService: ApiService,
+      private readonly infrastructureApiService: InfrastructureApiService,
+      private readonly movieApiService: MovieApiService,
       private readonly movieRenderer: MovieRenderer,
       private readonly router: Router
   ) {}
@@ -68,7 +70,7 @@ export class MoviesComponent {
   }
 
   public async loadCinemas(): Promise<void> {
-    const cinemas: CinemaModel[] = await this.apiService.getCinemas();
+    const cinemas: CinemaModel[] = await this.infrastructureApiService.getCinemas();
 
     for (const cinema of cinemas) {
       this.cinemaList.push(this.movieRenderer.renderCinema(cinema));
@@ -76,7 +78,7 @@ export class MoviesComponent {
   }
 
   public async loadCategories(): Promise<void> {
-    const categories: CategoryModel[] = await this.apiService.getCategories();
+    const categories: CategoryModel[] = await this.movieApiService.getCategories();
 
     for (const category of categories) {
       this.categoryList.push(this.movieRenderer.renderCategory(category));
@@ -90,7 +92,7 @@ export class MoviesComponent {
 
     this.isMovieListLoading = true;
 
-    const movies: MovieModel[] = await this.apiService.getMoviesGql(
+    const movies: MovieModel[] = await this.movieApiService.getMoviesGql(
         this.selectedCategoryId !== null ? Number(this.selectedCategoryId) : null,
         this.selectedShowtimeDateStart,
         this.selectedShowtimeDateEnd,

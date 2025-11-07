@@ -1,6 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
 import {HeaderComponent} from '../../shared/header/header.component';
-import {ApiService} from '../../core/services/api/api.service';
 import {FooterComponent} from '../../shared/footer/footer.component';
 import {NgOptimizedImage, TitleCasePipe} from '@angular/common';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
@@ -9,6 +8,7 @@ import {UserModel} from '../../core/models/user.model';
 import {LocalStorageService} from '../../core/services/local-storage/local-storage.service';
 import {DeleteEmployeeDialogComponent} from '../delete-employee-dialog/delete-employee-dialog.component';
 import {UpdateEmployeeDialogComponent} from '../update-employee-dialog/update-employee-dialog.component';
+import {UserApiService} from "../../core/services/api/user.api.service";
 
 @Component({
   selector: 'app-employee-list',
@@ -62,7 +62,7 @@ export class EmployeeListComponent {
   @ViewChild(DeleteEmployeeDialogComponent) deleteEmployeeDialogComponent!: DeleteEmployeeDialogComponent;
 
   constructor(
-    private readonly apiService: ApiService,
+    private readonly userApiService: UserApiService,
     private readonly localStorageService: LocalStorageService,
     private readonly employeeRenderer: EmployeeRenderer
   ) {}
@@ -74,7 +74,7 @@ export class EmployeeListComponent {
   public async createEmployee() {
     this.isCreatingEmployee = true;
 
-    await this.apiService.createUser(
+    await this.userApiService.createUser(
       <string> this.localStorageService.getJwtToken(),
       <string> this.employeeForm.value.email,
       <string> this.employeeForm.value.password,
@@ -114,7 +114,7 @@ export class EmployeeListComponent {
   public async loadEmployeeList(): Promise<void> {
     this.resetEmployeeList();
 
-    const employees: UserModel[] = await this.apiService.getUsers("employee");
+    const employees: UserModel[] = await this.userApiService.getUsers("employee");
 
     for (const employee of employees) {
       this.employeeList.push(this.employeeRenderer.render(employee));

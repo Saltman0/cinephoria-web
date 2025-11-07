@@ -1,11 +1,11 @@
 import {Component, ElementRef, Input, output, ViewChild} from '@angular/core';
 import {LocalStorageService} from '../../core/services/local-storage/local-storage.service';
-import {ApiService} from '../../core/services/api/api.service';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {NgOptimizedImage} from '@angular/common';
 import {CinemaModel} from '../../core/models/cinema.model';
 import {HallSettingsRenderer} from '../../core/renderers/hall-settings.renderer';
 import {SeatModel} from '../../core/models/seat.model';
+import {InfrastructureApiService} from "../../core/services/api/infrastructure.api.service";
 
 @Component({
   selector: 'app-update-hall-dialog',
@@ -53,7 +53,7 @@ export class UpdateHallDialogComponent {
 
   constructor(
     private readonly localStorageService: LocalStorageService,
-    private readonly apiService: ApiService,
+    private readonly infrastructureApiService: InfrastructureApiService,
     private readonly hallSettingsRenderer: HallSettingsRenderer) {}
 
   async ngOnInit(): Promise<void> {
@@ -63,7 +63,7 @@ export class UpdateHallDialogComponent {
   public async loadCinemaList(): Promise<void> {
     this.resetCinemaList();
 
-    const cinemas: CinemaModel[] = await this.apiService.getCinemas();
+    const cinemas: CinemaModel[] = await this.infrastructureApiService.getCinemas();
 
     for (const cinema of cinemas) {
       this.cinemaList.push(this.hallSettingsRenderer.renderCinema(cinema));
@@ -75,7 +75,7 @@ export class UpdateHallDialogComponent {
 
     const jwtToken: string = <string> this.localStorageService.getJwtToken();
 
-    const hall = await this.apiService.updateHall(
+    const hall = await this.infrastructureApiService.updateHall(
         jwtToken,
       this.hallId,
       <number><unknown> this.hallForm.value.number,
@@ -86,7 +86,7 @@ export class UpdateHallDialogComponent {
     const seats: SeatModel[] = hall.seats;
 
     for (const seat of seats) {
-      await this.apiService.deleteSeat(jwtToken, seat.id);
+      await this.infrastructureApiService.deleteSeat(jwtToken, seat.id);
     }
 
     const nbRows = <number><unknown> this.hallForm.value.nbRows;
@@ -98,7 +98,7 @@ export class UpdateHallDialogComponent {
       for (let j: number = 0; j < nbSeats; j++) {
         const number: number = j + 1;
 
-        await this.apiService.createSeat(
+        await this.infrastructureApiService.createSeat(
             jwtToken,
             row,
             number,

@@ -1,6 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
 import {HeaderComponent} from '../../shared/header/header.component';
-import {ApiService} from '../../core/services/api/api.service';
 import {FooterComponent} from '../../shared/footer/footer.component';
 import {NgOptimizedImage} from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';
@@ -10,6 +9,7 @@ import {CinemaModel} from '../../core/models/cinema.model';
 import {AddHallDialogComponent} from '../add-hall-dialog/add-hall-dialog.component';
 import {UpdateHallDialogComponent} from '../update-hall-dialog/update-hall-dialog.component';
 import {DeleteHallDialogComponent} from '../delete-hall-dialog/delete-hall-dialog.component';
+import {InfrastructureApiService} from "../../core/services/api/infrastructure.api.service";
 
 @Component({
   selector: 'app-hall-settings',
@@ -56,7 +56,10 @@ export class HallSettingsComponent {
   @ViewChild(UpdateHallDialogComponent) updateHallDialogComponent!: UpdateHallDialogComponent;
   @ViewChild(DeleteHallDialogComponent) deleteHallDialogComponent!: DeleteHallDialogComponent;
 
-  constructor(private readonly hallSettingsRenderer: HallSettingsRenderer, private readonly apiService: ApiService) {}
+  constructor(
+      private readonly hallSettingsRenderer: HallSettingsRenderer,
+      private readonly infrastructureApiService: InfrastructureApiService
+  ) {}
 
   async ngOnInit(): Promise<void> {
     await this.loadCinemaList();
@@ -65,7 +68,7 @@ export class HallSettingsComponent {
   public async loadCinemaList(): Promise<void> {
     this.resetCinemaList();
 
-    const cinemas: CinemaModel[] = await this.apiService.getCinemas();
+    const cinemas: CinemaModel[] = await this.infrastructureApiService.getCinemas();
 
     for (const cinema of cinemas) {
       this.cinemaList.push(this.hallSettingsRenderer.renderCinema(cinema));
@@ -79,7 +82,7 @@ export class HallSettingsComponent {
 
     let cinemaId = 1;
 
-    const halls: HallModel[] = await this.apiService.getHalls(cinemaId);
+    const halls: HallModel[] = await this.infrastructureApiService.getHalls(cinemaId);
 
     for (const hall of halls) {
       this.hallList.push(await this.hallSettingsRenderer.renderHall(hall, cinemaId));

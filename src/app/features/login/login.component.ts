@@ -2,11 +2,11 @@ import {Component} from '@angular/core';
 import {HeaderComponent} from '../../shared/header/header.component';
 import {FooterComponent} from '../../shared/footer/footer.component';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {ApiService} from '../../core/services/api/api.service';
 import {NavMobileComponent} from '../nav-mobile/nav-mobile.component';
 import {NgOptimizedImage} from '@angular/common';
 import {LocalStorageService} from '../../core/services/local-storage/local-storage.service';
 import {Router, RouterLink} from "@angular/router";
+import {UserApiService} from "../../core/services/api/user.api.service";
 
 @Component({
   selector: 'app-login',
@@ -29,19 +29,19 @@ export class LoginComponent {
 
   constructor(
       private readonly localStorageService: LocalStorageService,
-      private readonly apiService: ApiService,
+      private readonly userApiService: UserApiService,
       private readonly router: Router
   ) {}
 
   public async connect(): Promise<void> {
-    const result = await this.apiService.login(
+    const result = await this.userApiService.login(
         <string> this.loginForm.value.email,
         <string> this.loginForm.value.password
     );
 
     this.localStorageService.addJwtToken(result.value);
 
-    const resultUser = await this.apiService.getUser(<string> this.localStorageService.getJwtToken());
+    const resultUser = await this.userApiService.getUser(<string> this.localStorageService.getJwtToken());
 
     this.localStorageService.addCurrentUser(JSON.stringify({id: resultUser.id, role: resultUser.role}));
 

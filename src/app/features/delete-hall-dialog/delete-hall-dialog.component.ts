@@ -1,7 +1,7 @@
 import {Component, ElementRef, Input, output, ViewChild} from '@angular/core';
 import {LocalStorageService} from '../../core/services/local-storage/local-storage.service';
-import {ApiService} from '../../core/services/api/api.service';
 import {SeatModel} from '../../core/models/seat.model';
+import {InfrastructureApiService} from "../../core/services/api/infrastructure.api.service";
 
 @Component({
   selector: 'app-delete-hall-dialog',
@@ -12,7 +12,7 @@ import {SeatModel} from '../../core/models/seat.model';
 export class DeleteHallDialogComponent {
   constructor(
     private readonly localStorageService: LocalStorageService,
-    private readonly apiService: ApiService
+    private readonly infrastructureApiService: InfrastructureApiService
   ) {}
 
   @ViewChild('deleteHallDialog') deleteHallDialog!: ElementRef<HTMLDialogElement>;
@@ -28,12 +28,12 @@ export class DeleteHallDialogComponent {
 
     const jwtToken: string = <string> this.localStorageService.getJwtToken();
 
-    const seats: SeatModel[] = await this.apiService.getSeats(this.hallId);
+    const seats: SeatModel[] = await this.infrastructureApiService.getSeats(this.hallId);
 
-    await this.apiService.deleteHall(jwtToken, this.hallId);
+    await this.infrastructureApiService.deleteHall(jwtToken, this.hallId);
 
     for (const seat of seats) {
-      await this.apiService.deleteSeat(jwtToken, seat.id);
+      await this.infrastructureApiService.deleteSeat(jwtToken, seat.id);
     }
 
     this.hallDeletedEvent.emit(true);
