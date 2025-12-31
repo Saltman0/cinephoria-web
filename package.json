@@ -20,6 +20,7 @@
     "@angular/router": "^19.1.0",
     "@stripe/stripe-js": "^8.2.0",
     "@tailwindcss/postcss": "^4.1.4",
+    "apexcharts": "^5.3.6",
     "apollo-angular": "^10.0.3",
     "daisyui": "^5.1.29",
     "graphql": "^16.10.0",
