@@ -16,6 +16,7 @@ import {AdminGuard} from "./core/guards/admin.guard";
 import {UserGuard} from "./core/guards/user.guard";
 import {AuthGuard} from "./core/guards/auth.guard";
 import {ResetPasswordComponent} from "./features/reset-password/reset-password.component";
+import {DashboardComponent} from "./features/dashboard/dashboard.component";
 
 export const root: string = "http://localhost:4200/";
 
@@ -26,7 +27,6 @@ export const routes: Routes = [
   { path: 'movies', title: "Movies page", component: MoviesComponent },
   { path: 'booking', title: "Booking page", component: BookingComponent },
   { path: 'order', title: "Order page", component: OrderComponent, canActivate: [UserGuard, AuthGuard] },
-  { path: 'employee', title: "Employee page", component: EmployeeListComponent, canActivate: [AdminGuard, AuthGuard] },
   {
     path: 'movie-showtime-settings',
     title: "Movie Showtime settings page",
@@ -39,6 +39,8 @@ export const routes: Routes = [
     component: HallSettingsComponent,
     canActivate: [EmployeeGuard, AuthGuard]
   },
+  { path: 'employee', title: "Employee page", component: EmployeeListComponent, canActivate: [AdminGuard, AuthGuard] },
+  { path: 'dashboard', title: "Dashboard page", component: DashboardComponent, canActivate: [AdminGuard, AuthGuard] },
   { path: 'contact', title: "Contact page", component: ContactComponent },
   { path: 'account-creation', title: "Account creation page", component: AccountCreationComponent },
   {
