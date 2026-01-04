@@ -8,9 +8,12 @@ import {InfrastructureApiService} from "../../core/services/api/infrastructure.a
 import {CinemaModel} from "../../core/models/cinema.model";
 import {CategoryModel} from "../../core/models/category.model";
 import {MovieApiService} from "../../core/services/api/movie.api.service";
+import ApexCharts from 'apexcharts';
+import {DashboardApiService} from "../../core/services/api/dashboard.api.service";
+import {BookingHistoryModel} from "../../core/models/bookingHistory.model";
 
 @Component({
-  selector: 'app-contact',
+  selector: 'app-dashboard',
   imports: [
     HeaderComponent,
     FooterComponent,
@@ -24,24 +27,22 @@ import {MovieApiService} from "../../core/services/api/movie.api.service";
 export class DashboardComponent {
   cinemaList: { id: number, name: string }[] = [];
   categoryList: { id: number, name: string }[] = [];
-  dateStart: Date = new Date();
-  dateEnd: Date = new Date();
 
   selectedCinema: number|null = null;
   selectedCategory: number|null = null;
   selectedDateStart: Date|null = null;
   selectedDateEnd: Date|null = null;
 
-  isLoadingDashboard: boolean = false;
-
   constructor(
       private readonly movieApiService: MovieApiService,
-      private readonly infrastructureApiService: InfrastructureApiService
+      private readonly infrastructureApiService: InfrastructureApiService,
+      private readonly dashboardApiService: DashboardApiService
   ) {}
 
   async ngOnInit(): Promise<void> {
     await this.loadCinemaList();
     await this.loadCategoryList();
+    await this.loadDashboard();
   }
 
   private async loadCinemaList(): Promise<void> {
@@ -70,7 +71,74 @@ export class DashboardComponent {
     }
   }
 
-  public loadDashboard() {
-    // TODO Charger dashboard
+  public async loadDashboard() {
+    const bookingHistory: BookingHistoryModel[] = await this.dashboardApiService.getBookingHistory();
+
+    const countsByDate = bookingHistory.reduce<Record<string, number>>(
+        (acc, { bookingId, date }: BookingHistoryModel) => {
+          const newDate: Date = new Date(date);
+          const day: number = newDate.getDate();
+          const month: number = newDate.getMonth()+1;
+          const year: number = newDate.getFullYear();
+          const formattedDate: string = day+"/"+month+"/"+year;
+
+          acc[formattedDate] = (acc[formattedDate] ?? 0) + 1;
+          return acc;
+        },
+        {}
+    );
+
+    const arrNbBookingByDate = Object.entries(countsByDate).map(
+        ([date, count]) => ({ date, count })
+    );
+
+
+    let arrNbBooking: number[] = [];
+    let arrDate: string[] = [];
+    for (const nbBookingByDate of arrNbBookingByDate) {
+      arrNbBooking.push(nbBookingByDate.count);
+      arrDate.push(nbBookingByDate.date);
+    }
+
+
+    const options = {
+      chart: {
+        type: 'area'
+      },
+      series: [{
+        name: 'Réservations',
+        data: arrNbBooking
+      }],
+      xaxis: {
+        categories: arrDate
+      },
+      tooltip: {
+        enabled: false
+      }
+    }
+
+    const chart: ApexCharts = new ApexCharts(document.querySelector("#chart"), options);
+
+    await chart.render();
+  }
+
+  public selectCinemaId(event: Event): void {
+    const value: string = (event.target as HTMLSelectElement).value;
+    this.selectedCinema = Number(value);
+  }
+
+  public selectCategoryId(event: Event): void {
+    const value: string = (event.target as HTMLSelectElement).value;
+    this.selectedCategory = Number(value);
+  }
+
+  public selectShowtimeDateStart(event: Event): void {
+    const value: string = (event.target as HTMLSelectElement).value;
+    this.selectedDateStart = new Date(value);
+  }
+
+  public selectShowtimeDateEnd(event: Event): void {
+    const value: string = (event.target as HTMLSelectElement).value;
+    this.selectedDateEnd = new Date(value);
   }
 }

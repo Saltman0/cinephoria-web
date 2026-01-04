@@ -1,9 +1,8 @@
 <app-header></app-header>
 
-
 <main class="flex flex-col items-center p-5 my-4">
 
-    <section class="flex flex-col items-center p-5">
+    <section class="flex flex-col items-center gap-5 p-5">
 
         <div class="cinephoria-table-header">
             <div class="cinephoria-select-cinema flex justify-between items-center px-2">
@@ -49,17 +48,20 @@
 
             </div>
 
-            <button type="button" class="cinephoria-button border" (click)="loadMoviesAndShowtimes()">
+            <button type="button" class="cinephoria-button border" (click)="loadDashboard()">
                 <span>Rechercher</span>
             </button>
+        </div>
+
+        <div class="flex flex-col justify-center items-center">
+            <div class="cinephoria-big-text">Nombre de réservations</div>
+            <div id="chart" class="w-[600px]"></div>
         </div>
 
     </section>
 
 
 </main>
-
-<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
 <app-footer></app-footer>
 
