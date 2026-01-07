@@ -127,6 +127,7 @@ export class MovieShowtimeSettingsComponent {
       favorite: boolean,
       imageURL: string
   ): void {
+    this.selectedMovieId = movieId;
     this.updateMovieDialog.showUpdateMovieDialog(
         movieId,
         categoryId,
@@ -155,6 +156,7 @@ export class MovieShowtimeSettingsComponent {
       endTime: Date,
       price: number
   ) {
+    this.selectedMovieId = movieId;
     this.selectedShowtimeId = showtimeId;
     this.updateShowtimeDialog.showUpdateShowtimeDialog(
         showtimeId,

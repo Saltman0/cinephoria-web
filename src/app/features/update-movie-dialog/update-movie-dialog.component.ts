@@ -17,19 +17,11 @@ import {MovieApiService} from "../../core/services/api/movie.api.service";
   styleUrl: './update-movie-dialog.component.scss'
 })
 export class UpdateMovieDialogComponent {
-  movieId: number = 0;
-  categoryId: number = 0;
-  title: string = "";
-  description: string = "";
-  minimumAge: number|null = null;
-  favorite: boolean = false;
-  imageURL: string = "";
-
   categoryList: { id: number; name: string; }[] = [];
 
   movieForm = new FormGroup({
     categoryId: new FormControl(
-      "", [Validators.required]
+      0, [Validators.required]
     ),
     title: new FormControl(
       "", [Validators.required, Validators.minLength(1), Validators.max(50)]
@@ -38,14 +30,17 @@ export class UpdateMovieDialogComponent {
       "", [Validators.required, Validators.minLength(5), Validators.maxLength(200)]
     ),
     minimumAge: new FormControl(
-      null, [Validators.min(1), Validators.max(18)]
+      0, [Validators.min(1), Validators.max(18)]
     ),
     favorite: new FormControl(
       false, [Validators.required]
     ),
     imageURL: new FormControl(
       "", [Validators.required, Validators.minLength(1), Validators.maxLength(100)]
-    )
+    ),
+    movieId: new FormControl(
+        0, [Validators.required]
+    ),
   });
 
   isUpdatingMovie: boolean = false;
@@ -77,14 +72,14 @@ export class UpdateMovieDialogComponent {
     this.isUpdatingMovie = true;
 
     await this.movieApiService.updateMovie(
-      <string> this.localStorageService.getJwtToken(),
-      this.movieId,
-      <string> this.movieForm.value.title,
-      <string> this.movieForm.value.description,
-      <number|null> this.movieForm.value.minimumAge,
-      <boolean><unknown> this.movieForm.value.favorite,
-      <string> this.movieForm.value.imageURL,
-      <number><unknown> this.movieForm.value.categoryId
+        <string> this.localStorageService.getJwtToken(),
+        Number(this.movieForm.value.movieId),
+        <string> this.movieForm.value.title,
+        <string> this.movieForm.value.description,
+        <number|null> this.movieForm.value.minimumAge,
+        <boolean> this.movieForm.value.favorite,
+        <string> this.movieForm.value.imageURL,
+        Number(this.movieForm.value.categoryId)
     );
 
     this.movieUpdatedEvent.emit(true);
@@ -103,14 +98,16 @@ export class UpdateMovieDialogComponent {
       favorite: boolean,
       imageURL: string
   ): void {
-    this.movieId = movieId;
-    this.categoryId = categoryId;
-    this.title = title;
-    this.description = description;
-    this.minimumAge = minimumAge;
-    this.favorite = favorite;
-    this.imageURL = imageURL;
-    console.log(this.description);
+    this.movieForm.patchValue({
+      categoryId: categoryId,
+      title: title,
+      description: description,
+      minimumAge: minimumAge,
+      favorite: favorite,
+      imageURL: imageURL,
+      movieId: movieId
+    });
+
     this.updateMovieDialog.nativeElement.showModal();
   }
 

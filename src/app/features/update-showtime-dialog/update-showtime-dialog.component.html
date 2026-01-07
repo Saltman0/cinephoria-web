@@ -11,7 +11,7 @@
                 <select class="mx-1" formControlName="movieId" name="movieId" id="movieId">
                     <option disabled>Choisissez une catégorie</option>
                     @for (movie of movieList; track movie.id) {
-                        <option [value]="movie.id" [selected]="movie.id === movieId">{{ movie.title }}</option>
+                        <option [value]="movie.id">{{ movie.title }}</option>
                     }
                 </select>
 
@@ -23,7 +23,7 @@
                 <select class="mx-1" formControlName="hallId" name="hallId" id="hallId" required>
                     <option selected disabled>Choisissez une salle</option>
                     @for (hall of hallList; track hall.id) {
-                        <option [value]="hall.id" [selected]="hall.id === hallId">{{ hall.number }}</option>
+                        <option [value]="hall.id">{{ hall.number }}</option>
                     }
                 </select>
 
@@ -32,19 +32,19 @@
             </div>
 
             <div class="flex flex-col items-start">
-                <input [value]="startTime" type="datetime-local" formControlName="startTime"
+                <input type="datetime-local" formControlName="startTime"
                        placeholder="Date de début de séance" name="startTime" id="startTime"
                        class="cinephoria-input h-8.75 w-62.5" required minlength="5" maxlength="200" />
             </div>
 
             <div class="flex flex-col items-start">
-                <input [value]="endTime" type="datetime-local" formControlName="endTime"
+                <input type="datetime-local" formControlName="endTime"
                        placeholder="Date de fin de séance" name="endTime" id="endTime"
                        class="cinephoria-input h-8.75 w-62.5" required minlength="5" maxlength="200" />
             </div>
 
             <div class="flex flex-col items-start">
-                <input [value]="price" type="number" formControlName="price" placeholder="Prix de la séance"
+                <input type="number" formControlName="price" placeholder="Prix de la séance"
                        name="price" id="price" class="cinephoria-input h-8.75 w-62.5" required min="1" max="100" />
             </div>
 

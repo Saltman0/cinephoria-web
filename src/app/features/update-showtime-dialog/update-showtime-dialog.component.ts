@@ -19,13 +19,6 @@ import {ShowtimeApiService} from "../../core/services/api/showtime.api.service";
   styleUrl: './update-showtime-dialog.component.scss'
 })
 export class UpdateShowtimeDialogComponent {
-  showtimeId: number = 0;
-  movieId: number = 0;
-  hallId: number = 0;
-  startTime: string = "";
-  endTime: string = "";
-  price: number = 0;
-
   movieList: { id: number; title: string; }[] = [];
   hallList: { id: number; number: number; }[] = [];
 
@@ -44,7 +37,10 @@ export class UpdateShowtimeDialogComponent {
     ),
     price: new FormControl(
         0, [Validators.min(0), Validators.max(100)]
-    )
+    ),
+    showtimeId: new FormControl(
+        0, [Validators.required]
+    ),
   });
 
   isUpdatingShowtime: boolean = false;
@@ -90,12 +86,12 @@ export class UpdateShowtimeDialogComponent {
 
     await this.showtimeApiService.updateShowtime(
         <string> this.localStorageService.getJwtToken(),
-        this.showtimeId,
-        <number><unknown> this.showtimeForm.value.movieId,
-        <number><unknown> this.showtimeForm.value.hallId,
+        Number(this.showtimeForm.value.showtimeId),
+        Number(this.showtimeForm.value.movieId),
+        Number(this.showtimeForm.value.hallId),
         <string> this.showtimeForm.value.startTime,
         <string> this.showtimeForm.value.endTime,
-        <number><unknown> this.showtimeForm.value.price
+        Number(this.showtimeForm.value.price)
     );
 
     this.showtimeUpdatedEvent.emit(true);
@@ -113,12 +109,15 @@ export class UpdateShowtimeDialogComponent {
       endTime: string,
       price: number
   ): void {
-    this.showtimeId = showtimeId;
-    this.movieId = movieId;
-    this.hallId = hallId;
-    this.startTime = startTime;
-    this.endTime = endTime;
-    this.price = price;
+    this.showtimeForm.patchValue({
+      movieId: movieId,
+      hallId: hallId,
+      startTime: startTime,
+      endTime: endTime,
+      price: price,
+      showtimeId: showtimeId
+    });
+
     this.updateShowtimeDialog.nativeElement.showModal();
   }
 
