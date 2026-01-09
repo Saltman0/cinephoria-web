@@ -1,86 +1,86 @@
 <app-header></app-header>
 
-<main class="flex justify-center items-center px-4 lg:my-8 h-[65dvh]">
+<main class="px-5 my-4">
 
-  <section class="flex flex-col items-center px-5 pb-6">
+  <section class="flex flex-col lg:flex-row justify-center items-center">
 
-    <div class="flex justify-center">
-      <div class="cinephoria-table-header-movie border-r-1 border-r-neutral-900">
-        <span class="cinephoria-subtitle-2">Films</span>
-        <img ngSrc="../../../assets/images/Plus.png" width="40" height="40" alt="Ajouter un film"
-             (click)="openAddMovieDialog()" class="cursor-pointer" />
-      </div>
+    <div class="flex flex-col justify-center lg:w-fit w-full">
 
-      <div class="cinephoria-table-header-showtime border-l-1 border-l-neutral-900">
-        <span class="cinephoria-subtitle-2">Séances</span>
-        <img ngSrc="../../../assets/images/Plus.png" width="40" height="40" alt="Ajouter une séance"
-             (click)="openAddShowtimeDialog()" class="cursor-pointer" />
-      </div>
+        <div class="cinephoria-table-header-movie border-r-1 border-r-neutral-900">
+            <span class="cinephoria-subtitle-2">Films</span>
+            <img ngSrc="../../../assets/images/Plus.png" width="40" height="40" alt="Ajouter un film"
+                 (click)="openAddMovieDialog()" class="cursor-pointer" />
+        </div>
+
+        <div class="cinephoria-movie-list border-r-1 border-r-neutral-900" style="background-color: #272727;">
+            @if (isMovieListLoading) {
+                <span class="loading loading-spinner loading-xl text-warning"></span>
+            } @else {
+                @for (movie of movieList; track movie.id) {
+                    <div class="cinephoria-movie-settings flex lg:flex-row flex-col justify-between items-center p-2.5 lg:gap-0 gap-2"
+                         style="background-image: url('assets/images/movies/{{ movie.imageURL }}')"
+                         (click)="loadShowtimeList(movie.id)">
+
+                        <div class="cinephoria-main-title flex items-center lg:justify-start justify-center lg:text-start text-center gap-2 lg:w-48/100">
+                            @if (movie.favorite) {
+                                <img ngSrc="../../../assets/images/Heart.png" width="50" height="50" alt="Coup de coeur" />
+                            }
+                            <span>{{ movie.title }}</span>
+                        </div>
+
+                        <span class="cinephoria-big-text lg:w-20/100">{{ movie.nbShowtimes }} séance(s)</span>
+
+                        <div class="flex flex-col justify-center items-center lg:w-20/100">
+                            <span class="cinephoria-big-text">
+                                @if (movie.minimumAge) {
+                                    - {{ movie.minimumAge }} ans
+                                } @else {
+                                    Tous public
+                                }
+                            </span>
+                            <div class="flex justify-around lg:w-full">
+                                @for (star of stars; track star) {
+                                    <img ngSrc="../../../assets/images/Star.png" width="25" height="25" alt="Note du film" />
+                                }
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end items-center lg:w-12/100">
+                            <img ngSrc="../../../assets/images/Pencil.png" width="30" height="30" alt="Modifier le film"
+                                 (click)="openUpdateMovieDialog(
+                                    movie.id,
+                                    movie.categoryId,
+                                    movie.title,
+                                    movie.description,
+                                    movie.minimumAge,
+                                    movie.favorite,
+                                    movie.imageURL
+                                 )" />
+                            <img ngSrc="../../../assets/images/Trash.png" width="30" height="30" alt="Supprimer le film"
+                                 (click)="openDeleteMovieDialog(movie.id)" />
+                        </div>
+
+                    </div>
+                }
+            }
+        </div>
+
     </div>
 
-    <div class="flex justify-center">
+    <div class="flex flex-col justify-center lg:w-fit w-full">
+        <div class="cinephoria-table-header-showtime border-l-1 border-l-neutral-900">
+            <span class="cinephoria-subtitle-2">Séances</span>
+            <img ngSrc="../../../assets/images/Plus.png" width="40" height="40" alt="Ajouter une séance"
+                 (click)="openAddShowtimeDialog()" class="cursor-pointer" />
+        </div>
 
-      <div class="cinephoria-movie-list border-r-1 border-r-neutral-900" style="background-color: #272727;">
-        @if (isMovieListLoading) {
-          <span class="loading loading-spinner loading-xl text-warning"></span>
-        } @else {
-          @for (movie of movieList; track movie.id) {
-            <div class="cinephoria-movie-settings flex lg:flex-row flex-col justify-between items-center p-2.5 my-1"
-                 style="background-image: url('assets/images/movies/{{ movie.imageURL }}')"
-                 (click)="loadShowtimeList(movie.id)">
-
-              <!-- Icône de coeur -->
-              <div class="w-10/100">
-                @if (movie.favorite) {
-                  <img ngSrc="../../../assets/images/Heart.png" width="50" height="50" alt="Coup de coeur" />
-                }
-              </div>
-
-              <span class="cinephoria-main-title w-38/100">{{ movie.title }}</span>
-
-              <span class="cinephoria-big-text w-20/100">{{ movie.nbShowtimes }} séance(s)</span>
-
-              <div class="flex flex-col justify-center items-center w-20/100">
-              <span class="cinephoria-big-text">
-                @if (movie.minimumAge) {
-                  - {{ movie.minimumAge }} ans
-                } @else {
-                  Tous public
-                }
-              </span>
-                <div class="flex justify-around w-full">
-                  @for (star of stars; track star) {
-                    <img ngSrc="../../../assets/images/Star.png" width="25" height="25" alt="Note du film" />
-                  }
-                </div>
-              </div>
-
-              <div class="flex justify-end items-center w-12/100">
-                <img ngSrc="../../../assets/images/Pencil.png" width="30" height="30" alt="Modifier le film"
-                     (click)="openUpdateMovieDialog(
-                        movie.id,
-                        movie.categoryId,
-                        movie.title,
-                        movie.description,
-                        movie.minimumAge,
-                        movie.favorite,
-                        movie.imageURL
-                     )" />
-                <img ngSrc="../../../assets/images/Trash.png" width="30" height="30" alt="Supprimer le film"
-                     (click)="openDeleteMovieDialog(movie.id)" />
-              </div>
-
-            </div>
-          }
-        }
-      </div>
 
       <div class="cinephoria-showtime-list border-l-1 border-l-neutral-900" style="background-color: #272727;">
         @if (isShowtimeListLoading) {
           <span class="loading loading-spinner loading-xl text-warning"></span>
         } @else {
           @for (showtime of showtimeList; track showtime.id) {
-            <div class="cinephoria-showtime-settings flex lg:flex-row flex-col justify-between items-center p-2.5 my-1">
+            <div class="cinephoria-showtime-settings flex justify-between items-center p-2.5 my-1">
 
               <div class="flex flex-col justify-around h-full">
 
