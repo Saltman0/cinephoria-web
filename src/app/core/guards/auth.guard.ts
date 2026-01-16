@@ -20,6 +20,9 @@ export class AuthGuard implements CanActivate {
 
     const expiredTime: number = <number> jwtDecode(token).exp * 1000;
     if (new Date().getTime() >= expiredTime) {
+      this.localStorageService.deleteJwtToken();
+      this.localStorageService.deleteCurrentUser();
+
       this.router.navigate(['/home']);
       return false
     }
