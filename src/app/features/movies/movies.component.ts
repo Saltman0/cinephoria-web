@@ -67,6 +67,7 @@ export class MoviesComponent {
   async ngOnInit(): Promise<void> {
     await this.loadCinemas();
     await this.loadCategories();
+    await this.loadMoviesAndShowtimes();
   }
 
   public async loadCinemas(): Promise<void> {
