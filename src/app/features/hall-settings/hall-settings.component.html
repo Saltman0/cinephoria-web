@@ -4,7 +4,7 @@
 
   <section class="flex flex-col items-center px-5 pb-6 lg:w-[1090px]">
 
-    <div class="cinephoria-table-header flex lg:flex-row flex-col lg:justify-between w-full">
+    <div class="cinephoria-table-header flex sm:flex-row flex-col sm:justify-between w-full">
       <span class="cinephoria-subtitle-2">Salles</span>
       <div class="cinephoria-select-cinema flex justify-between items-center px-2">
         <img ngSrc="../../../assets/images/Placeholder.png" width="25" height="25" alt="Cinéma à choisir" />
@@ -96,3 +96,5 @@
 >
 </app-update-hall-dialog>
 <app-delete-hall-dialog (hallDeletedEvent)="loadHallList()" [hallId]="hallIdToDelete"></app-delete-hall-dialog>
+
+<app-nav-mobile></app-nav-mobile>

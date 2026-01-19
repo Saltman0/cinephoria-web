@@ -10,6 +10,7 @@ import {AddHallDialogComponent} from '../add-hall-dialog/add-hall-dialog.compone
 import {UpdateHallDialogComponent} from '../update-hall-dialog/update-hall-dialog.component';
 import {DeleteHallDialogComponent} from '../delete-hall-dialog/delete-hall-dialog.component';
 import {InfrastructureApiService} from "../../core/services/api/infrastructure.api.service";
+import {NavMobileComponent} from "../nav-mobile/nav-mobile.component";
 
 @Component({
   selector: 'app-hall-settings',
@@ -21,7 +22,8 @@ import {InfrastructureApiService} from "../../core/services/api/infrastructure.a
     ReactiveFormsModule,
     AddHallDialogComponent,
     UpdateHallDialogComponent,
-    DeleteHallDialogComponent
+    DeleteHallDialogComponent,
+    NavMobileComponent
   ],
   templateUrl: './hall-settings.component.html',
   styleUrl: './hall-settings.component.scss'
