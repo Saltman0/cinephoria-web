@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, output, ViewChild} from '@angular/core';
+import {Component, ElementRef, output, ViewChild} from '@angular/core';
 import {LocalStorageService} from '../../core/services/local-storage/local-storage.service';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {NgOptimizedImage} from '@angular/common';
@@ -15,12 +15,6 @@ import {UserApiService} from "../../core/services/api/user.api.service";
   styleUrl: './update-employee-dialog.component.scss'
 })
 export class UpdateEmployeeDialogComponent {
-  @Input() employeeId: number = 0;
-  @Input() firstName: string = "";
-  @Input() lastName: string = "";
-  @Input() email: string = "";
-  @Input() password: string = "";
-  @Input() phoneNumber: string = "";
   @ViewChild('updateEmployeeDialog') updateEmployeeDialog!: ElementRef<HTMLDialogElement>;
 
   employeeForm = new FormGroup({
