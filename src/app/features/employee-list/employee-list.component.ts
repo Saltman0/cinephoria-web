@@ -48,12 +48,6 @@ export class EmployeeListComponent {
     )
   });
 
-  employeeIdToUpdate: number = 0;
-  employeeEmailToUpdate: string = "";
-  employeeFirstNameToUpdate: string = "";
-  employeeLastNameToUpdate: string = "";
-  employeePhoneNumberToUpdate: string = "";
-
   employeeIdToDelete: number = 0;
 
   isCreatingEmployee: boolean = false;
@@ -98,12 +92,13 @@ export class EmployeeListComponent {
     lastName: string,
     phoneNumber: string
   ): void {
-    this.employeeIdToUpdate = id;
-    this.employeeEmailToUpdate = email;
-    this.employeeFirstNameToUpdate = firstName;
-    this.employeeLastNameToUpdate = lastName;
-    this.employeePhoneNumberToUpdate = phoneNumber;
-    this.updateEmployeeDialogComponent.showUpdateEmployeeDialog();
+    this.updateEmployeeDialogComponent.showUpdateEmployeeDialog(
+        id,
+        email,
+        firstName,
+        lastName,
+        phoneNumber
+    );
   }
 
   public openDeleteEmployeeDialog(id: number) {

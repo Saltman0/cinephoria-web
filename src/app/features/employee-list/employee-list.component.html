@@ -99,14 +99,7 @@
 
 <app-footer></app-footer>
 
-<app-update-employee-dialog
-  [employeeId]="employeeIdToUpdate"
-  [email]="employeeEmailToUpdate"
-  [firstName]="employeeFirstNameToUpdate"
-  [lastName]="employeeLastNameToUpdate"
-  [phoneNumber]="employeePhoneNumberToUpdate"
-  (employeeUpdatedEvent)="loadEmployeeList()">
-</app-update-employee-dialog>
+<app-update-employee-dialog (employeeUpdatedEvent)="loadEmployeeList()"></app-update-employee-dialog>
 
 <app-delete-employee-dialog
   [employeeId]="employeeIdToDelete"

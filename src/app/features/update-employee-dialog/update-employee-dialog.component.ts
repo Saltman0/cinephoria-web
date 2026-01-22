@@ -39,7 +39,10 @@ export class UpdateEmployeeDialogComponent {
     phoneNumber: new FormControl(
       "",
       [Validators.required, Validators.pattern("[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}")]
-    )
+    ),
+    employeeId: new FormControl(
+        0, [Validators.required]
+    ),
   });
 
   readonly employeeUpdatedEvent = output<boolean>();
@@ -51,11 +54,11 @@ export class UpdateEmployeeDialogComponent {
     private readonly userApiService: UserApiService
   ) {}
 
-  public async updateEmployee(employeeId: number) {
+  public async updateEmployee(): Promise<void> {
     this.isUpdatingEmployee = true;
 
     await this.userApiService.updateUser(
-      employeeId,
+      Number(this.employeeForm.value.employeeId),
       <string> this.localStorageService.getJwtToken(),
       <string> this.employeeForm.value.email,
       <string> this.employeeForm.value.password,
@@ -72,11 +75,25 @@ export class UpdateEmployeeDialogComponent {
     this.isUpdatingEmployee = false;
   }
 
-  public showUpdateEmployeeDialog() {
+  public showUpdateEmployeeDialog(
+      employeeId: number,
+      email: string,
+      firstName: string,
+      lastName: string,
+      phoneNumber: string
+  ): void {
+    this.employeeForm.patchValue({
+      employeeId: employeeId,
+      email: email,
+      firstName: firstName,
+      lastName: lastName,
+      phoneNumber: phoneNumber
+    });
+
     this.updateEmployeeDialog.nativeElement.showModal();
   }
 
-  public closeUpdateEmployeeDialog() {
+  public closeUpdateEmployeeDialog(): void {
     this.updateEmployeeDialog.nativeElement.close();
   }
 }
