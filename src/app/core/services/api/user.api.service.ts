@@ -101,7 +101,7 @@ export class UserApiService {
     }
 
     public async updateUser(
-        employeeId: number,
+        userId: number,
         token: string,
         email: string,
         password: string,
@@ -110,7 +110,7 @@ export class UserApiService {
         phoneNumber: string,
         role: string
     ): Promise<any> {
-        const response: Response = await fetch(environment.USER_API_URL + `user/${encodeURIComponent(employeeId)}`, {
+        const response: Response = await fetch(environment.USER_API_URL + `user/${encodeURIComponent(userId)}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
