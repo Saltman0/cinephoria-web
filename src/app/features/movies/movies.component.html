@@ -73,7 +73,7 @@
                         movie.imageURL,
                         movie.minimumAge,
                         movie.averageRating
-                    )" ngSrc="../../assets/images/movies/{{ movie.imageURL }}"
+                    )" ngSrc="{{ movie.imageURL }}"
                              alt="{{ movie.title }}" width="150" height="230" tabindex="0"
                              class="cinephoria-movie-image"/>
                     }
@@ -81,7 +81,7 @@
 
                 @if (selectedMovie !== null) {
                     <div class="cinephoria-movie-details"
-                         style="background-image: url('assets/images/movies/{{ selectedMovie.imageURL }}')">
+                         style="background-image: url('{{ selectedMovie.imageURL }}')">
 
                         <div class="flex lg:flex-row flex-col lg:justify-between">
 

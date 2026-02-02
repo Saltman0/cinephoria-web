@@ -28,7 +28,7 @@
         @for (booking of bookingList; track booking.id) {
 
           <div class="cinephoria-booking lg:flex-row flex-col justify-between items-center p-2.5 my-1"
-               style="background-image: url('assets/images/movies/{{ booking.movieImage }}')">
+               style="background-image: url('{{ booking.movieImage }}')">
 
             <div class="flex justify-start items-center w-25/100">
               <span class="cinephoria-main-title">{{ booking.movieTitle }}</span>

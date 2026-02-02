@@ -30,7 +30,7 @@
       } @else {
         @for (hall of hallList; track hall.id) {
           <div class="cinephoria-hall lg:w-1/3 md:w-1/2 w-1/1"
-               style="background-image: url('assets/images/movies/{{ hall.movieImage }}')">
+               style="background-image: url('{{ hall.movieImage }}')">
 
             <div class="flex justify-center items-center gap-2">
               <img ngSrc="../../../assets/images/Hall.png" width="25" height="25" alt="Numéro de salle">

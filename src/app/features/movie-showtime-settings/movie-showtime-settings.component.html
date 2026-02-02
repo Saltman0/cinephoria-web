@@ -18,7 +18,7 @@
             } @else {
                 @for (movie of movieList; track movie.id) {
                     <div class="cinephoria-movie-settings flex lg:flex-row flex-col justify-between items-center p-2.5 lg:gap-0 gap-2"
-                         style="background-image: url('assets/images/movies/{{ movie.imageURL }}')"
+                         style="background-image: url('{{ movie.imageURL }}')"
                          (click)="loadShowtimeList(movie.id)">
 
                         <div class="cinephoria-main-title flex items-center lg:justify-start justify-center lg:text-start text-center gap-2 lg:w-48/100">

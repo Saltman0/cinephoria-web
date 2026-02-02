@@ -10,7 +10,7 @@
       <span class="loading loading-spinner loading-xl text-warning"></span>
     } @else {
       @for (movie of movieList; track movie.id) {
-        <img ngSrc="../../assets/images/movies/{{ movie.imageURL }}" alt="{{ movie.title }}"
+        <img ngSrc="{{ movie.imageURL }}" alt="{{ movie.title }}"
              width="150" height="230" class="cinephoria-movie-image w-30 lg:w-37.5 mx-1 my-1" />
       } @empty {
         <li>Aucun film.</li>

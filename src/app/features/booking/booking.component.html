@@ -26,7 +26,7 @@
       <span class="loading loading-spinner loading-xl text-warning" [class.hidden]="!isMovieListLoading"></span>
     } @else {
       @for (movie of movieList; track movie.id) {
-        <img (click)="loadShowtimes(movie.id)" ngSrc="../../assets/images/movies/{{ movie.imageURL }}"
+        <img (click)="loadShowtimes(movie.id)" ngSrc="{{ movie.imageURL }}"
              alt="{{ movie.title }}" width="150" height="230" tabindex="0"
              class="cinephoria-movie-image w-30 lg:w-37.5 m-1" />
       }
