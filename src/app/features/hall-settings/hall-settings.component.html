@@ -85,16 +85,7 @@
 <app-footer></app-footer>
 
 <app-add-hall-dialog (hallAddedEvent)="loadHallList()"></app-add-hall-dialog>
-<app-update-hall-dialog
-  [hallId]="hallIdToUpdate"
-  [cinemaId]="cinemaIdToUpdate"
-  [number]="numberToUpdate"
-  [projectionQuality]="projectionQualityToUpdate"
-  [nbRows]="nbRowsToUpdate"
-  [nbSeats]="nbSeatsToUpdate"
-  (hallUpdatedEvent)="loadHallList()"
->
-</app-update-hall-dialog>
+<app-update-hall-dialog (hallUpdatedEvent)="loadHallList()"></app-update-hall-dialog>
 <app-delete-hall-dialog (hallDeletedEvent)="loadHallList()" [hallId]="hallIdToDelete"></app-delete-hall-dialog>
 
 <app-nav-mobile></app-nav-mobile>

@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, output, ViewChild} from '@angular/core';
+import {Component, ElementRef, output, ViewChild} from '@angular/core';
 import {LocalStorageService} from '../../core/services/local-storage/local-storage.service';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {NgOptimizedImage} from '@angular/common';
@@ -22,32 +22,28 @@ export class UpdateHallDialogComponent {
 
   hallForm = new FormGroup({
     cinemaId: new FormControl(
-      "", [Validators.required]
+      0, [Validators.required]
     ),
     number: new FormControl(
-      "", [Validators.required, Validators.min(1), Validators.max(50)]
+      1, [Validators.required, Validators.min(1), Validators.max(50)]
     ),
     projectionQuality: new FormControl(
       "", [Validators.required, Validators.minLength(1), Validators.maxLength(20)]
     ),
     nbRows: new FormControl(
-      "", [Validators.required, Validators.min(1), Validators.max(50)]
+      1, [Validators.required, Validators.min(1), Validators.max(50)]
     ),
     nbSeats: new FormControl(
-      "", [Validators.required, Validators.min(1), Validators.max(100)]
+      1, [Validators.required, Validators.min(1), Validators.max(100)]
+    ),
+    hallId: new FormControl(
+        0, [Validators.required]
     )
   });
 
   isUpdatingHall: boolean = false;
 
   readonly hallUpdatedEvent = output<boolean>();
-
-  @Input() hallId: number = 0;
-  @Input() cinemaId: number = 0;
-  @Input() number: number = 0;
-  @Input() projectionQuality: string|null = null;
-  @Input() nbRows: number = 0;
-  @Input() nbSeats: number = 0;
 
   @ViewChild('updateHallDialog') updateHallDialog!: ElementRef<HTMLDialogElement>;
 
@@ -76,14 +72,14 @@ export class UpdateHallDialogComponent {
     const jwtToken: string = <string> this.localStorageService.getJwtToken();
 
     const hall = await this.infrastructureApiService.updateHall(
-        jwtToken,
-      this.hallId,
-      <number><unknown> this.hallForm.value.number,
+      jwtToken,
+      Number(this.hallForm.value.hallId),
+      Number(this.hallForm.value.number),
       <string> this.hallForm.value.projectionQuality,
-      <number><unknown> this.hallForm.value.cinemaId
+      Number(this.hallForm.value.cinemaId)
     );
 
-    const seats: SeatModel[] = hall.seats;
+    const seats: SeatModel[] = await this.infrastructureApiService.getSeats(Number(this.hallForm.value.hallId));
 
     for (const seat of seats) {
       await this.infrastructureApiService.deleteSeat(jwtToken, seat.id);
@@ -115,7 +111,23 @@ export class UpdateHallDialogComponent {
     this.isUpdatingHall = false;
   }
 
-  public showUpdateHallDialog(): void {
+  public showUpdateHallDialog(
+      hallId: number,
+      cinemaId: number,
+      number: number,
+      projectionQuality: string|null,
+      nbRows: number,
+      nbSeats: number
+  ): void {
+    this.hallForm.patchValue({
+      hallId: hallId,
+      cinemaId: cinemaId,
+      number: number,
+      projectionQuality: projectionQuality,
+      nbRows: nbRows,
+      nbSeats: nbSeats
+    });
+
     this.updateHallDialog.nativeElement.showModal();
   }
 

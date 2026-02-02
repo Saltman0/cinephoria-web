@@ -43,13 +43,6 @@ export class HallSettingsComponent {
     hours: string|null
   }[] = [];
 
-  hallIdToUpdate: number = 0;
-  cinemaIdToUpdate: number = 0;
-  numberToUpdate: number = 0;
-  projectionQualityToUpdate: string|null = "";
-  nbRowsToUpdate: number = 0;
-  nbSeatsToUpdate: number = 0;
-
   hallIdToDelete: number = 0;
 
   isHallListLoading: boolean = false;
@@ -101,18 +94,18 @@ export class HallSettingsComponent {
     hallId: number,
     cinemaId: number,
     number: number,
-    projectionQuality: string | null,
+    projectionQuality: string|null,
     nbRows: number,
     nbSeats: number
   ): void {
-    this.hallIdToUpdate = hallId;
-    this.cinemaIdToUpdate = cinemaId;
-    this.numberToUpdate = number;
-    this.projectionQualityToUpdate = projectionQuality;
-    this.nbRowsToUpdate = nbRows;
-    this.nbSeatsToUpdate = nbSeats;
-
-    this.updateHallDialogComponent.showUpdateHallDialog();
+    this.updateHallDialogComponent.showUpdateHallDialog(
+        hallId,
+        cinemaId,
+        number,
+        projectionQuality,
+        nbRows,
+        nbSeats
+    );
   }
 
   public openDeleteHallDialog(hallId: number) {
