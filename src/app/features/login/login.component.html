@@ -1,0 +1,40 @@
+<app-header></app-header>
+
+<main class="flex flex-col items-center justify-center px-4 lg:my-8 h-[65dvh]">
+
+  <section class="flex flex-col justify-center items-center p-5 lg:w-[450px] h-[300px]" style="background-color: #272727;">
+
+      <span class="cinephoria-dialog-title">Connexion</span>
+
+      <form [formGroup]="loginForm" (ngSubmit)="connect()" method="POST"
+            class="flex flex-col justify-around items-center h-[240px]">
+
+        <div class="cinephoria-input-container flex flex-col items-start">
+          <img ngSrc="../../../assets/images/User.png" width="25" height="25" alt="Email"/>
+          <input type="email" formControlName="email" placeholder="Email" name="email" id="email"
+                 class="cinephoria-input h-8.75 w-62.5" required minlength="4" maxlength="50" />
+        </div>
+
+        <div class="cinephoria-input-container flex flex-col items-start">
+          <img ngSrc="../../../assets/images/Lock.png" width="25" height="25" alt="Mot de passe"/>
+          <input type="password" formControlName="password" placeholder="Mot de passe" name="password" id="password"
+                 class="cinephoria-input h-8.75 w-62.5" required minlength="4" maxlength="64" />
+        </div>
+
+        <div class="flex justify-center">
+          <button type="submit" class="cinephoria-button">
+            <span>Se connecter</span>
+          </button>
+        </div>
+
+      </form>
+
+      <a class="cinephoria-main-text" routerLink="/forgotten-password">Mot de passe oublié ?</a>
+
+  </section>
+
+</main>
+
+<app-footer></app-footer>
+
+<app-nav-mobile></app-nav-mobile>

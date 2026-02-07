@@ -1,0 +1,52 @@
+<app-header></app-header>
+
+
+<main class="flex flex-col items-center justify-center px-4 lg:my-8">
+
+    <section class="flex flex-col items-center p-5 lg:w-105 w-90 h-140" style="background-color: #272727;">
+
+        <span class="cinephoria-dialog-title">Votre demande</span>
+
+        <form [formGroup]="contactForm" (ngSubmit)="submit()"
+              action="https://formspree.io/f/xjkojppa"
+              method="POST"
+              class="flex flex-col justify-around items-center h-140">
+
+            <div class="flex flex-col items-start">
+                <label for="contactEmail" class="cinephoria-main-text mb-1">Email</label>
+                <input type="email" formControlName="contactEmail" name="contactEmail" id="contactEmail"
+                       class="cinephoria-input h-6.25 w-50" required minlength="4" maxlength="20"/>
+            </div>
+
+            <div class="flex flex-col items-start">
+                <label for="contactTitle" class="cinephoria-main-text mb-1">Titre</label>
+                <input type="text" formControlName="contactTitle" name="contactTitle" id="contactTitle"
+                       class="cinephoria-input h-6.25 w-50" required minlength="4" maxlength="20"/>
+            </div>
+
+            <div class="flex flex-col items-start">
+                <label for="contactDescription" class="cinephoria-main-text mb-1">Description</label>
+                <textarea formControlName="contactDescription" name="contactDescription" id="contactDescription"
+                          class="cinephoria-input w-75 h-35" required minlength="4" maxlength="200"></textarea>
+            </div>
+
+            <div class="flex justify-center w-full">
+                <button type="submit" class="cinephoria-button">
+                    <span [class.hidden]="isSendingMail">Envoyer</span>
+                    <span [class.hidden]="!isSendingMail" class="loading loading-spinner loading-xl"></span>
+                </button>
+            </div>
+
+        </form>
+
+        @if (type !== null && message !== null) {
+            <app-alert [type]="type" [message]="message"></app-alert>
+        }
+
+    </section>
+
+</main>
+
+<app-footer></app-footer>
+
+<app-nav-mobile></app-nav-mobile>

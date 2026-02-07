@@ -1,0 +1,66 @@
+<dialog #updateHallDialog class="modal">
+
+  <div class="modal-box flex flex-col justify-center items-center">
+
+        <span class="cinephoria-dialog-title">Ajout d'une salle</span>
+
+        <form [formGroup]="hallForm" (ngSubmit)="updateHall()" method="POST"
+              class="flex flex-col justify-around items-center h-140">
+
+          <div class="cinephoria-select-cinema flex justify-between items-center px-2">
+            <img ngSrc="../../../assets/images/Placeholder.png" width="25" height="25" alt="Cinéma à choisir" />
+
+            <select class="mx-1" formControlName="cinemaId" id="cinemaId">
+              <option disabled>Choisissez un cinéma</option>
+              @for (cinema of cinemaList; track cinema.id) {
+                <option [value]="cinema.id">{{ cinema.name }}</option>
+              }
+            </select>
+
+            <img ngSrc="../../../assets/images/Down_arrow.png" width="25" height="25"
+                 alt="Flèche de sélection de cinéma" />
+          </div>
+
+          <div class="flex flex-col items-start">
+            <input type="number" formControlName="number" placeholder="Numéro de la salle" id="number"
+                   class="cinephoria-input h-8.75 w-62.5" required min="1" max="50" />
+          </div>
+
+          <div class="cinephoria-input-container flex flex-col items-start">
+            <img ngSrc="../../../assets/images/Camera.png" width="25" height="25" alt="Numéro de la salle"/>
+            <input type="text" formControlName="projectionQuality"
+                   placeholder="Qualité de la salle" name="projectionQuality" id="projectionQuality"
+                   class="cinephoria-input h-8.75 w-62.5" required minlength="1" maxlength="20" />
+          </div>
+
+          <div class="cinephoria-input-container flex flex-col items-start">
+            <img ngSrc="../../../assets/images/Hall.png" width="25" height="25" alt="Nombre de lignes"/>
+            <input type="number" formControlName="nbRows" placeholder="Nombre de lignes"
+                   id="nbRows" class="cinephoria-input h-8.75 w-62.5" required min="1" max="50" />
+          </div>
+
+          <div class="cinephoria-input-container flex flex-col items-start">
+            <img ngSrc="../../../assets/images/Chair.png" width="25" height="25" alt="Nombre de sièges"/>
+            <input type="number" formControlName="nbSeats" placeholder="Nombre de sièges"
+                   id="nbSeats" class="cinephoria-input h-8.75 w-62.5" required min="1" max="100" />
+          </div>
+
+          <input type="hidden" formControlName="hallId" />
+
+          <div class="flex justify-end items-center gap-2 mt-2">
+            <button type="submit" class="cinephoria-button">
+              <span [class.hidden]="isUpdatingHall">Enregistrer</span>
+              <span [class.hidden]="!isUpdatingHall" class="loading loading-spinner loading-xl"></span>
+            </button>
+            <button type="button" class="cinephoria-button" (click)="closeUpdateHallDialog()">
+              <span [class.hidden]="isUpdatingHall">Annuler</span>
+              <span [class.hidden]="!isUpdatingHall" class="loading loading-spinner loading-xl"></span>
+            </button>
+          </div>
+
+        </form>
+
+
+  </div>
+
+</dialog>

@@ -1,0 +1,38 @@
+<dialog #addRatingDialog class="modal">
+
+    <div class="modal-box flex flex-col justify-center items-center">
+
+        <span class="cinephoria-dialog-title">Ajout d'un avis</span>
+
+        <form [formGroup]="ratingForm" (ngSubmit)="createRating()" method="POST"
+              class="flex flex-col justify-around items-center h-120">
+
+            <div class="flex flex-col items-start">
+                <label for="number" class="cinephoria-main-text mb-1">Note :</label>
+                <input type="number" formControlName="number" name="number" id="number"
+                       class="cinephoria-input h-8.75 w-62.5" required min="1" max="5" />
+            </div>
+
+            <div class="flex flex-col items-start">
+                <label for="description" class="cinephoria-main-text mb-1">Description</label>
+                <textarea type="text" formControlName="description" name="description" id="description"
+                          class="cinephoria-input h-50 w-100" required minlength="5" maxlength="200"></textarea>
+            </div>
+
+            <div class="flex justify-end items-center gap-2 mt-2">
+                <button type="submit" class="cinephoria-button">
+                    <span [class.hidden]="isAddingRating">Enregistrer</span>
+                    <span [class.hidden]="!isAddingRating" class="loading loading-spinner loading-xl"></span>
+                </button>
+                <button type="button" class="cinephoria-button" (click)="closeAddRatingDialog()">
+                    <span [class.hidden]="isAddingRating">Annuler</span>
+                    <span [class.hidden]="!isAddingRating" class="loading loading-spinner loading-xl"></span>
+                </button>
+            </div>
+
+        </form>
+
+
+    </div>
+
+</dialog>

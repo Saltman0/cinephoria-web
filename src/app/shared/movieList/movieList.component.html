@@ -1,0 +1,22 @@
+<section>
+
+  <div class="h-1/10 p-2">
+    <span class="cinephoria-subtitle-2">{{ title }}</span>
+  </div>
+
+  <div class="h-9/10 flex flex-wrap justify-around p-2">
+
+    @if (movieList.length === 0) {
+      <span class="loading loading-spinner loading-xl text-warning"></span>
+    } @else {
+      @for (movie of movieList; track movie.id) {
+        <img ngSrc="{{ movie.imageURL }}" alt="{{ movie.title }}"
+             width="150" height="230" class="cinephoria-movie-image w-30 lg:w-37.5 mx-1 my-1" />
+      } @empty {
+        <li>Aucun film.</li>
+      }
+    }
+
+  </div>
+
+</section>

@@ -1,0 +1,60 @@
+<app-header></app-header>
+
+<main class="flex flex-col items-center justify-center px-4 lg:my-8">
+
+    <section class="flex flex-col items-center p-5 lg:w-112.5 w-90 h-135" style="background-color: #272727;">
+
+        <span class="cinephoria-dialog-title">Inscription</span>
+
+        <form [formGroup]="accountCreationForm" (ngSubmit)="submit()" method="POST"
+              class="flex flex-col justify-around items-center h-140">
+
+            <div class="cinephoria-input-container flex flex-col items-start">
+                <img ngSrc="../../../assets/images/User.png" width="25" height="25" alt="Email"/>
+                <input type="email" formControlName="email" placeholder="Email" name="email" id="email"
+                       class="cinephoria-input h-8.75 w-62.5" required minlength="4" maxlength="50"/>
+            </div>
+
+            <div class="cinephoria-input-container flex flex-col items-start">
+                <img ngSrc="../../../assets/images/Lock.png" width="25" height="25" alt="Mot de passe"/>
+                <input type="password" formControlName="password" placeholder="Mot de passe" name="password"
+                       id="password"
+                       class="cinephoria-input h-8.75 w-62.5" required minlength="4" maxlength="64"/>
+            </div>
+
+            <div class="flex flex-col items-start">
+                <input type="text" formControlName="firstName" placeholder="Prénom" name="firstName" id="firstName"
+                       class="cinephoria-input h-8.75 w-62.5" required minlength="4" maxlength="30"/>
+            </div>
+
+            <div class="flex flex-col items-start">
+                <input type="text" formControlName="lastName" placeholder="Nom" name="lastName" id="lastName"
+                       class="cinephoria-input h-8.75 w-62.5" required minlength="4" maxlength="30"/>
+            </div>
+
+            <div class="cinephoria-input-container flex flex-col items-start">
+                <img ngSrc="../../../assets/images/Phone_2.png" width="25" height="25" alt="Numéro de téléphone"/>
+                <input type="text" formControlName="phoneNumber" placeholder="Numéro de téléphone" name="phoneNumber"
+                       id="phoneNumber" class="cinephoria-input h-8.75 w-62.5" required minlength="4" maxlength="20"/>
+            </div>
+
+            <div class="flex justify-center">
+                <button type="submit" class="cinephoria-button">
+                    <span [class.hidden]="isCreatingAccount">Créer mon compte</span>
+                    <span [class.hidden]="!isCreatingAccount" class="loading loading-spinner loading-xl"></span>
+                </button>
+            </div>
+
+        </form>
+
+        @if (type !== null && message !== null) {
+            <app-alert [type]="type" [message]="message"></app-alert>
+        }
+
+    </section>
+
+</main>
+
+<app-footer></app-footer>
+
+<app-nav-mobile></app-nav-mobile>

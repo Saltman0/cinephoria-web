@@ -42,6 +42,22 @@ html {
   }
 }
 
+.cinephoria-select-category {
+    width: 200px;
+    height: 35px;
+    background-color: #FFFFFF;
+    border-radius: 2px;
+    cursor: pointer;
+
+    select {
+        width: 100%;
+        height: 100%;
+        appearance: none;
+        color: #1C1C1C;
+        cursor: pointer;
+    }
+}
+
 .cinephoria-hamburger {
   font-size: 2rem;
   cursor: pointer;
@@ -122,7 +138,6 @@ html {
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  width: 350px;
   height: 200px;
 }
 
@@ -144,9 +159,9 @@ html {
   flex-direction: column;
   justify-content: start;
   align-items: center;
-  width: 1150px;
   height: 410px;
   padding: 20px;
+  overflow-x: hidden;
   overflow-y: auto;
 }
 
@@ -156,11 +171,6 @@ html {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  width: 1150px;
-  height: 440px;
-  padding: 20px;
   overflow-y: auto;
 }
 
@@ -171,8 +181,8 @@ html {
   flex-direction: column;
   justify-content: start;
   align-items: center;
-  width: 875px;
   height: 410px;
+  gap: 10px;
   padding: 20px;
   overflow-x: hidden;
   overflow-y: auto;
@@ -185,11 +195,23 @@ html {
   flex-direction: column;
   justify-content: start;
   align-items: center;
-  width: 300px;
   height: 410px;
   padding: 20px;
   overflow-x: hidden;
   overflow-y: auto;
+}
+
+.cinephoria-movie-details {
+  background-color: rgba(0, 0, 0, 0.8);
+  background-blend-mode: darken;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  padding: 20px;
+  width: 100%;
 }
 
 .cinephoria-movie-settings {
@@ -198,19 +220,24 @@ html {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  height: 90px;
-  width: 840px;
+  width: 100%;
   cursor: pointer;
 }
 
 .cinephoria-showtime-settings {
   background-color: #1C1C1C;
   height: 110px;
-  width: 270px;
+  width: 100%;
 }
 
 .cinephoria-employee {
   background-color: #1C1C1C;
+  padding: 10px;
+  margin: 4px;
+  width: 100%;
+  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .cinephoria-hall-number {
@@ -278,12 +305,7 @@ html {
 .cinephoria-table-header {
   background-color: #E63946;
   border-radius: 2px 2px 0 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 1150px;
-  height: 90px;
+  gap: 5px;
   padding: 20px;
 }
 
@@ -294,7 +316,6 @@ html {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: 875px;
   height: 90px;
   padding: 20px;
 }
@@ -306,7 +327,6 @@ html {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: 300px;
   height: 90px;
   padding: 20px;
 }
@@ -416,6 +436,7 @@ html {
   color: #1C1C1C;
   font-size: 16px;
   font-family: Raleway, sans-serif;
+  font-weight: bold;
   padding: 5px;
 }
 
