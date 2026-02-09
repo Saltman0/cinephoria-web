@@ -3,15 +3,15 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: true,
-  FRONT_URL: 'https://cinephoria-mb.netlify.app/',
-  BOOKING_API_URL: "https://cinephoria.lol/",
-  DASHBOARD_API_URL: "https://cinephoria.lol/",
-  GRAPHQL_API_URL: "https://cinephoria.lol/",
-  INFRASTRUCTURE_API_URL: "https://cinephoria.lol/",
-  MOVIE_API_URL: "https://cinephoria.lol/",
-  SHOWTIME_API_URL: "hhttps://cinephoria.lol/",
-  USER_API_URL: "https://cinephoria.lol/"
+  production: false,
+  FRONT_URL: 'http://localhost:4200/',
+  BOOKING_API_URL: "http://172.18.0.5/",
+  DASHBOARD_API_URL: "http://172.18.0.5/",
+  GRAPHQL_API_URL: "http://172.18.0.5/",
+  INFRASTRUCTURE_API_URL: "http://172.18.0.5/",
+  MOVIE_API_URL: "http://172.18.0.5/",
+  SHOWTIME_API_URL: "http://172.18.0.5/",
+  USER_API_URL: "http://172.18.0.5/"
 };
 
 /*
