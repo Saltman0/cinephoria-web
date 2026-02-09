@@ -1,18 +1,21 @@
 import {test, expect, Locator} from '@playwright/test';
+import {environment} from "../src/environments/environment";
+
+const FRONT_URL = environment.FRONT_URL;
 
 test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:4200/home');
+    await page.goto(FRONT_URL + 'home');
 });
 
 test('Home page', async ({ page }) => {
-    await page.goto('http://localhost:4200/home');
+    await page.goto(FRONT_URL + 'home');
 
     await expect(page.getByText('Dernières affiches')).toBeVisible();
     await expect(page.getByText('Coups de coeur')).toBeVisible();
 });
 
 test('Booking page', async ({ page }) => {
-    await page.goto('http://localhost:4200/booking');
+    await page.goto(FRONT_URL + 'booking');
 
     const cinemaSelect: Locator = page.locator('select[name="cinema"]');
     await expect(cinemaSelect).toBeVisible();
@@ -36,7 +39,7 @@ test('Booking page', async ({ page }) => {
 });
 
 test('Movies page', async ({ page }) => {
-    await page.goto('http://localhost:4200/home');
+    await page.goto(FRONT_URL + '/home');
 
     const moviesLink: Locator = page.getByRole('link', { name: 'Films' });
     await expect(moviesLink).toBeVisible();
@@ -64,7 +67,11 @@ test('Movies page', async ({ page }) => {
 });
 
 test('Contact page', async ({ page }) => {
-    await page.goto('http://localhost:4200/contact');
+    await page.goto(FRONT_URL + '/home');
+
+    const contactLink: Locator = page.getByRole('link', { name: 'Contact' });
+    await expect(contactLink).toBeVisible();
+    await contactLink.click();
 
     const contactEmailInput: Locator = page.locator('input[id="contactEmail"]');
     await expect(contactEmailInput).toBeVisible();
