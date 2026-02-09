@@ -69,7 +69,7 @@
             }
 
             <button (click)="loadSeats(showtime.hallId, showtime.price, showtime.id)" type="button"
-                    class="cinephoria-little-button">
+                    class="book-button cinephoria-little-button">
               <img ngSrc="../../../assets/images/Ticket.png" alt="Réserver" width="20" height="20" />
               <span>Réserver</span>
             </button>
@@ -121,7 +121,7 @@
             <span class="cinephoria-big-text mx-1">{{ selectedSeat.row + selectedSeat.number }}@if (!$last) {,}</span>
           }
         </div>
-        <button (click)="book()" type="button" class="cinephoria-button mt-1">
+        <button (click)="book()" type="button" class="cinephoria-button mt-1" id="confirm-book-button">
           <img ngSrc="../../../assets/images/Ticket.png" alt="Réserver" width="35" height="35" class="ml-5 mr-auto" />
           <span class="mr-10">Réserver</span>
         </button>
