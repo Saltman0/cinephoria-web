@@ -24,7 +24,7 @@
             <div class="cinephoria-select-category flex justify-between items-center px-2">
                 <img ngSrc="../../../assets/images/Label.png" width="25" height="25" alt="Catégorie à choisir" />
 
-                <select (change)="selectCategoryId($event)" class="mx-1" name="cinema">
+                <select (change)="selectCategoryId($event)" class="mx-1" name="categoryId">
                     <option selected>Aucun</option>
                     @for (category of categoryList; track category.id) {
                         <option [value]="category.id">{{ category.name }}</option>
