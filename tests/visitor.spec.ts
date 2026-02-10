@@ -4,11 +4,11 @@ import {environment} from "../src/environments/environment";
 const FRONT_URL = environment.FRONT_URL;
 
 test.beforeEach(async ({ page }) => {
-    await page.goto(FRONT_URL + 'home');
+    await page.goto(FRONT_URL);
 });
 
 test('Home page', async ({ page }) => {
-    await page.goto(FRONT_URL + 'home');
+    await page.goto(FRONT_URL);
 
     await expect(page.getByText('Dernières affiches')).toBeVisible();
     await expect(page.getByText('Coups de coeur')).toBeVisible();
@@ -39,7 +39,7 @@ test('Booking page', async ({ page }) => {
 });
 
 test('Movies page', async ({ page }) => {
-    await page.goto(FRONT_URL + '/home');
+    await page.goto(FRONT_URL);
 
     const moviesLink: Locator = page.getByRole('link', { name: 'Films' });
     await expect(moviesLink).toBeVisible();
@@ -67,7 +67,7 @@ test('Movies page', async ({ page }) => {
 });
 
 test('Contact page', async ({ page }) => {
-    await page.goto(FRONT_URL + '/home');
+    await page.goto(FRONT_URL);
 
     const contactLink: Locator = page.getByRole('link', { name: 'Contact' });
     await expect(contactLink).toBeVisible();
