@@ -3,6 +3,13 @@ ___
 
 Application Web de Cinéphoria.
 
+### Documentation
+
+- [Documentation technique.pdf](https://github.com/user-attachments/files/25327038/Documentation.technique.pdf)
+- [Documentation de gestion de projet.pdf](https://github.com/user-attachments/files/25327035/Documentation.de.gestion.de.projet.pdf)
+- [Manuel d'utilisation.pdf](https://github.com/user-attachments/files/25327039/Manuel.d.utilisation.pdf)
+- [Charte graphique.pdf](https://github.com/user-attachments/files/25327027/Charte.graphique.pdf)
+
 ## Installation
 
 ### Pré-requis
