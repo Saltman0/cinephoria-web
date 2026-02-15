@@ -103,7 +103,9 @@ export class DashboardComponent {
 
     const options = {
       chart: {
-        type: 'area'
+        type: 'area',
+        height: 380,
+        width: '100%'
       },
       series: [{
         name: 'Réservations',

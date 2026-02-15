@@ -4,7 +4,7 @@
 
     <section class="flex flex-col items-center gap-5 p-5">
 
-        <div class="cinephoria-table-header">
+        <div class="cinephoria-table-header flex flex-col lg:flex-row justify-between items-center">
             <div class="cinephoria-select-cinema flex justify-between items-center px-2">
                 <img ngSrc="../../../assets/images/Placeholder.png" width="25" height="25" alt="Cinéma à choisir" />
 
@@ -33,19 +33,15 @@
                      alt="Flèche du sélection de cinéma"/>
             </div>
 
-            <div class="flex justify-center items-center gap-2">
-                <div class="cinephoria-input flex justify-between items-center gap-2">
-                    <img ngSrc="../../../assets/images/Calendar.png" width="25" height="25" alt="Date de début de séance"/>
-                    <input (change)="selectShowtimeDateStart($event)" type="date" name="showtimeDateStart"
-                           id="showtimeDateStart" placeholder="Choisissez une date de début de séance"/>
-                </div>
-
-                <div class="cinephoria-input flex justify-between items-center gap-2">
-                    <img ngSrc="../../../assets/images/Calendar.png" width="25" height="25" alt="Date de fin de séance"/>
-                    <input (change)="selectShowtimeDateEnd($event)" type="date" name="showtimeDateEnd"
-                           id="showtimeDateEnd" placeholder="Choisissez une date de fin de séance"/>
-                </div>
-
+            <div class="cinephoria-input flex justify-between items-center gap-2">
+                <img ngSrc="../../../assets/images/Calendar.png" width="25" height="25" alt="Date de début de séance"/>
+                <input (change)="selectShowtimeDateStart($event)" type="date" name="showtimeDateStart"
+                       id="showtimeDateStart" placeholder="Choisissez une date de début de séance"/>
+            </div>
+            <div class="cinephoria-input flex justify-between items-center gap-2">
+                <img ngSrc="../../../assets/images/Calendar.png" width="25" height="25" alt="Date de fin de séance"/>
+                <input (change)="selectShowtimeDateEnd($event)" type="date" name="showtimeDateEnd"
+                       id="showtimeDateEnd" placeholder="Choisissez une date de fin de séance"/>
             </div>
 
             <button type="button" class="cinephoria-button border" (click)="loadDashboard()">
@@ -53,10 +49,7 @@
             </button>
         </div>
 
-        <div class="flex flex-col justify-center items-center">
-            <div class="cinephoria-big-text">Nombre de réservations</div>
-            <div id="chart" class="w-[600px]"></div>
-        </div>
+        <div id="chart" class="w-full"></div>
 
     </section>
 
